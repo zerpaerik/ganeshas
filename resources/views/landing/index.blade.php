@@ -310,8 +310,8 @@
 
     <!-- Start copyright  -->
     <div class="footer-copyright" style="background-color: #3766b1;">
-        <p class="footer-company">All Rights Reserved. &copy; 2022 <a href="#"></a> Design By : 
-            <a href="">Jose Luis MEZA</a></p>
+        <p class="footer-company">Todos los derechos reservados. &copy; 2022 <a href="#"></a> Realizado Por : 
+            <a href="https://www.facebook.com/sysmedicPE" target="_blank">SYSMEDIC PERU SAC</a></p>
     </div>
     <!-- End copyright  -->
 
