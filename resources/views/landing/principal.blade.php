@@ -313,14 +313,14 @@ https://templatemo.com/tm-546-sixteen-clothing
             <div class="inner-content">
               <p>Copyright &copy; 2020 Sixteen Clothing Co., Ltd.
             
-            - Design: <a rel="nofollow noopener" href="https://templatemo.com" target="_blank">TemplateMo</a></p>
+            - Design: <a rel="nofollow noopener" href="" target="_blank">SYSMEDIC PERU SAC</a></p>
             </div>
           </div>
           <div class="col-md-4">
             <div class="inner-content">
               <p>Copyright &copy; 2020 Sixteen Clothing Co., Ltd.
             
-            - Design: <a rel="nofollow noopener" href="https://templatemo.com" target="_blank">TemplateMo</a></p>
+            - Design: <a rel="nofollow noopener" href="" target="_blank">SYSMEDIC PERU SAC</a></p>
             </div>
           </div>
         </div>
