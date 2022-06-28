@@ -638,7 +638,7 @@
      top: 0px;
      width: 100%;
      padding: 0px 0px;
-     background: #ffffff;
+     background-color: black;
      z-index: 0;
      transition: all 500ms ease;
      -moz-transition: all 500ms ease;

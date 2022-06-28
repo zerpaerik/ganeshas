@@ -42,7 +42,7 @@
     <!-- End Main Top -->
 
     <!-- Start Main Top -->
-    <header class="main-header">
+    <header class="main-header" style="background-color: black;">
         <!-- Start Navigation -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default bootsnav">
             <div class="container">
@@ -58,12 +58,12 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="navbar-menu">
                     <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
-                        <li class="nav-item active"><a class="nav-link" href="index.html">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="about.html"></a></li>
-                    
-                        <li class="nav-item"><a class="nav-link" href="service.html">Quiero ser Consultora</a></li>
-                        <li class="nav-item"><a class="nav-link" href="contact-us.html">Quiero Comprar</a></li>
-                        <li class="nav-item"><a class="nav-link" href="contact-us.html">Soy Consultora</a></li>
+                        <li class="nav-item active"><a class="nav-link" href="index.html">INICIO</a></li>
+                        <li class="nav-item"><a class="nav-link" href="about.html">CATALOGO</a></li>
+
+                        <li class="nav-item"><a class="nav-link" href="service.html">QUIERO SER CONSULTORA</a></li>
+                        <li class="nav-item"><a class="nav-link" href="contact-us.html">QUIERO COMPRAR</a></li>
+                        <li class="nav-item"><a class="nav-link" href="contact-us.html">SOY CONSULTORA</a></li>
                     </ul>
                 </div>
                 <!-- /.navbar-collapse -->
