@@ -44,28 +44,31 @@ https://templatemo.com/tm-546-sixteen-clothing
     <header class="">
       <nav class="navbar navbar-expand-lg">
         <div class="container">
-          <a class="navbar-brand" href="index.html"><h2>GANESHAS <em>PERU</em></h2></a>
+          <a class="navbar-brand" href="{{route('inicio.index')}}"></a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
               <li class="nav-item active">
-                <a class="nav-link" href="index.html">INICIO
+                <a class="nav-link" href="{{route('inicio.index')}}">INICIO
                   <span class="sr-only">(current)</span>
                 </a>
               </li> 
               <li class="nav-item">
-                <a class="nav-link" href="products.html">CATALOGO</a>
+                <a class="nav-link" href="{{route('nosotras.index')}}">NOSOTRAS</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="about.html">QUIERO SER GANESHA`S</a>
+                <a class="nav-link" href="{{route('productos-ganesha.index')}}">CATALOGO</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{route('contacto.index')}}">QUIERO SER GANESHA`S</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="contact.html">INICIAR SESIÒN</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="contact.html">CÒMO COMPRAR</a>
+                <a class="nav-link" target="_blank" href="https://api.whatsapp.com/send?phone=51934545223&text=Hola, Estoy interesada en comprar!">CÒMO COMPRAR</a>
               </li>
             </ul>
           </div>
@@ -77,23 +80,20 @@ https://templatemo.com/tm-546-sixteen-clothing
     <!-- Banner Starts Here -->
     <div class="banner header-text">
       <div class="owl-banner owl-carousel">
-        <div class="banner-item-01">
-          <div class="text-content">
-            <h4>Best Offer</h4>
-            <h2>New Arrivals On Sale</h2>
-          </div>
+        <div class="banner-item-01" style="margin-top: -50px;">
+         
         </div>
-        <div class="banner-item-02">
-          <div class="text-content">
-            <h4>Flash Deals</h4>
-            <h2>Get your best products</h2>
-          </div>
+        <div class="banner-item-02" style="margin-top: -50px;">
+        
         </div>
-        <div class="banner-item-03">
-          <div class="text-content">
-            <h4>Last Minute</h4>
-            <h2>Grab last minute deals</h2>
-          </div>
+        <div class="banner-item-03" style="margin-top: -50px;">
+        
+        </div>
+        <div class="banner-item-04" style="margin-top: -50px;">
+        
+        </div>
+        <div class="banner-item-05" style="margin-top: -50px;">
+        
         </div>
       </div>
     </div>
@@ -182,8 +182,8 @@ https://templatemo.com/tm-546-sixteen-clothing
         <div class="row">
           <div class="col-md-12">
             <div class="section-heading">
-              <h2>Latest Products</h2>
-              <a href="products.html">view all products <i class="fa fa-angle-right"></i></a>
+              <h2>Ùltimos productos</h2>
+              <a href="products.html">ver todos <i class="fa fa-angle-right"></i></a>
             </div>
           </div>
           <div class="col-md-4">
@@ -299,28 +299,34 @@ https://templatemo.com/tm-546-sixteen-clothing
     </div>
 
     
-    <footer style="background-color:#ad296d;">
+    <footer style="background-color:#ad296d; margin-top: -30px;">
       <div class="container">
         <div class="row">
           <div class="col-md-4">
             <div class="inner-content">
-              <p>ENCUENTRANOS EN</p>
-              <img src="redes.png" alt="">
-           
+              <img src="logotipo.png" alt="" style="width: 40%;">
+              <p style="color: white;margin-top: 15px;">ENCUENTRANOS EN</p>
+              <ul class="social-icons">
+                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+              </ul>
             </div>
           </div>
           <div class="col-md-4">
             <div class="inner-content">
-              <p>Copyright &copy; 2020 Sixteen Clothing Co., Ltd.
-            
-            - Design: <a rel="nofollow noopener" href="" target="_blank">SYSMEDIC PERU SAC</a></p>
+            <img src="location.png" alt="" style="width: 20%;">
+              <p style="color: white;margin-top: 15px;">Direcciòn: Santiago de Surco - Lima Perù. </p>
+              <img src="mail.png" alt="" style="width: 20%;">
+              <p style="color: white;margin-top: 10px;">adm.ganeshasperu@gmail.com</p>
+
             </div>
           </div>
           <div class="col-md-4">
             <div class="inner-content">
-              <p>Copyright &copy; 2020 Sixteen Clothing Co., Ltd.
-            
-            - Design: <a rel="nofollow noopener" href="" target="_blank">SYSMEDIC PERU SAC</a></p>
+              <img src="whats.png" alt="" style="width: 70%;">
+              <p style="color: white;margin-top: 15px;">Horarios de atenciòn: </p>
+              <p style="color: white;margin-top: 10px;">Lunes a Viernes: 9am a 7pm </p>
+              <p style="color: white;margin-top: 10px;">Sabado: 9am a 2pm </p>
             </div>
           </div>
         </div>
