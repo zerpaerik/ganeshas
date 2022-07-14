@@ -55,7 +55,7 @@
 </head>
 <body>
 
-    <img src="victal.png" style="width: 20%;"/>
+    <img src="GANESHAS.png" style="width: 20%;"/>
 
 
 

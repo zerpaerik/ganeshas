@@ -48,7 +48,7 @@
 
 <div>
 	<div class="text-center title-header col-12">
-	   <center><strong>HOTEL VICTAL</strong> </center>
+	   <center><strong>HOTEL GANESHAS</strong> </center>
 		<center><strong>REPORTE DE CIERRE DE CAJA</strong> </center>
 		<center><strong>INICIO: {{ $caja->fecha_init }}</strong>- <strong>FIN: {{ $caja->fecha_fin }}</strong></center>
 

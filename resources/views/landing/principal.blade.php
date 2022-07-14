@@ -5,11 +5,12 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
+    <meta name="description" content="Somos una tribu de MUJERES EMPRENDEDORAS en busca de sus SUEÑOS💗
+Distribuimos PRODUCTOS MISTICOS SANADORES NATURALES🌱creados con SECRETOS ANCESTRAL">
     <meta name="author" content="">
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
 
-    <title>Ganeshàs Peru</title>
+    <title>Ganeshas Peru</title>
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -44,7 +45,10 @@ https://templatemo.com/tm-546-sixteen-clothing
     <header class="">
       <nav class="navbar navbar-expand-lg">
         <div class="container">
-          <a class="navbar-brand" href="{{route('inicio.index')}}"></a>
+          <a class="navbar-brand" href="{{route('inicio.index')}}">
+          <h2>GANESHAS <em>PERU</em></h2>
+
+          </a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -62,10 +66,10 @@ https://templatemo.com/tm-546-sixteen-clothing
                 <a class="nav-link" href="{{route('productos-ganesha.index')}}">CATALOGO</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{{route('contacto.index')}}">QUIERO SER GANESHA`S</a>
+                <a class="nav-link" href="{{route('contacto.index')}}">ÙNETE</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="contact.html">INICIAR SESIÒN</a>
+                <a class="nav-link" href="{{route('login')}}">INGRESA</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" target="_blank" href="https://api.whatsapp.com/send?phone=51934545223&text=Hola, Estoy interesada en comprar!">CÒMO COMPRAR</a>
@@ -80,21 +84,19 @@ https://templatemo.com/tm-546-sixteen-clothing
     <!-- Banner Starts Here -->
     <div class="banner header-text">
       <div class="owl-banner owl-carousel">
-        <div class="banner-item-01" style="margin-top: -50px;">
+        <div class="banner-item-01">
+      
          
         </div>
-        <div class="banner-item-02" style="margin-top: -50px;">
+        <div class="banner-item-02">
+       
+         
         
         </div>
-        <div class="banner-item-03" style="margin-top: -50px;">
+        <div class="banner-item-03">
         
         </div>
-        <div class="banner-item-04" style="margin-top: -50px;">
-        
-        </div>
-        <div class="banner-item-05" style="margin-top: -50px;">
-        
-        </div>
+      
       </div>
     </div>
     <!-- Banner Ends Here -->
@@ -112,7 +114,7 @@ https://templatemo.com/tm-546-sixteen-clothing
             <div class="center-content">
               <h3 style="margin-botton:10px;margin-top: 80px;">Conoce la magia de la Naturaleza a través de nuestros productos Artesanales creados para ti.</h2>
 
-              <a href="about.html" class="filled-button" style="background-color:#981d5f;">Ver Catálogo</a>
+              <a href="{{route('productos-ganesha.index')}}" class="filled-button" style="background-color:#981d5f;">Ver Catálogo</a>
             </div>
           </div>
        
@@ -160,9 +162,11 @@ https://templatemo.com/tm-546-sixteen-clothing
             </div>
           </div>
 
-          <div class="col-md-12" style="text-align: center;">
+          <div class="col-md-12" style="text-align: center; margin-left: 10px; margin-right:20px;">
             <div>
               <h4>Y ¡hagamos nuestros sueños juntas realidad! </h2>
+              <p align="center"><iframe src="https://snapwidget.com/embed/1003208" class="snapwidget-widget" allowtransparency="true" frameborder="0" scrolling="no" style="border:none; overflow:hidden;  width:960px; height:1058px"></iframe></p>
+
             </div>
           </div>
 
@@ -170,12 +174,6 @@ https://templatemo.com/tm-546-sixteen-clothing
       </div>
     </div>
 
-          <div class="row" style="margin-top: -50px;">
-            <img src="instagram.jpg" alt="" style=" display: block;
-                    margin-left: auto;
-                    margin-right: auto;
-                    width: 40%; height: 50%;">
-          </div>
 
     <div class="latest-products">
       <div class="container">
@@ -304,7 +302,7 @@ https://templatemo.com/tm-546-sixteen-clothing
         <div class="row">
           <div class="col-md-4">
             <div class="inner-content">
-              <img src="logotipo.png" alt="" style="width: 40%;">
+              <img src="logo_nuevo.png" alt="" style="width: 40%;">
               <p style="color: white;margin-top: 15px;">ENCUENTRANOS EN</p>
               <ul class="social-icons">
                 <li><a href="#"><i class="fa fa-facebook"></i></a></li>

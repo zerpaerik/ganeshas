@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Admin | VICTAL</title>
+  <title>Admin | GANESHAS</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -26,7 +26,7 @@
   <!-- /.login-logo -->
   <div class="card">
     <div class="card-body login-card-body">
-    <center><img src="victal.png" class="" alt="User Image" width="200"></center>
+    <center><img src="logo_nuevo.png" class="" alt="User Image" width="200"></center>
 
       <p class="login-box-msg">Complete los datos para iniciar sesión</p>
 
@@ -59,7 +59,6 @@
         <div class="input-group mb-3">
         <select class="form-control" name="sede">
 						              	<option value="1">PRINCIPAL</option>
-                            <option value="2">AREQUIPA</option>
                         </select>        
               <div class="input-group-append">
             <div class="input-group-text">
@@ -73,14 +72,12 @@
           <div class="col-8">
             <div class="icheck-primary">
               <input type="checkbox" id="remember">
-              <label for="remember">
-                Recordar
-              </label>
+             
             </div>
           </div>
           <!-- /.col -->
           <div class="col-4">
-            <button type="submit" class="btn btn-primary btn-block">Iniciar</button>
+            <button type="submit" class="btn btn-primary btn-block" style="background-color: #981d5f; border-color: #981d5f">Iniciar</button>
           </div>
           <!-- /.col -->
         </div>

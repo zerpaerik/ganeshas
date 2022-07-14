@@ -5,11 +5,12 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
+    <meta name="description" content="Somos una tribu de MUJERES EMPRENDEDORAS en busca de sus SUEÑOS💗
+Distribuimos PRODUCTOS MISTICOS SANADORES NATURALES🌱creados con SECRETOS ANCESTRAL">
     <meta name="author" content="">
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
 
-    <title>Sixteen Clothing - About Page</title>
+    <title>Ganeshas Peru</title>
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -44,13 +45,16 @@ https://templatemo.com/tm-546-sixteen-clothing
     <header class="">
       <nav class="navbar navbar-expand-lg">
         <div class="container">
-          <a class="navbar-brand" href="{{route('inicio.index')}}"><h2>Sixteen <em>Clothing</em></h2></a>
+          <a class="navbar-brand" href="{{route('inicio.index')}}">
+          <h2>GANESHAS <em>PERU</em></h2>
+
+          </a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
+              <li class="nav-item ">
                 <a class="nav-link" href="{{route('inicio.index')}}">INICIO
                   <span class="sr-only">(current)</span>
                 </a>
@@ -62,10 +66,10 @@ https://templatemo.com/tm-546-sixteen-clothing
                 <a class="nav-link" href="{{route('productos-ganesha.index')}}">CATALOGO</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="about.html">QUIERO SER GANESHA`S</a>
+                <a class="nav-link" href="{{route('contacto.index')}}">ÙNETE</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{{route('contacto.index')}}">INICIAR SESIÒN</a>
+                <a class="nav-link" href="{{route('login')}}">INGRESA</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" target="_blank" href="https://api.whatsapp.com/send?phone=51934545223&text=Hola, Estoy interesada en comprar!">CÒMO COMPRAR</a>
@@ -100,7 +104,7 @@ https://templatemo.com/tm-546-sixteen-clothing
           </div>
           <div class="col-md-6">
             <div class="right-image">
-              <img src="assets/images/feature-image.jpg" alt="">
+              <img src="assets/images/nosotras.jpg" alt="">
             </div>
           </div>
           <div class="col-md-6">
@@ -128,7 +132,7 @@ https://templatemo.com/tm-546-sixteen-clothing
           </div>
           <div class="col-md-6">
             <div class="right-image">
-              <img src="assets/images/feature-image.jpg" alt="">
+              <img src="mision.jpg" alt="">
             </div>
           </div>
           <div class="col-md-6">
@@ -153,7 +157,7 @@ nuestro taller de producción como nuestro equipo de profesionales y consultoras
           </div>
           <div class="col-md-6">
             <div class="right-image">
-              <img src="assets/images/feature-image.jpg" alt="">
+              <img src="vision.jpg" alt="">
             </div>
           </div>
           <div class="col-md-6">
@@ -175,7 +179,7 @@ nuestro taller de producción como nuestro equipo de profesionales y consultoras
         <div class="row">
           <div class="col-md-4">
             <div class="inner-content">
-              <img src="logotipo.png" alt="" style="width: 40%;">
+            <img src="logo_nuevo.png" alt="" style="width: 40%;">
               <p style="color: white;margin-top: 15px;">ENCUENTRANOS EN</p>
               <ul class="social-icons">
                 <li><a href="#"><i class="fa fa-facebook"></i></a></li>

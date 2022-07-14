@@ -47,7 +47,7 @@
 </style>
 
 <div class="" style="font-size: 35px; text-align: center;margin-bottom: 15px;">
-		<img src="/var/www/html/victal/public/victal.png"  style="width: 20%;"/>
+		<img src="/var/www/html/GANESHAS/public/GANESHAS.png"  style="width: 20%;"/>
 	</div>
 
 <div>

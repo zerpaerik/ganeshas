@@ -45,7 +45,7 @@
 		padding: 8px 5px;
 	}
 </style>
-<img src="/var/www/html/sistemaVICTAL/public/image.png"  style="width: 20%; color: black;"/>
+<img src="/var/www/html/sistemaGANESHAS/public/image.png"  style="width: 20%; color: black;"/>
 
 <div>
 	<div class="text-center title-header col-12">

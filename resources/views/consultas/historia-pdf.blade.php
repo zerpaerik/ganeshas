@@ -71,7 +71,7 @@ table {
 
 		<div>
 			<div align="left" style="width: 50%;">
-				<img src="/var/www/html/victal/public/victal.png"  style="width: 20%;"/>
+				<img src="/var/www/html/GANESHAS/public/GANESHAS.png"  style="width: 20%;"/>
 			</div>
 
 		</div>
