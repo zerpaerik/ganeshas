@@ -318,7 +318,7 @@ header .navbar {
 
 .banner-item-01 {
 	padding: 300px 0px;
-	background-image: url(../images/sc1.jpg);
+	background-image: url(../images/scb1.png);
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-position: center center;
@@ -326,7 +326,7 @@ header .navbar {
 
 .banner-item-02 {
 	padding: 300px 0px;
-	background-image: url(../images/sc2.jpg);
+	background-image: url(../images/scb2.png);
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-position: center center;
@@ -334,7 +334,7 @@ header .navbar {
 
 .banner-item-03 {
 	padding: 300px 0px;
-	background-image: url(../images/sc3.jpg);
+	background-image: url(../images/scb3.png);
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-position: center center;
@@ -371,6 +371,7 @@ header .navbar {
 	text-transform: uppercase;
 	font-weight: 700;
 	margin-bottom: 15px;
+	margin-right: 20px;
 }
 
 .banner .text-content h2 {

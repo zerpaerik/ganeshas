@@ -86,14 +86,14 @@ https://templatemo.com/tm-546-sixteen-clothing
       <div class="owl-banner owl-carousel">
         <div class="banner-item-01">
         <div class="text-content">
-            <h4>Best Offer</h4>
-            <h2>New Arrivals On Sale</h2>
+            <h4>SE PARTE DE LA PRIMERA TRIBU DE MUJERES TRABAJADORAS Y LUCHADORAS</h4>
+            <h4>LLENAS DE GRANDES METAS E ILUSIONES.</h4>
           </div>
         </div>
         <div class="banner-item-02">
         <div class="text-content">
-            <h4>Best Offer</h4>
-            <h2>New Arrivals On Sale</h2>
+            <h4>CONOCE NUESTRA VARIADA LINEA DE PRODUCTOS NATURALES</h4>
+            <h4>100% ARTESANALES</h4>
           </div>
        
          
@@ -101,8 +101,9 @@ https://templatemo.com/tm-546-sixteen-clothing
         </div>
         <div class="banner-item-03">
         <div class="text-content">
-            <h4>Best Offer</h4>
-            <h2>New Arrivals On Sale</h2>
+            <h4>COSMÈTICA NATURAL</h4>
+            <h4>CREMAS DE DIA Y DE NOCHE</h4>
+            <h4>FULL COLAGENO</h4>
           </div>
         
         </div>
