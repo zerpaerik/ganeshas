@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>GANESHAS | Admin</title>
+  <title>Ganeshas | Admin</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
@@ -102,7 +102,7 @@
                     <form action="/cierre-caja-create" method="post">
                     {{ csrf_field() }}
                     <input type="hidden" value="{{$total}}" name="total">
-                    <input type="submit" class="btn btn-danger" value="Cerrar Turno" onclick="return confirm('¿Desea Cerrar este turno?')">
+                    <input type="submit" class="btn btn-danger" value="Abrir Turno" onclick="return confirm('¿Desea Abrir este turno?')">
                 </form>
 
                 </div>
@@ -113,9 +113,9 @@
                   <thead>
                   <tr>
                     <th>Fecha</th>
-                    <th>Primer Turno</th>
-                    <th>Segundo Turno</th>
-                    <th>Total</th>
+                    <th>Monto</th>
+                    <th>Inicio de Turno</th>
+                    <th>Fin de Turno</th>
                     <th>Estatus</th>
                     <th>Registrado Por</th>
                     <th>Acciones</th>
@@ -126,9 +126,9 @@
                   @foreach($caja as $c)
                   <tr>
                     <td>{{$c->created_at}}</td>
-                    <td>{{$c->primer_turno}}</td>
-                    <td>{{$c->segundo_turno}}</td>  
-                    <td>{{$c->total}}</td>
+                    <td>{{$c->monto_fin}}</td>
+                    <td>{{$c->fecha_init}}</td>  
+                    <td>{{$c->fecha_fin}}</td>
                     @if($c->estatus == 1)
                     <td><span class="badge bg-primary">Abierto</span></td>
                     @else
@@ -139,30 +139,36 @@
 
                     <td>
 
-                   
-                    @if($c->primer_turno > 0)
-                    <a target="_blank" class="btn btn-primary btn-sm" href="caja-consolidado-{{$c->id}}">
+                    <a class="btn btn-success btn-sm" href="caja-ticket-{{$c->id}}">
                         <i class="fas fa-print">
                         </i>
-                        Consolidado
+                        Ticket
                     </a>
-                    @else
-                    <a target="_blank" class="btn btn-primary btn-sm" href="caja-consolidado2/{{$c->id}}/{{$c->fecha}}/{{$c->fecha}}">
+
+                    <a class="btn btn-primary btn-sm"  onclick="view(this)" data-id="{{$c->id}}">
                         <i class="fas fa-print">
                         </i>
-                        Consolidado
+                        Vista Previa
                     </a>
-                    @endif
+
+
 
                     @if(Auth::user()->rol == 1)
-                  
-                    <a class="btn btn-danger btn-sm" href="caja-delete-{{$c->id}}" onclick="return confirm('¿Desea Reversar este Cierre?')">
+                    <a class="btn btn-primary btn-sm" href="caja-cerrar-{{$c->id}}" onclick="return confirm('¿Desea Cerrar este Turno?')">
+                        <i class="fas fa-lock">
+                        </i>
+                        Cerrar Turno
+                    </a>
+
+                   
+                    <a class="btn btn-danger btn-sm" href="caja-delete-{{$c->id}}" onclick="return confirm('¿Desea Eliminar este registro?')">
                         <i class="fas fa-trash">
                         </i>
                         Reversar
                     </a>
                     @endif</td>
-                      
+                    
+                       
                   </td>
                   </tr>
                   @endforeach
@@ -174,10 +180,9 @@
                   </tbody>
                   <tfoot>
                   <tr>
-                    <th>Fecha</th>
-                    <th>Primer Turno</th>
-                    <th>Segundo Turno</th>
-                    <th>Total</th>
+                  <th>Fecha</th>
+                    <th>Monto de Inicio</th>
+                    <th>Monto de Fin</th>
                     <th>Estatus</th>
                     <th>Registrado Por</th>
                     <th>Acciones</th>

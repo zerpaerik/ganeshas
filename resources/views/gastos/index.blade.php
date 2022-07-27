@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>GANESHAS | Admin</title>
+  <title>Laboratorio | Admin</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
@@ -82,12 +82,8 @@
 
                     <div class="row">
                   <div class="col-md-3">
-                    <label for="exampleInputEmail1">Fecha Inicio</label>
+                    <label for="exampleInputEmail1">Fecha</label>
                     <input type="date" class="form-control" value="{{$f1}}" name="inicio" placeholder="Buscar por dni" onsubmit="datapac()">
-                  </div>
-                  <div class="col-md-3">
-                    <label for="exampleInputEmail1">Fecha Fin</label>
-                    <input type="date" class="form-control" value="{{$f2}}" name="fin" placeholder="Buscar por dni" onsubmit="datapac()">
                   </div>
 
                   <div class="col-md-2">
@@ -113,10 +109,8 @@
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                    <th>Tipo</th>
                     <th>Descripción</th>
                     <th>Monto</th>
-                    <th>Recibido Por</th>
                     <th>Registrado Por:</th>
                     <th>Fecha</th>
                     <th>Acciones</th>
@@ -126,18 +120,11 @@
 
                   @foreach($gastos as $client)
                   <tr>
-                    <td>{{$client->tipo}}</td>
                     <td>{{$client->descripcion}}</td>
                     <td>{{$client->monto}}</td>
-                    <td>{{$client->recibido}}</td>
                     <td>{{$client->name}}</td>
                     <td>{{$client->created_at}}</td>
                     <td>
-                    <a class="btn btn-primary btn-sm" href="gastos-ticket-{{$client->id}}" target="_blank">
-                              <i class="fas fa-print">
-                              </i>
-                              Ticket
-                          </a>
                     @if(Auth::user()->rol == 1)
 
                           <a class="btn btn-info btn-sm" href="gastos-edit-{{$client->id}}">
@@ -150,7 +137,6 @@
                               </i>
                               Delete
                           </a>
-                        
                           @endif
                           </td>
                   </tr>
@@ -163,10 +149,8 @@
                   </tbody>
                   <tfoot>
                   <tr>
-                  <th>Tipo</th>
-                    <th>Descripción</th>
+                  <th>Descripción</th>
                     <th>Monto</th>
-                    <th>Recibido Por</th>
                     <th>Registrado Por:</th>
                     <th>Fecha</th>
                     <th>Acciones</th>

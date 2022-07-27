@@ -84,7 +84,10 @@
               {{ csrf_field() }}                
                     <div class="card-body">
                     <div class="row">
-                   
+                    <div class="col-md-3">
+                    <label for="exampleInputEmail1">Nombre</label>
+                    <input type="text" class="form-control" id="email" name="nombre" placeholder="Nombre">
+                  </div>
                   <div class="col-md-3">
                     <label for="exampleInputEmail1">Monto</label>
                     <input type="float" class="form-control" id="name" name="monto" placeholder="Monto">
@@ -96,15 +99,34 @@
                   <div class="col-md-3">
                   <label>Tipo de Ingreso</label>
                         <select class="form-control" name="tipopago">
-						              	<option value="EF">EFECTIVO</option>
-                            <option value="TJ">TARJETA</option>
-                            <option value="DP">DEPOSITO</option>
-                            <option value="YP">YAPE</option>
-                            <option value="PN">PLIN</option>
+							<option value="EF">EF</option>
+                            <option value="TJ">TJ</option>
+							
                         </select>
                   </div>
                   </div>
                   <br>
+
+                  <div class="row">
+                   
+                  <div class="col-md-3">
+                  <label>Causa</label>
+                        <select class="form-control" name="causa" id="el2">
+                            <option value="">Seleccione</option>
+							              <option value="1">COMPRA</option>
+                            <option value="2">SINIESTRO</option>
+                            <option value="3">OTRO</option>
+
+                        </select>
+                  </div>
+
+                  <div class="col-md-6">
+                      <div id="siniestro" class="siniestro">
+
+                  </div>
+                  </div>
+                
+                 
 
         
                  

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>GANESHAS | Admin</title>
+  <title>Ganeshas | Admin</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
@@ -83,7 +83,6 @@
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                    <th>Id</th>
                     <th>Nombres</th>
                     <th>Apellidos</th>
                     <th>Centro</th>
@@ -96,7 +95,6 @@
 
                   @foreach($prof as $p)
                   <tr>
-                  <td>{{$p->id}}</td>
                     <td>{{$p->name}}</td>
                     <td>{{$p->lastname}}</td>
                     <td>{{$p->centro}}</td>
@@ -127,8 +125,7 @@
                   </tbody>
                   <tfoot>
                   <tr>
-                  <th>Id</th>
-                    <th>Nombres</th>
+                  <th>Nombres</th>
                     <th>Apellidos</th>
                     <th>Centro</th>
                     <th>Especialidad</th>

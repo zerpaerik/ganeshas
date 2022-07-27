@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>GANESHAS | Admin</title>
+  <title>Ganeshas | Admin</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
@@ -84,17 +84,104 @@
 
                     <div class="row">
                   <div class="col-md-3">
-                    <label for="exampleInputEmail1">Inicio</label>
+                    <label for="exampleInputEmail1">Fecha Inicio</label>
                     <input type="date" class="form-control" value="{{$f1}}" name="inicio" placeholder="Buscar por dni">
                   </div>
+
                   <div class="col-md-3">
-                    <label for="exampleInputEmail1">Fin</label>
+                    <label for="exampleInputEmail1">Fecha Fin</label>
                     <input type="date" class="form-control" value="{{$f2}}" name="fin" placeholder="Buscar por dni">
                   </div>
-                  <div class="col-md-2" style="margin-top: 30px;">
+                 
+                 
+                  <div class="col-md-2">
+                    <label for="exampleInputEmail1">Almacen</label>
+                    <select class="form-control" name="almacen">
+                    @if($alma == 2)
+                    <option value="2" selected>Recepción</option>
+                    <option value="3">Obstetra</option>
+                    <option value="4">Rayos X</option>
+                    <option value="11">Laboratorio</option>
+                  
+                    @elseif($alma == 3)
+                    <option value="2">Recepción</option>
+                    <option value="3" selected>Obstetra</option>
+                    <option value="4">Rayos X</option>
+                    <option value="11">Laboratorio</option>
+                  
+                    @elseif($alma == 4)
+                    <option value="2">Recepción</option>
+                    <option value="3">Obstetra</option>
+                    <option value="4" selected>Rayos X</option>
+                    <option value="11">Laboratorio</option>
+                 
+                    @elseif($alma == 7)
+                    <option value="2">Recepción</option>
+                    <option value="3">Obstetra</option>
+                    <option value="4">Rayos X</option>
+                    <option value="11">Laboratorio</option>
+              
+                    @elseif($alma == 8)
+                    <option value="2">Recepción</option>
+                    <option value="3">Obstetra</option>
+                    <option value="4">Rayos X</option>
+                    <option value="11">Laboratorio</option>
+                  
+                    @elseif($alma == 9)
+                    <option value="2">Recepción</option>
+                    <option value="3">Obstetra</option>
+                    <option value="4">Rayos X</option>
+                    <option value="11">Laboratorio</option>
+                 
+                    @elseif($alma == 11)
+                    <option value="2">Recepción</option>
+                    <option value="3">Obstetra</option>
+                    <option value="4">Rayos X</option>
+                    <option value="11" selected>Laboratorio</option>
+                  
+                    @else
+                    <option value="2">Recepción</option>
+                    <option value="3">Obstetra</option>
+                    <option value="4">Rayos X</option>
+                    <option value="11">Laboratorio</option>
+     
+                    @endif
+                    </select>                  
+                    </div>
+                    <div class="col-md-2">
+                    <label for="exampleInputEmail1">Producto</label>
+                    <select class="form-control" name="producto">
+                    <option value="0">Todos</option>
+                    @foreach($productosg as $prod)
+                    <option value="{{$prod->id}}" >{{$prod->nombre}}</option>
+                    @endforeach
+                
+                    </select>                  
+                    </div>
+                    <div class="col-md-2" style="margin-top: 30px;">
                   <button type="submit" class="btn btn-primary">Buscar</button>
 
                   </div>
+                  <div class="col-md-2">
+                            <label for="exampleInputEmail1">Items</label>
+                            <input type="text" disabled class="form-control" value="{{$item}}" >
+                            </div>
+                            <div class="col-md-2">
+                            <label for="exampleInputEmail1">Cantidad</label>
+                            <input type="text" disabled class="form-control" value="{{$desp}}" >
+                            </div>
+                            <div class="col-md-2">
+                              <label for="exampleInputEmail1">Cantidad Total Soles</label>
+                              <input type="text" disabled class="form-control" value="{{number_format((float)$total, 2, '.', '')}}" >
+                            </div>
+
+
+
+                            </form>
+                  </div>
+                  <!--
+                 <div class="row">
+
                   <div class="col-md-2">
                     <label for="exampleInputEmail1">Items</label>
                     <input type="text" disabled class="form-control" value="{{$soli->item}}" >
@@ -103,22 +190,29 @@
                     <label for="exampleInputEmail1">Cantidad</label>
                     <input type="text" disabled class="form-control" value="{{$soli->cant}}" >
                   </div>
-                
-                 
-                  
+                  <div class="col-md-2">
+                    <label for="exampleInputEmail1">Cantidad Total Soles</label>
+                    <input type="text" disabled class="form-control" value="{{$soli->preciototal}}" >
+                  </div>
+                  <div class="col-md-2">
+                    <label for="exampleInputEmail1">Producto Seleccionado</label>
+                    <input type="text" disabled class="form-control" value="{{$producto_sel}}" >
+                  </div>
+                  </div>
                   </form>
-              </div>
+              </div>––>
               <!-- /.card-header -->
               <div class="card-body">
                 <table id="example" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                    <th>Producto</th>
-                    <th>Medida</th>
+                  <th>Producto</th>
                     <th>Cantidad</th>
+                    <th>Precio</th>
+                    <th>Total Soles</th>
+                    <th>Fecha Descarga</th>
                     <th>Almacen</th>
                     <th>Fecha</th>
-                    <th>Registrado Por</th>
                     <th>Acciones</th>
                   </tr>
                   </thead>
@@ -127,17 +221,20 @@
                   @foreach($productos as $an)
                   <tr>
                     <td>{{$an->nompro}}</td>
-                    <td>{{$an->medida}}</td>
-                    <td>{{$an->cantidad}}</td>
+                    <td>{{$an->cant}}</td>
+                    <td>{{number_format((float)$an->precio, 2, '.', '')}}</td>
+                    <td>{{number_format((float)$an->precio * $an->cant, 2, '.', '')}}</td>
+                    <td>{{$an->fecha}}</td>
                     @if($an->almacen == 2)
                     <td>Recepción</td>
                     @elseif($an->almacen == 3)
                     <td>Obstetra</td>
+                    @elseif($an->almacen == 11)
+                    <td>Laboratorio</td>
                     @else
                     <td>Rayos X</td>
                     @endif
                     <td>{{$an->created_at}}</td>
-                    <td>{{$an->user}}</td>
                     <td>
                     @if($an->estatus == 1)
                     @if(Auth::user()->rol == 1)
@@ -155,7 +252,14 @@
                           <span class="badge bg-success">Reversado por:</span>
                           <span class="badge bg-success">{{$an->eliminado_por}}</span>
 
+
+
                           @endif
+                          <a class="btn btn-success btn-sm" target="_blank" href="productos_usados_report/{{$an->producto}}/{{$f1}}/{{$f2}}/{{$alma}}">
+                              <i class="fas fa-print">
+                              </i>
+                              Recibo
+                          </a>
                           </td>
 
                   </tr>
@@ -168,12 +272,13 @@
                   </tbody>
                   <tfoot>
                   <tr>
-                  <th>Producto</th>
-                    <th>Medida</th>
+                    <th>Producto</th>
                     <th>Cantidad</th>
+                    <th>Precio</th>
+                    <th>Total Soles</th>
+                    <th>Fecha Descarga</th>
                     <th>Almacen</th>
                     <th>Fecha</th>
-                    <th>Registrado Por</th>
                     <th>Acciones</th>
                   </tr>
                   </tfoot>

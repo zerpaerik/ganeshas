@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>GANESHAS | Admin</title>
+  <title>Ganeshas | Admin</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
@@ -59,7 +59,7 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Pedidos</li>
+              <li class="breadcrumb-item active">Pedidos Enviados</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -88,14 +88,6 @@
                     <input type="date" class="form-control" value="{{$f1}}" name="inicio" placeholder="Buscar por dni" onsubmit="datapac()">
                   </div>
 
-                  <div class="col-md-3">
-                    <label for="exampleInputEmail1">Habitación</label>
-                    <select class="form-control" data-placeholder="Seleccione" style="width: 100%;" name="habitacion">
-                   @foreach($habs as $h)
-                   <option value="{{$h->solicitud}}">{{$h->habita}}</option>
-                    @endforeach
-                  </select>
-                  </div>
                   <div class="col-md-2" style="margin-top: 30px;">
                   <button type="submit" class="btn btn-primary">Buscar</button>
 
@@ -118,13 +110,11 @@
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                    <th>Habitacion</th>
-                    <th>Huesped</th>
-                    <th>Producto</th>
-                    <th>Monto</th>
-                    <th>Estatus</th>
-                    <th>TP</th>
                     <th>Fecha Pedido</th>
+                    <th>Subtotal</th>
+                    <th>% Descuento</th>
+                    <th>Monto Descuento</th>
+                    <th>Total a Pagar</th>
                     <th>Acciones</th>
                   </tr>
                   </thead>
@@ -132,25 +122,22 @@
 
                   @foreach($pedidos as $so)
                   <tr>
-                    <td>{{$so->habita}}</td>
-                    <td>{{$so->nompac}} {{$so->apepac}}</td>
-                    <td>{{$so->descripcion}}</td>
-                    <td>{{$so->monto}}</td>
-                    @if($so->estatus == 0)
-                    <td><span class="badge bg-primary">Pendiente</span></td>
-                    @else
-                    <td><span class="badge bg-success">Pagado</span></td>
-                    @endif
-                    <td>{{$so->tipopago}}</td>
-                    <td>{{date('d-M-y', strtotime($so->created_at))}}</td>
+                    <td>{{$so->created_at}}</td>
+                    <td>{{$so->subtotal}}</td>
+                    <td>{{$so->descuento}}</td>
+                    <td>{{$so->subtotal - $so->total}}</td>
+                    <td>{{$so->total}}</td>
                     <td>
-                    
-                             
 
-                          <a target="_blank" class="btn btn-success btn-sm" href="pedidos-ticket-{{$so->solicitud}}">
-                              <i class="fas fa-print">
+                    <a target="_blank" class="btn btn-success btn-sm" href="pedidos-ticket-{{$so->id}}">
+                              <i class="fas fa-eye">
                               </i>
-                              Ticket
+                              Ver
+                          </a>
+                          <a  class="btn btn-danger btn-sm" href="">
+                              <i class="fas fa-trash">
+                              </i>
+                              Eliminar
                           </a>
                        
                   </td>
@@ -164,12 +151,11 @@
                   </tbody>
                   <tfoot>
                   <tr>
-                  <th>Habitacion</th>
-                    <th>Huesped</th>
-                    <th>Descripción</th>
-                    <th>Monto</th>
-                    <th>Estatus</th>
                     <th>Fecha Pedido</th>
+                    <th>Subtotal</th>
+                    <th>% Descuento</th>
+                    <th>Monto Descuento</th>
+                    <th>Total a Pagar</th>
                     <th>Acciones</th>
                   </tr>
                   </tfoot>

@@ -11,8 +11,6 @@ use App\User;
 use Auth;
 use Illuminate\Http\Request;
 use DB;
-use Carbon\Carbon;
-
 
 class PacientesController extends Controller
 {
@@ -21,29 +19,15 @@ class PacientesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
 
-
-        
-      if(!is_null($request->filtro)){
         $pacientes = DB::table('pacientes as a')
-        ->select('a.id','a.nombres','a.dni','a.apellidos','a.usuario','a.fechanac','a.email','a.sexo','a.telefono','a.empresa','a.estatus')
+        ->select('a.id','a.nombres','a.dni','a.apellidos','a.fechanac','a.email','a.sexo','a.telefono','a.empresa','a.estatus')
+        ->where('a.empresa', '=', Auth::user()->empresa)
         ->where('a.estatus', '=', 1)
-        ->where('a.apellidos','like','%'.$request->filtro.'%')
-        ->orderby('a.apellidos','asc')
         ->get(); 
 
-        }else{
-        $pacientes = DB::table('pacientes as a')
-          ->select('a.id','a.nombres','a.dni','a.apellidos','a.fechanac','a.email','a.sexo','a.telefono','a.empresa','a.estatus')
-          ->where('a.estatus', '=', 999999999)
-          ->get(); 
-        }
-
-      
-
-       
         return view('pacientes.index', compact('pacientes'));
         //
     }
@@ -61,12 +45,6 @@ class PacientesController extends Controller
         return view('pacientes.create');
     }
 
-    public function create2()
-    {
-       
-        return view('pacientes.create2');
-    }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -76,11 +54,6 @@ class PacientesController extends Controller
     public function store(Request $request)
     {
 
-      $pac = Pacientes::where('estatus','=',1)->latest()->first();
-
-
-      if ($request->tipo_doc != 'SIN DOC') {
-
         $validator = \Validator::make($request->all(), [
         'dni' => 'required|unique:pacientes'
             
@@ -90,130 +63,49 @@ class PacientesController extends Controller
            // Toastr::error('Error Registrando.', 'Paciente- DNI YA REGISTRADO!', ['progressBar' => true]);
             return redirect()->action('PacientesController@create', ['errors' => $validator->errors()]);
           } else {
-              $pacientes = new Pacientes();
-              $pacientes->nombres =$request->nombres;
-              $pacientes->apellidos =$request->apellidos;
-              $pacientes->tipo_doc =$request->tipo_doc;
-              $pacientes->dni =$request->dni;
-              $pacientes->telefono =$request->telefono;
-              $pacientes->email =$request->email;
-              $pacientes->direccion =$request->direccion;
-              $pacientes->edocivil =$request->edocivil;
-              $pacientes->ocupacion =$request->ocupacion;
-              $pacientes->fechanac =$request->fechanac;
-              $pacientes->sexo =$request->sexo;
-              $pacientes->usuario =Auth::user()->id;
-              $pacientes->save();
 
-            
-          } 
-
-        } else {
-
-          $pacientes = new Pacientes();
-          $pacientes->nombres =$request->nombres;
-          $pacientes->apellidos =$request->apellidos;
-          $pacientes->tipo_doc =$request->tipo_doc;
-          $pacientes->dni =$pac->id + 1;
-          $pacientes->telefono =$request->telefono;
-          $pacientes->email =$request->email;
-          $pacientes->direccion =$request->direccion;
-          $pacientes->edocivil =$request->edocivil;
-          $pacientes->ocupacion =$request->ocupacion;
-          $pacientes->fechanac =$request->fechanac;
-          $pacientes->sexo =$request->sexo;
-          $pacientes->usuario =Auth::user()->id;
-          $pacientes->save();
-
-        }
-
-
-
+        $pacientes = new Pacientes();
+        $pacientes->nombres =$request->nombres;
+        $pacientes->apellidos =$request->apellidos;
+        $pacientes->dni =$request->dni;
+        $pacientes->telefono =$request->telefono;
+        $pacientes->email =$request->email;
+        $pacientes->direccion =$request->direccion;
+        $pacientes->edocivil =$request->edocivil;
+        $pacientes->ocupacion =$request->ocupacion;
+        $pacientes->fechanac =$request->fechanac;
+        $pacientes->sexo =$request->sexo;
+        $pacientes->empresa =Auth::user()->empresa;
+        $pacientes->usuario =Auth::user()->id;
+        $pacientes->save();
 
         return redirect()->action('PacientesController@index', ["created" => true, "pacientes" => Pacientes::all()]);
     }
-
-    
-
-    public function store2(Request $request)
-    {
-
-      $pac = Pacientes::where('estatus','=',1)->latest()->first();
-
-
-      if ($request->tipo_doc != 'SIN DOC') {
-
-        $validator = \Validator::make($request->all(), [
-        'dni' => 'required|unique:pacientes'
-            
-          ]);
-          if($validator->fails()) {
-            $request->session()->flash('error', 'El Paciente ya esta Registrado.');
-           // Toastr::error('Error Registrando.', 'Paciente- DNI YA REGISTRADO!', ['progressBar' => true]);
-            return redirect()->action('PacientesController@create', ['errors' => $validator->errors()]);
-          } else {
-              $pacientes = new Pacientes();
-              $pacientes->nombres =$request->nombres;
-              $pacientes->apellidos =$request->apellidos;
-              $pacientes->tipo_doc =$request->tipo_doc;
-              $pacientes->dni =$request->dni;
-              $pacientes->telefono =$request->telefono;
-              $pacientes->email =$request->email;
-              $pacientes->direccion =$request->direccion;
-              $pacientes->edocivil =$request->edocivil;
-              $pacientes->ocupacion =$request->ocupacion;
-              $pacientes->fechanac =$request->fechanac;
-              $pacientes->sexo =$request->sexo;
-              $pacientes->usuario =Auth::user()->id;
-              $pacientes->save();
-
-            
-          } 
-
-        } else {
-
-          $pacientes = new Pacientes();
-          $pacientes->nombres =$request->nombres;
-          $pacientes->apellidos =$request->apellidos;
-          $pacientes->tipo_doc =$request->tipo_doc;
-          $pacientes->dni =$pac->id + 1;
-          $pacientes->telefono =$request->telefono;
-          $pacientes->email =$request->email;
-          $pacientes->direccion =$request->direccion;
-          $pacientes->edocivil =$request->edocivil;
-          $pacientes->ocupacion =$request->ocupacion;
-          $pacientes->fechanac =$request->fechanac;
-          $pacientes->sexo =$request->sexo;
-          $pacientes->usuario =Auth::user()->id;
-          $pacientes->save();
-
-        }
-
-      
-
-        return redirect()->action('AtencionesController@create');
-    
 
     }
 
     public function ver($id)
     {
-
-
-      $pacientes = DB::table('pacientes as a')
-      ->select('a.id','a.nombres','a.dni','a.apellidos','a.ocupacion','a.tipo_doc','a.usuario','a.fechanac','a.email','a.sexo','a.telefono','a.empresa','a.estatus')
-     // ->join('users as u', 'u.id', 'a.usuario')
-      ->where('a.id', '=', $id)
-      ->first(); 
-
-
-      $edad = Carbon::parse($pacientes->fechanac)->age;
 	  
-       
+        $req = DB::table('requerimientos as a')
+        ->select('a.id','a.asunto','a.prioridad','a.categoria','a.descripcion','a.estatus','a.estado','a.empresa','b.nombre as empresa')
+        ->join('clientes as b','b.id','a.empresa')
+        ->where('a.empresa', '=', Auth::user()->empresa)
+        ->where('a.estatus', '=', 1)
+        ->where('a.id', '=', $id)
+        ->first(); 
+
+        //$equipos = ActivosRequerimientos::
+
+        $equipos = DB::table('activos_requerimientos as a')
+        ->select('a.id','a.activo','a.ticket','b.nombre','b.modelo','b.serial')
+        ->join('equipos as b','b.id','a.activo')
+        ->where('ticket','=',$id)
+        ->get();
 
 
 	  
-      return view('pacientes.ver', compact('pacientes', 'edad'));
+      return view('requerimientos.ver', compact('req','equipos'));
     }	  
 
     /**
@@ -239,10 +131,19 @@ class PacientesController extends Controller
     public function update(Request $request, Pacientes $pacientes)
     {
 
-      $pacientes = Pacientes::where('id','=',$request->id)->first();
+        $validator = \Validator::make($request->all(), [
+            'dni' => 'required|unique:pacientes'
+                
+              ]);
+              if($validator->fails()) {
+                $request->session()->flash('error', 'El Paciente ya esta Registrado.');
+               // Toastr::error('Error Registrando.', 'Paciente- DNI YA REGISTRADO!', ['progressBar' => true]);
+                return redirect()->action('PacientesController@edit', ['errors' => $validator->errors()]);
+              } else {
+
+      $pacientes = Pacientes::find($request->id);
       $pacientes->nombres =$request->nombres;
       $pacientes->apellidos =$request->apellidos;
-      $pacientes->tipo_doc =$request->tipo_doc;
       $pacientes->dni =$request->dni;
       $pacientes->telefono =$request->telefono;
       $pacientes->email =$request->email;
@@ -250,10 +151,10 @@ class PacientesController extends Controller
       $pacientes->edocivil =$request->edocivil;
       $pacientes->ocupacion =$request->ocupacion;
       $pacientes->fechanac =$request->fechanac;
-      $res = $pacientes->save();
+      $res = $pacientes->update();
       return redirect()->action('PacientesController@index');
 
-    
+    }
 
         //
     }

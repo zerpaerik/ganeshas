@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>GANESHAS | Admin</title>
+  <title>Ganeshas | Admin</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
@@ -119,15 +119,15 @@
 
                   <div class="col-md-3">
                     <label for="exampleInputEmail1">Precio</label>
-                    <input type="text" class="form-control" id="nombre" name="precio" placeholder="Precio de Producto" required>
+                    <input type="number" class="form-control" id="nombre" name="precio" placeholder="Precio" required>
                   </div>
 
-                  
                   <div class="col-md-3">
-                    <label for="exampleInputEmail1">Principio activo</label>
-                    <input type="text" class="form-control" id="nombre" name="activo" placeholder="Principio activo" required>
+                    <label for="exampleInputEmail1">Foto</label>
+                    <input type="file" class="form-control" id="nombre" name="foto" placeholder="Cantidad Mínima Local" required>
                   </div>
-
+                 
+                  
                   </div>
                   <br>
 

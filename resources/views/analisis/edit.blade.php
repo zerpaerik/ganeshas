@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>GANESHAS | Admin</title>
+  <title>Ganeshas | Admin</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
@@ -118,12 +118,6 @@
                     <label for="exampleInputEmail1">Material</label>
                     <input type="float" class="form-control" id="email" name="material" value="{{$analisis->material}}" placeholder="Precio">
                   </div>
-
-                  <div class="col-md-4">
-                    <label for="exampleInputEmail1">Método</label>
-                    <input type="float" class="form-control" id="email" name="metodo" value="{{$analisis->metodo}}" placeholder="Precio">
-                  </div>
-
 
                   
                 

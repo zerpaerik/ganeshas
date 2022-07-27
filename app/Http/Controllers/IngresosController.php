@@ -22,61 +22,84 @@ class IngresosController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->inicio) {
+
+        if($request->inicio){
+
+        $ingresos = DB::table('creditos as a')
+        ->select('a.id','a.origen','a.descripcion','a.monto','a.nombre','a.usuario','a.cliente','a.created_at','b.name')
+        ->join('users as b','b.id','a.usuario')
+        ->where('a.origen', '=', 'OTROS INGRESOS')
+        ->where('a.created_at','=',$request->inicio)
+        ->get(); 
+        $f1 = $request->inicio;
 
 
-            $f1 = $request->inicio;
-            $ingresos = DB::table('creditos as a')
-          ->select('a.id', 'a.origen', 'a.descripcion', 'a.monto','a.sede',  'a.usuario', 'a.created_at', 'b.name')
-          ->join('users as b', 'b.id', 'a.usuario')
-          ->where('a.origen', '=', 'INGRESOS')
-          ->whereDate('a.created_at', date('Y-m-d 00:00:00', strtotime($f1)))
-          ->where('a.sede', '=', $request->session()->get('sede'))
-          ->get();
+        
+        $ing = Creditos::where('created_at', '=',$request->inicio)
+        ->where('origen', '=', 'OTROS INGRESOS')
+        ->select(DB::raw('COUNT(*) as cantidad, SUM(monto) as monto'))
+        ->first();
 
-           
-        /* $ing = Creditos::where('created_at', '=',$request->inicio)
-         ->where('origen', '=', 'OTROS INGRESOS')
-         ->select(DB::raw('COUNT(*) as cantidad, SUM(monto) as monto'))
-         ->first();
-
-         if ($ing->cantidad == 0) {
-         $ing->monto = 0;
-         }*/
+        if ($ing->cantidad == 0) {
+        $ing->monto = 0;
+        }
         } else {
+            $ingresos = DB::table('creditos as a')
+            ->select('a.id','a.origen','a.descripcion','a.nombre','a.monto','a.usuario','a.cliente','a.created_at','b.name')
+            ->join('users as b','b.id','a.usuario')
+            ->where('a.origen', '=', 'OTROS INGRESOS')
+            ->where('a.created_at', date('Y-m-d'))
+            ->get(); 
+
             $f1 =date('Y-m-d');
 
-            $ingresos = DB::table('creditos as a')
-            ->select('a.id', 'a.origen', 'a.descripcion', 'a.sede','a.monto', 'a.usuario', 'a.created_at', 'b.name')
-            ->join('users as b', 'b.id', 'a.usuario')
-            ->where('a.origen', '=', 'INGRESOS')
-            ->whereDate('a.created_at', date('Y-m-d 00:00:00', strtotime($f1)))
-            ->where('a.sede','=', $request->session()->get('sede'))
-            ->get();
-
-
             
-            /*  $ing = Creditos::where('created_at', '=',$f1)
-              ->where('origen', '=', 'OTROS INGRESOS')
-              ->select(DB::raw('COUNT(*) as cantidad, SUM(monto) as monto'))
-              ->first();
+        $ing = Creditos::where('created_at', '=',$f1)
+        ->where('origen', '=', 'OTROS INGRESOS')
+        ->select(DB::raw('COUNT(*) as cantidad, SUM(monto) as monto'))
+        ->first();
 
-              if ($ing->cantidad == 0) {
-              $ing->monto = 0;
-              }
-
-              }*/
-
-            //
+        if ($ing->cantidad == 0) {
+        $ing->monto = 0;
         }
-        return view('ingresos.index', compact('ingresos', 'f1', 'ing'));
+            
+        }
 
+        return view('ingresos.index', compact('ingresos','f1','ing'));
+        //
     }
 
-  
+    public function solicitudes(){
+     
+        $solicitudes = DB::table('solicitudes as a')
+        ->select('a.id','a.huesped','a.cliente','a.habitacion','a.es_pagado','a.hora','a.precio','a.created_at','a.estatus','a.estado','a.observacion','b.nombre as nompac','b.responsable as apepac','an.nombre as hab')
+        ->join('clientes as b','b.id','a.huesped')
+        ->join('analisis as an','an.id','a.habitacion')
+        ->where('a.estatus', '=', 1)
+        ->get();
+ 
+     return view('ingresos.solicitudes', compact('solicitudes'));
+   }
+
+   public function otros(){
+     
+    $solicitudes = DB::table('solicitudes as a')
+    ->select('a.id','a.huesped','a.cliente','a.habitacion','a.es_pagado','a.hora','a.precio','a.created_at','a.estatus','a.estado','a.observacion','b.nombre as nompac','b.responsable as apepac','an.nombre as hab')
+    ->join('clientes as b','b.id','a.huesped')
+    ->join('analisis as an','an.id','a.habitacion')
+    ->where('a.estatus', '=', 1)
+    ->get();
+
+ return view('ingresos.otros', compact('solicitudes'));
+}
 
 
 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function create()
     {
         return view('ingresos.create');
@@ -91,32 +114,67 @@ class IngresosController extends Controller
     public function store(Request $request)
     {
 
-        $cre = new Creditos();
-        $cre->origen = 'INGRESOS';
-        $cre->descripcion = $request->descripcion;
-        $cre->monto = $request->monto;
-        $cre->usuario = Auth::user()->id;
-        $cre->tipopago = $request->tipopago;
-        if ($request->tipopago == 'EF') {
-            $cre->efectivo = $request->monto;
-          } elseif($request->tipopago == 'TJ') {
-            $cre->tarjeta = $request->monto;
-          } elseif($request->tipopago == 'DP') {
-            $cre->dep = $request->monto;
-          } else {
-            $cre->yap = $request->monto;
-          }
-        $cre->sede = $request->session()->get('sede');
-        $cre->fecha = date('Y-m-d');
-        $cre->save();
 
+        $ingresos = new Creditos();
+        if($request->causa == 2){
+            $ingresos->descripcion ='SINIESTRO:'.' '.$request->descripcion;
+        } else {
+            $ingresos->descripcion =$request->descripcion;
+        }
+        $ingresos->origen ='OTROS INGRESOS';
+        $ingresos->fecha =date('Y-m-d H:i:s');
+        $ingresos->nombre =$request->nombre;
+        $ingresos->tipopago =$request->tipopago;
+        if($request->tipopago == 'TJ'){
+            $ingresos->tarjeta =$request->monto + $request->monto * 0.1;
+            $ingresos->monto =$request->monto + $request->monto * 0.1;
+            } else {
+            $ingresos->monto =$request->monto;
+            $ingresos->efectivo =$request->monto;
+            }
+        $ingresos->usuario =Auth::user()->id;
+        $ingresos->save();
+
+
+        if($request->solicitud != null){
+
+            $sini = new Siniestros();
+            $sini->observacion =$request->descripcion;
+            $sini->solicitud =$request->solicitud;
+            $sini->precio =$ingresos->monto;
+            $sini->tipopago =$request->tipopago;
+            $sini->usuario =Auth::user()->id;
+            $sini->save();
+
+        }
 
 
         return redirect()->action('IngresosController@index', ["created" => true, "ingresos" => Creditos::all()]);
 
     }
 
-   
+    public function ver($id)
+    {
+	  
+        $req = DB::table('requerimientos as a')
+        ->select('a.id','a.asunto','a.prioridad','a.categoria','a.descripcion','a.estatus','a.estado','a.empresa','b.nombre as empresa')
+        ->join('clientes as b','b.id','a.empresa')
+        ->where('a.estatus', '=', 1)
+        ->where('a.id', '=', $id)
+        ->first(); 
+
+        //$equipos = ActivosRequerimientos::
+
+        $equipos = DB::table('activos_requerimientos as a')
+        ->select('a.id','a.activo','a.ticket','b.nombre','b.modelo','b.serial')
+        ->join('equipos as b','b.id','a.activo')
+        ->where('ticket','=',$id)
+        ->get();
+
+
+	  
+      return view('requerimientos.ver', compact('req','equipos'));
+    }	
     
     
     public function ticket($id)
@@ -167,28 +225,13 @@ class IngresosController extends Controller
       $p = Creditos::find($request->id);
       $p->descripcion =$request->descripcion;
       $p->tipopago =$request->tipopago;
-      if ($request->tipopago == 'EF') {
-        $p->efectivo = $request->monto;
-        $p->tarjeta = '0';
-        $p->dep = '0';
-        $p->yap = '0';
-      } elseif($request->tipopago == 'TJ') {
-        $p->tarjeta = $request->monto;
-        $p->efectivo = '0';
-        $p->dep = '0';
-        $p->yap = '0';
-      } elseif($request->tipopago == 'DP') {
-        $p->dep = $request->monto;
-        $p->efectivo = '0';
-        $p->tarjeta = '0';
-        $p->yap = '0';
-      } else {
-        $p->efectivo = '0';
-        $p->tarjeta = '0';
-        $p->dep = '0';
-        $p->yap = $request->monto;
-      }
-      $p->monto =$request->monto;
+      if($request->tipopago == 'TJ'){
+        $p->tarjeta =$request->monto + $request->monto * 0.1;
+        $p->monto =$request->monto + $request->monto * 0.1;
+        } else {
+        $p->monto =$request->monto;
+        $p->efectivo =$request->monto;
+        }
       $res = $p->update();
       return redirect()->action('IngresosController@index');
 

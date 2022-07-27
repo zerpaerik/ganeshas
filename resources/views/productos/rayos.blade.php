@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>GANESHAS | Admin</title>
+  <title>Ganeshas | Admin</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
@@ -54,12 +54,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Almacen Recepción</h1>
+            <h1 class="m-0 text-dark">Almacen Rayos</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Almacen Recepción</li>
+              <li class="breadcrumb-item active">Almacen Rayos</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -74,22 +74,28 @@
       <div class="container-fluid">
       <div class="card">
               <div class="card-header">
-              <a class="btn btn-primary btn-sm" href="{{route('productosu.createra')}}">
-                              <i class="fas fa-arrow-circle-down"></i>
-                              
-                              Descargar Productos
-                          </a>
-               
+              <div class="row">
+                 
+                 <div class="col-md-2">
+                   <label for="exampleInputEmail1">Total Soles</label>
+                   <input type="text" disabled class="form-control" value="{{round($total->preciototal, 2)}}" >
+                 </div>
+             
+
+                 </div>
+           
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <table id="example1" class="table table-bordered table-striped">
+                <table id="example1" class="table table-bordered table-striped" data-page-length='100'>
                   <thead>
                   <tr>
-                    <th>Producto</th>
+                  <th>id</th>
+                  <th>Producto</th>
                     <th>Stock Minimo</th>
                     <th>Cantidad</th>
                     <th>Precio Unit.</th>
+                    <th>Total Soles.</th>
                     <th>Categoria</th>
                     <th>Medida</th>
                     <th>Vence</th>
@@ -100,6 +106,7 @@
 
                   @foreach($productos as $i)
                   <tr>
+                  <td>{{$i->id}}</td>
                     <td><span class="badge bg-success">{{$i->nompro}}</span></td>
                     <td>{{$i->minimol}}</td>
                     @if($i->cantidad < $i->minimol)
@@ -107,21 +114,42 @@
                     @else
                     <td>{{$i->cantidad}}</td>
                     @endif
-                    <td>{{$i->precio}}</td>
+                    <td>{{round($i->precio,2)}}</td>
+                    <td>{{$i->precio * $i->cantidad}}</td>
                     <td>{{$i->categoria}}</td>
                     <td>{{$i->medida}}</td>
                     <td>{{$i->vence}}</td>
                     <td>
+                    @if(Auth::user()->rol == 1)
+
+                    <a class="btn btn-success btn-sm" id="{{$i->id}}" onclick="viewh(this)">
+                              <i class="fas fa-eye">
+                              </i>
+                              Historial
+                          </a>
+                    <a class="btn btn-primary btn-sm" id="{{$i->id}}" onclick="view1(this)">
+                              <i class="fas fa-pencil-alt">
+                              </i>
+                              Editar
+                          </a>
+                          @endif
                     @if($i->cantidad < $i->minimol)
 
 
-                    <a class="btn btn-success btn-sm" href="requerimientos-create-almacen-{{$i->almacen}}">
+                    <a class="btn btn-success btn-sm"  id="{{$i->id}}" onclick="viewr(this)">
                               <i class="fas fa-pencil-alt">
                               </i>
                               Crear Requerimiento
                           </a>
 
+                         
+
                           @endif
+                          <a class="btn btn-danger btn-sm" id="{{$i->id}}" onclick="view(this)">
+                              <i class="fas fa-pencil-alt">
+                              </i>
+                              Descargar
+                          </a>
                           </td>
                   </tr>
                   @endforeach
@@ -133,10 +161,12 @@
                   </tbody>
                   <tfoot>
                   <tr>
+                  <th>id</th>
                   <th>Producto</th>
                     <th>Stock Minimo</th>
                     <th>Cantidad</th>
                     <th>Precio Unit.</th>
+                    <th>Total Soles.</th>
                     <th>Categoria</th>
                     <th>Medida</th>
                     <th>Vence</th>
@@ -155,32 +185,22 @@
       </div>
       <!-- /.container-fluid -->
 
-      <div class="modal fade" id="myModal">
-        <div class="modal-dialog">
+      <div class="modal fade" id="viewTicket">
+        <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <div class="modal-header">
-              <h4 class="modal-title">Detalle de Ingreso de Productos</h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div class="modal-body">
-              <p>One fine body&hellip;</p>
             </div>
-            <div class="modal-footer justify-content-between">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-            </div>
+           
           </div>
           <!-- /.modal-content -->
         </div>
         <!-- /.modal-dialog -->
       </div>
-
-     
-    </section>
-    <!-- /.content -->
-  </div>
-  </div>
   </section>
 
   <!-- /.content-wrapper -->
@@ -196,25 +216,88 @@
 <!-- jQuery -->
 <script src="plugins/jquery/jquery.min.js"></script>
 
+
 <script type="text/javascript">
+		function view1(e){
+		    var id = $(e).attr('id');
+		    
+		    $.ajax({
+		        type: "GET",
+		        url: "/productos/editc/"+id,
+		        success: function (data) {
+		            $("#viewTicket .modal-body").html(data);
+		            $('#viewTicket').modal('show');
+		        },
+		        error: function (data) {
+		            console.log('Error:', data);
+		        }
+		    });
+		}
 
-function view(e){
-        var id = $(e).attr('data-id');
-        
-        $.ajax({
-            type: "GET",
-            url: "ingresos/view/"+id,
-            success: function (data) {
-                $(".modal-body").html(data);
-                $('#myModal').modal('show');
-            },
-            error: function (data) {
-                console.log('Error:', data);
-            }
-        });
-    };
+	
+	</script>
 
-</script>
+
+<script type="text/javascript">
+		function viewh(e){
+		    var id = $(e).attr('id');
+
+		    
+		    $.ajax({
+		        type: "GET",
+		        url: "/productos/historial/"+id,
+		        success: function (data) {
+		            $("#viewTicket .modal-body").html(data);
+		            $('#viewTicket').modal('show');
+		        },
+		        error: function (data) {
+		            console.log('Error:', data);
+		        }
+		    });
+		}
+
+	
+	</script>
+
+<script type="text/javascript">
+		function view(e){
+		    var id = $(e).attr('id');
+		    
+		    $.ajax({
+		        type: "GET",
+		        url: "/productos/descargar/"+id,
+		        success: function (data) {
+		            $("#viewTicket .modal-body").html(data);
+		            $('#viewTicket').modal('show');
+		        },
+		        error: function (data) {
+		            console.log('Error:', data);
+		        }
+		    });
+		}
+
+	
+	</script>
+  <script type="text/javascript">
+		function viewr(e){
+		    var id = $(e).attr('id');
+
+		    
+		    $.ajax({
+		        type: "GET",
+		        url: "/productos/requerimiento/"+id,
+		        success: function (data) {
+		            $("#viewTicket .modal-body").html(data);
+		            $('#viewTicket').modal('show');
+		        },
+		        error: function (data) {
+		            console.log('Error:', data);
+		        }
+		    });
+		}
+
+	
+	</script>
 <!-- jQuery UI 1.11.4 -->
 <script src="plugins/jquery-ui/jquery-ui.min.js"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
@@ -263,6 +346,10 @@ function view(e){
     $("#example1").DataTable({
       "responsive": true,
       "autoWidth": false,
+      dom: 'Bfrtip',
+      buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
     });
     $('#example2').DataTable({
       "paging": true,

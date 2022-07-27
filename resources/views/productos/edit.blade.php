@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>GANESHAS | Admin</title>
+  <title>Ganeshas | Admin</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
@@ -164,17 +164,8 @@
                   </div>
 
                   <div class="col-md-3">
-                    <label for="exampleInputEmail1">Cantidad</label>
-                    <input type="number" class="form-control" id="cantidad" value="{{$productos->cantidad}}" name="cantidad" placeholder="Cantidad" required>
-                  </div>
-
-                  <div class="col-md-3">
-                    <label for="exampleInputEmail1">Precio</label>
-                    <input type="text" class="form-control" id="cantidad" value="{{$productos->precio}}" name="precio" placeholder="Precio" required>
-                  </div>
-                  <div class="col-md-3">
-                    <label for="exampleInputEmail1">Principio activo</label>
-                    <input type="text" class="form-control" id="cantidad" value="{{$productos->activo}}" name="activo" placeholder="Principio activo" required>
+                    <label for="exampleInputEmail1">Stock Minimo Local</label>
+                    <input type="number" class="form-control" id="minimol" value="{{$productos->minimol}}" name="minimol" placeholder="Cantidad Mínima Local" required>
                   </div>
                  
                  

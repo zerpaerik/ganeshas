@@ -14,9 +14,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    //return view('auth.login');
     return view('landing.principal');
 });
-
 
 
 Auth::routes();
@@ -25,6 +25,7 @@ Route::get('/nosotras', 'LandingController@nosotras')->name('nosotras.index');
 Route::get('/contacto', 'LandingController@contacto')->name('contacto.index');
 Route::get('/mis-productos', 'LandingController@productos')->name('productos-ganesha.index');
 Route::get('/home', 'HomeController@index')->name('home');
+
 
 Route::get('roles', 'RolesController@index')->name('roles.index');
 Route::get('roles-create', 'RolesController@create')->name('roles.create')->middleware('auth');
@@ -39,8 +40,6 @@ Route::post('personal/create', 'PersonalController@store')->middleware('auth');
 Route::get('personal-delete-{id}', 'PersonalController@delete')->middleware('auth');
 Route::get('personal-edit-{id}', 'PersonalController@edit')->name('personal.edit');
 Route::post('personal/edit', 'PersonalController@update');
-Route::get('personal/ver/{id}', 'PersonalController@ver');
-
 
 Route::get('centros', 'CentrosController@index')->name('centros.index');
 Route::get('centros-create', 'CentrosController@create')->name('centros.create')->middleware('auth');
@@ -55,13 +54,6 @@ Route::post('profesionales/create', 'ProfesionalesController@store')->middleware
 Route::get('profesionales-delete-{id}', 'ProfesionalesController@delete')->middleware('auth');
 Route::get('profesionales-edit-{id}', 'ProfesionalesController@edit')->name('profesionales.edit');
 Route::post('profesionales/edit', 'ProfesionalesController@update');
-
-Route::get('creditos', 'UserCreditosController@index')->name('creditos.index');
-Route::get('creditos-create', 'UserCreditosController@create')->name('creditos.create')->middleware('auth');
-Route::post('creditos/create', 'UserCreditosController@store')->middleware('auth');
-Route::get('creditos-delete-{id}', 'UserCreditosController@delete')->middleware('auth');
-Route::get('creditos-edit-{id}', 'UserCreditosController@edit')->name('creditos.edit');
-Route::post('creditos/edit', 'UserCreditosController@update');
 
 Route::get('laboratorio', 'LaboratorioController@index')->name('laboratorio.index');
 Route::get('laboratorio-create', 'LaboratorioController@create')->name('laboratorio.create')->middleware('auth');
@@ -133,34 +125,12 @@ Route::post('analisis/edit', 'AnalisisController@update');
 Route::get('analisis-dispon-{id}', 'AnalisisController@dispon');
 Route::get('analisis-dispon1-{id}-{id2}', 'AnalisisController@dispon1');
 
-Route::get('servicios', 'ServiciosController@index')->name('servicios.index');
-Route::get('servicios-create', 'ServiciosController@create')->name('servicios.create')->middleware('auth');
-Route::post('servicios/create', 'ServiciosController@store')->middleware('auth');
-Route::get('servicios-delete-{id}', 'ServiciosController@delete')->middleware('auth');
-Route::get('servicios-edit-{id}', 'ServiciosController@edit')->name('servicios.edit');
-Route::post('servicios/edit', 'ServiciosController@update');
-Route::get('servicios/sesiones', 'ServiciosController@sesiones');
-Route::get('servicios/nada', 'ServiciosController@nada');
-
-
-Route::get('paquetes', 'PaquetesController@index')->name('paquetes.index');
-Route::get('paquetes-create', 'PaquetesController@create')->name('paquetes.create')->middleware('auth');
-Route::post('paquetes/create', 'PaquetesController@store')->middleware('auth');
-Route::get('paquetes-delete-{id}', 'PaquetesController@delete')->middleware('auth');
-Route::get('paquetes-edit-{id}', 'PaquetesController@edit')->name('paquetes.edit');
-Route::post('paquetes/edit/{id}', 'PaquetesController@update');
-Route::get('paquetes/ver/{id}', 'PaquetesController@ver')->middleware('auth');
-
-
 
 Route::get('pacientes', 'PacientesController@index')->name('pacientes.index');
 Route::get('pacientes-create', 'PacientesController@create')->name('pacientes.create')->middleware('auth');
-Route::get('pacientes-create2', 'PacientesController@create2')->name('pacientes.create2')->middleware('auth');
 Route::post('pacientes/create', 'PacientesController@store')->middleware('auth');
-Route::post('pacientes/create2', 'PacientesController@store2')->middleware('auth');
 Route::get('pacientes-delete-{id}', 'PacientesController@delete')->middleware('auth');
 Route::get('pacientes-edit-{id}', 'PacientesController@edit')->name('pacientes.edit');
-Route::get('pacientes/ver/{id}', 'PacientesController@ver');
 Route::post('pacientes/edit', 'PacientesController@update');
 
 Route::get('productos_usados', 'ProductosUsadosController@index')->name('productosu.index');
@@ -180,6 +150,9 @@ Route::get('productos-usados-reversar-{id}', 'ProductosUsadosController@reversar
 Route::get('productos-usados-reversar1-{id}', 'ProductosUsadosController@reversar1')->middleware('auth');
 Route::get('productos-usados-edit-{id}', 'ProductosUsadosController@edit')->name('productosu.edit');
 Route::post('productosu/edit', 'ProductosUsadosController@update');
+Route::get('productos_usados_report/{p}/{f1}/{f2}/{al}', 'ProductosUsadosController@productos_usados_report')->middleware('auth');
+
+
 
 Route::get('crear-sesion', 'UserController@sesion')->name('sesion.create')->middleware('auth');
 
@@ -205,182 +178,6 @@ Route::get('ingresos-edit-{id}', 'IngresosController@edit')->name('ingresos.edit
 Route::post('ingresos/edit', 'IngresosController@update');
 Route::get('ingresos-ticket-{id}', 'IngresosController@ticket');
 
-Route::get('atenciones', 'AtencionesController@index')->name('atenciones.index');
-Route::get('atenciones-create', 'AtencionesController@create')->name('atenciones.create')->middleware('auth');
-Route::post('atenciones/create', 'AtencionesController@store')->middleware('auth');
-Route::get('atenciones-delete-{id}', 'AtencionesController@delete')->middleware('auth');
-Route::get('atenciones-ticket-{id}', 'AtencionesController@ticket')->middleware('auth');
-Route::get('atenciones-ver-{id}', 'AtencionesController@ver')->middleware('auth');
-Route::get('atenciones-edits-{id}', 'AtencionesController@edits')->name('atenciones.edits');
-Route::get('atenciones-editl-{id}', 'AtencionesController@editl')->name('atenciones.editl');
-Route::get('atenciones-editp-{id}', 'AtencionesController@editp')->name('atenciones.editp');
-Route::get('atenciones-editc-{id}', 'AtencionesController@editc')->name('atenciones.editc');
-Route::get('atenciones-editm-{id}', 'AtencionesController@editm')->name('atenciones.editm');
-Route::get('atenciones-editsa-{id}', 'AtencionesController@editsa')->name('atenciones.editsa');
-Route::get('atenciones-archivo-{id}', 'AtencionesController@guardar_archivo_get');
-Route::post('atenciones_archivo', 'AtencionesController@guardar_archivo');
-Route::get('atenciones-archivos-{id}', 'AtencionesController@ver_archivos');
-Route::get('archivos-eliminar-{id}', 'AtencionesController@eliminar_archivos');
-
-
-
-
-
-
-
-Route::get('pagos-personal', 'PagosPersonalController@index')->name('pagosp.index');
-Route::get('pagosp-create', 'PagosPersonalController@create')->name('pagosp.create')->middleware('auth');
-Route::post('pagosp/create', 'PagosPersonalController@store')->middleware('auth');
-Route::get('pagosp-delete-{id}', 'PagosPersonalController@delete')->middleware('auth');
-Route::get('pagosp/edit/{id}', 'PagosPersonalController@edit');
-Route::post('pagosp/editar', 'PagosPersonalController@update');
-Route::get('pagosp-ticket-{id}', 'PagosPersonalController@ticket');
-
-Route::get('sesiones', 'AtencionesController@sesiones1')->name('sesiones.index');
-Route::get('sesiones-atendidas', 'AtencionesController@sesiones2')->name('sesiones1.index');
-Route::get('sesiones-atender', 'AtencionesController@atender_sesion');
-Route::get('sesiones-reversar-{id}', 'AtencionesController@reversar_sesion');
-
-
-
-Route::post('atenciones/edit', 'AtencionesController@update');
-Route::post('atenciones/edits', 'AtencionesController@updates');
-Route::post('atenciones/editl', 'AtencionesController@updatel');
-Route::post('atenciones/editp', 'AtencionesController@updatep');
-Route::post('atenciones/editc', 'AtencionesController@updatec');
-Route::post('atenciones/editm', 'AtencionesController@updatem');
-
-Route::get('atenciones/getServicio/{id}', 'AtencionesController@getServicio')->middleware('auth');
-Route::get('atenciones/getAnalisis/{id}', 'AtencionesController@getAnalisis')->middleware('auth');
-Route::get('atenciones/getPaquetes/{id}', 'AtencionesController@getPaquetes')->middleware('auth');
-Route::get('atenciones/personal','AtencionesController@personal');
-Route::get('atenciones/profesionales','AtencionesController@profesionales');
-Route::get('atenciones/particular','AtencionesController@particular');
-Route::get('atenciones/creditos','AtencionesController@creditos');
-
-
-Route::get('cobrar', 'CobrarController@index')->name('cobrar.index');
-Route::get('historial_cobros', 'CobrarController@historial')->name('historialc.index');
-Route::get('atenciones/cobrar/{id}', 'CobrarController@cobrar');
-Route::get('cobro-ticket-{id}', 'CobrarController@ticket');
-Route::get('cobrar-create', 'CobrarController@create')->name('cobrar.create')->middleware('auth');
-Route::post('cobrar/procesar', 'CobrarController@procesar')->middleware('auth');
-Route::get('historialc-reversar-{id}-{id2}', 'CobrarController@reversar')->middleware('auth');
-Route::get('cobrar-delete-{id}', 'IngresosController@delete')->middleware('auth');
-Route::get('cobrar-delete-{id}', 'IngresosController@delete')->middleware('auth');
-Route::get('historialc-reversar-{id}', 'IngresosController@delete')->middleware('auth');
-Route::get('cobrar-edit-{id}', 'IngresosController@edit')->name('ingresos.edit');
-Route::post('cobrar/edit', 'IngresosController@update');
-Route::get('cobrar-ticket-{id}', 'IngresosController@ticket');
-
-Route::get('resultados', 'ResultadosController@index')->name('resultados.index');
-Route::get('resultadosl', 'ResultadosController@index1')->name('resultados.index1');
-
-Route::get('resultados-asoc-{id}', 'ResultadosController@asociar');
-Route::get('resultados-asocl-{id}', 'ResultadosController@asociarl');
-Route::get('resultados-desoc-{id}', 'ResultadosController@desoc');
-Route::get('resultados-desocl-{id}', 'ResultadosController@desocl');
-Route::get('resultados-reversar-{id}', 'ResultadosController@reversar');
-Route::get('resultados-ver-{id}', 'ResultadosController@ver');
-Route::get('resultados-verp-{id}', 'ResultadosController@verp');
-Route::get('resultados-vers-{id}', 'ResultadosController@vers');
-Route::get('resultados-redactar-{id}', 'ResultadosController@redactar');
-Route::get('resultados-redactars-{id}', 'ResultadosController@redactars');
-Route::get('resultados-redactarp-{id}', 'ResultadosController@redactarp');
-Route::post('resultados/redactar', 'ResultadosController@redactarPost');
-Route::post('resultados/redactarp', 'ResultadosController@redactarPostP');
-Route::post('resultados/redactars', 'ResultadosController@redactarPostS');
-
-Route::get('resultados-reversarl-{id}', 'ResultadosController@reversarl');
-Route::get('modelo-informe-{id}-{id2}', 'ResultadosController@modelo_informe');
-Route::get('modelo-informel-{id}-{id2}', 'ResultadosController@modelo_informel');
-
-Route::get('resultados-guardar-{id}', 'ResultadosController@guardar_informe');
-Route::get('resultados-guardarl-{id}', 'ResultadosController@guardar_informel');
-Route::post('resultados_guardar', 'ResultadosController@guardar');
-Route::post('resultados_guardarl', 'ResultadosController@guardarl');
-
-Route::get('resultadosg', 'ResultadosController@indexg')->name('resultados.indexg');
-Route::get('resultadosg-reversar-{id}', 'ResultadosController@reversarg');
-Route::get('resultadosgl', 'ResultadosController@indexg1')->name('resultados.indexg1');
-Route::get('resultadosgl-reversar-{id}', 'ResultadosController@reversargl');
-
-
-Route::get('historial_pacientes', 'ReportesController@historial_pacientes')->name('historial.pacientes');
-
-Route::get('creditos_cobrar', 'ComisionesPagarCController@index')->name('creditosc.index');
-Route::get('creditos_cobrados', 'ComisionesPagarCController@index1')->name('creditosco.index');
-Route::get('creditosc-pagar', 'ComisionesPagarCController@pagar')->middleware('auth');
-Route::post('pagarmultiplec', 'ComisionesPagarCController@pagarmultiple');
-Route::get('creditosc-ticket-{id}', 'ComisionesPagarCController@ticket')->middleware('auth');
-Route::get('creditosc-reversar-{id}', 'ComisionesPagarCController@reversar');
-Route::get('creditosc-archivo-{id}', 'ComisionesPagarCController@guardar_archivo_get');
-Route::post('creditosc_archivo', 'ComisionesPagarCController@guardar_archivo');
-
-
-
-Route::get('comisiones', 'ComisionesPagarController@index')->name('comisiones.index');
-Route::get('comisiones1', 'ComisionesPagarController@index1')->name('comisiones.index1');
-Route::get('comisiones2', 'ComisionesPagarController@index2')->name('comisiones.index2');
-Route::get('comisiones-pagar-{id}', 'ComisionesPagarController@pagar')->middleware('auth');
-Route::post('pagarmultiple', 'ComisionesPagarController@pagarmultiple');
-Route::get('reporte_compagar', 'ComisionesPagarController@reporte_compagar')->name('compagar.index');
-Route::get('reporte_compagar1', 'ComisionesPagarController@reporte_compagar1')->name('compagar1.index');
-
-Route::get('comisionesp', 'ComisionesPagadasController@index')->name('comisionesp.index');
-Route::get('comisionesp1', 'ComisionesPagadasController@index1')->name('comisionesp.index1');
-Route::get('comisionesp-reversar-{id}', 'ComisionesPagadasController@reversar');
-Route::get('comisionep-ticket-{id}', 'ComisionesPagadasController@ticket')->middleware('auth');
-Route::get('reporte/pagadas', 'ComisionesPagadasController@reporte_pagadas');
-Route::get('reporte/pagadas1', 'ComisionesPagadasController@reporte_pagadas1');
-
-Route::get('comisiones-por-entregar', 'VisitadorController@index')->name('comisionespe.index');
-Route::get('comisiones-entregadas', 'VisitadorController@index1')->name('comisionese.index');
-Route::get('entregar', 'VisitadorController@entregar');
-Route::get('comisionese-reversar-{id}', 'VisitadorController@reversar');
-
-Route::get('consultas', 'ConsultasController@index')->name('consultas.index');
-Route::get('consultas-create', 'ConsultasController@create')->name('consultas.create')->middleware('auth');
-Route::post('consultas/create', 'ConsultasController@store')->middleware('auth');
-Route::get('consultas-delete-{id}', 'ConsultasController@delete')->middleware('auth');
-Route::get('cobrconsultasar-edit-{id}', 'ConsultasController@edit')->name('ingresos.edit');
-Route::post('consultas/edit', 'ConsultasController@update');
-Route::get('consultas-ticket-{id}', 'ConsultasController@ticket');
-Route::get('consulta-guia-{id}', 'ConsultasController@guia');
-Route::get('consulta-receta-{id}', 'ConsultasController@receta');
-Route::get('historias', 'ConsultasController@historias')->name('historias.index');
-Route::get('historia/reevaluar/{id}', 'ConsultasController@reevaluar');
-Route::post('historia/reevaluar', 'ConsultasController@reevaluarPost');
-Route::get('historias-ver-{id}', 'ConsultasController@ver_historias');
-Route::get('historias-editar-{id}', 'ConsultasController@editar_historias');
-Route::post('historias/editar', 'ConsultasController@editar_historiaP');
-Route::get('historias-pdf-{id}', 'ConsultasController@ver_historias_pdf');
-Route::get('controles', 'ConsultasController@controles')->name('controles.index');
-Route::get('controles-ver-{id}', 'ConsultasController@ver_controles');
-Route::get('historia-crear-{id}', 'ConsultasController@historia_crear');
-Route::get('control-crear-{id}', 'ConsultasController@control_crear');
-Route::post('historia/guardar', 'ConsultasController@guardar_historia');
-Route::post('historiab/guardar', 'ConsultasController@guardar_historiab');
-Route::post('control/guardar', 'ConsultasController@guardar_control');
-Route::post('controlh/guardar', 'ConsultasController@guardar_controlh');
-
-
-Route::get('metodos', 'MetodosController@index')->name('metodos.index');
-Route::get('metodos_llamar', 'MetodosController@llamar')->name('llamar.index');
-Route::get('metodos-create', 'MetodosController@create')->name('metodos.create')->middleware('auth');
-Route::get('metodos-llamar-{id}', 'MetodosController@llamarPost')->middleware('auth');
-Route::post('metodos/create', 'ConsultasController@store')->middleware('auth');
-Route::get('metodos-delete-{id}', 'ConsultasController@delete')->middleware('auth');
-Route::get('metodos-edit-{id}', 'ConsultasController@edit')->name('ingresos.edit');
-Route::get('metodos/aplicar/{id}', 'MetodosController@aplicar');
-Route::post('metodos/aplicar', 'MetodosController@aplicarPost');
-Route::post('metodos/edit', 'ConsultasController@update');
-Route::get('metodos-ticket-{id}', 'ConsultasController@ticket');
-
-
-
-
-
 
 Route::get('ingresos/siniestros','IngresosController@solicitudes');
 Route::get('ingresos/otros','IngresosController@otros');
@@ -400,16 +197,11 @@ Route::get('checkin-ticket-{id}', 'CheckinController@ticket');
 Route::get('checkin-delete-{id}','CheckinController@delete');
 Route::get('checkin-recargar-{id}', 'CheckinController@recargar');
 
-Route::get('ventas', 'VentasController@index')->name('ventas.index');
-Route::get('ventas-create', 'VentasController@create')->name('ventas.create')->middleware('auth');
-Route::post('ventas/create', 'VentasController@store')->middleware('auth');
-Route::get('ventas-delete-{id}','VentasController@delete');
-
-
-
 
 
 Route::get('pedidos', 'PedidosController@index')->name('pedidos.index');
+Route::get('pedidos1', 'PedidosController@index1')->name('pedidos.index1');
+Route::get('pedidosr', 'PedidosController@indexr')->name('pedidos.indexr');
 Route::get('pedidos-create', 'PedidosController@create')->name('pedidos.create')->middleware('auth');
 Route::post('pedidos/create', 'PedidosController@store')->middleware('auth');
 Route::get('pedidos-delete-{id}', 'PedidosController@delete')->middleware('auth');
@@ -418,13 +210,14 @@ Route::get('pedidos-pagar-{id}', 'PedidosController@pagar');
 Route::get('pedidos-ticket-{id}', 'PedidosController@ticket');
 Route::post('pedidos/edit', 'PedidosController@update');
 Route::post('pedidos/pagar', 'PedidosController@pago');
+Route::post('procesarmultiple', 'PedidosController@procesarmultiple');
+
 
 Route::get('gastos', 'GastosController@index')->name('gastos.index');
 Route::get('gastos-create', 'GastosController@create')->name('gastos.create')->middleware('auth');
 Route::post('gastos/create', 'GastosController@store')->middleware('auth');
 Route::get('gastos-delete-{id}', 'GastosController@delete')->middleware('auth');
 Route::get('gastos-edit-{id}', 'GastosController@edit')->name('gastos.edit');
-Route::get('gastos-ticket-{id}', 'GastosController@ticket');
 Route::post('gastos/edit', 'GastosController@update');
 
 Route::get('siniestros', 'SiniestrosController@index')->name('siniestros.index');
@@ -434,9 +227,6 @@ Route::get('siniestros-delete-{id}', 'SiniestrosController@delete')->middleware(
 Route::get('siniestros-edit-{id}', 'SiniestrosController@edit')->name('siniestros.edit');
 Route::post('siniestros/edit', 'SiniestrosController@update');
 
-Route::get('reporte_ingresos', 'ReportesController@ingresos')->name('reporte_ingresos.index');
-Route::get('reporte_total', 'ReportesController@total')->name('reporte_total.index');
-Route::get('reporte_servicios', 'ReportesController@total_servicios')->name('reporte_servicios.index');
 Route::get('consolidado', 'ReportesController@consolidado')->name('consolidado.index');
 Route::get('detallado', 'ReportesController@detallado')->name('detallado.index');
 Route::get('general', 'ReportesController@general')->name('general.index');
@@ -446,6 +236,13 @@ Route::post('report/general', 'ReportesController@reportg');
 
 Route::get('productos', 'ProductosController@index')->name('productos.index');
 Route::get('recepcion', 'ProductosController@recepcion')->name('productos.recepcion');
+Route::get('productos/descargar/{id}', 'ProductosController@descargar');
+Route::get('productos/historial/{id}', 'ProductosController@historial');
+Route::get('productos/editc/{id}', 'ProductosController@editc');
+Route::get('productos/requerimiento/{id}', 'ProductosController@requerimiento');
+Route::post('productos/descargar', 'ProductosController@descargarPost');
+Route::post('productos/reqPost', 'ProductosController@reqPost');
+Route::post('productos/editcP', 'ProductosController@editcP');
 Route::get('obstetra', 'ProductosController@obstetra')->name('productos.obstetra');
 Route::get('rayos', 'ProductosController@rayos')->name('productos.rayos');
 Route::get('laboratorio-almacen', 'ProductosController@laboratorio')->name('productos.laboratorio');
@@ -502,26 +299,10 @@ Route::get('cierre-caja','CajaController@index')->name('cierre.index')->middlewa
 Route::get('cierre-caja-reporte-{fecha}','CajaController@reporte_pdf')->name('cierre.reporte')->middleware('auth');
 Route::post('cierre-caja-create','CajaController@create')->name('cierre.create')->middleware('auth');
 Route::get('caja-delete-{id}','CajaController@delete');
-Route::get('caja-consolidado-{id}','CajaController@consolidado');
-Route::get('caja-consolidado2/{id}/{fecha1?}/{fecha2?}','CajaController@consolidado2');
 Route::get('caja-ticket-{id}','CajaController@ticket');
 Route::get('caja-cerrar-{id}','CajaController@cerrar');
 Route::get('saldo/view/{id}', 'CajaController@saldo');
 
-Route::get('templates', 'TemplatesController@index')->name('templates.index');
-Route::get('templates-create', 'TemplatesController@create')->name('templates.create')->middleware('auth');
-Route::post('templates/create', 'TemplatesController@store')->middleware('auth');
-Route::get('templates-delete-{id}', 'TemplatesController@delete')->middleware('auth');
-Route::get('templates-edit-{id}', 'TemplatesController@edit')->name('templates.edit');
-Route::post('templates/edit', 'TemplatesController@update');
-Route::get('templates/ver/{id}', 'TemplatesController@ver')->middleware('auth');
-
-
-Route::get('templates_s', 'TemplatesController@index1')->name('templates.index1');
-Route::get('templates-creates', 'TemplatesController@creates')->name('templates.creates')->middleware('auth');
-Route::post('templates/creates', 'TemplatesController@stores')->middleware('auth');
-Route::get('templates/vers/{id}', 'TemplatesController@vers')->middleware('auth');
-Route::get('templates-deletes-{id}', 'TemplatesController@deletes')->middleware('auth');
 
 
 
@@ -529,29 +310,8 @@ Route::get('templates-deletes-{id}', 'TemplatesController@deletes')->middleware(
 
 
 
-Route::get('download2/{filename}', function($filename)
-{
-    // Check if file exists in 
-    $file_path = public_path().'/informes/'. $filename;
-    if (file_exists($file_path))
-    {
-        // Send Download
-        return Response::download($file_path, $filename, [
-            'Content-Length: '. filesize($file_path),
-            'Content-Type: ' . mime_content_type($file_path)
-        ]);
-    }
-    else
-    {
-        // Error
-        exit('Requested file does not exist on our server!');
-    }
-})->name('descargar2');
 
-
-
-
-Route::get('/solicitudes/dataPacientes/{id}','AtencionesController@datapac');
+Route::get('/solicitudes/dataPacientes/{id}','SolicitudesController@datapac');
 
 
 

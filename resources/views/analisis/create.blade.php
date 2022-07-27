@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>GANESHAS | Admin</title>
+  <title>Ganeshas | Admin</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
@@ -95,7 +95,7 @@
                     <div class="row">
                   <div class="col-md-4">
                     <label for="exampleInputEmail1">Nombre</label>
-                    <input type="text" class="form-control" id="name" value=""  onkeyup="javascript:this.value=this.value.toUpperCase();" name="nombre" placeholder="Nombre de Analisis">
+                    <input type="text" class="form-control" id="name" name="nombre" placeholder="Nombre de Analisis">
                   </div>
                   <div class="col-md-4">
                     <label for="exampleInputEmail1">Precio</label>
@@ -115,16 +115,11 @@
                   </div>
                   <div class="col-md-4">
                     <label for="exampleInputEmail1">Tiempo</label>
-                    <input type="text" class="form-control" id="email" name="tiempo" placeholder="Tiempo" onkeyup="javascript:this.value=this.value.toUpperCase();">
+                    <input type="text" class="form-control" id="email" name="tiempo" placeholder="Tiempo">
                   </div>
                   <div class="col-md-4">
                     <label for="exampleInputEmail1">Material</label>
-                    <input type="text" class="form-control" id="email" name="material" placeholder="Material" onkeyup="javascript:this.value=this.value.toUpperCase();">
-                  </div>
-
-                  <div class="col-md-4">
-                    <label for="exampleInputEmail1">Método</label>
-                    <input type="text" class="form-control" id="email" name="metodo" placeholder="Método" onkeyup="javascript:this.value=this.value.toUpperCase();">
+                    <input type="text" class="form-control" id="email" name="material" placeholder="Material">
                   </div>
 
                  

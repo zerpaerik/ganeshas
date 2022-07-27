@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>GANESHAS | Admin</title>
+  <title>Ganeshas | Admin</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
@@ -86,7 +86,14 @@
                     <input type="date" class="form-control" value="{{$f1}}" name="inicio" placeholder="Buscar por dni" onsubmit="datapac()">
                   </div>
 
-                 
+                  <div class="col-md-2">
+                    <label for="exampleInputEmail1">Items</label>
+                    <input type="text" disabled class="form-control" value="{{$ing->cantidad}}" name="inicio" placeholder="Buscar por dni" onsubmit="datapac()">
+                  </div>
+                  <div class="col-md-2">
+                    <label for="exampleInputEmail1">Total</label>
+                    <input type="text" disabled class="form-control" value="{{$ing->monto}}" name="inicio" placeholder="Buscar por dni" onsubmit="datapac()">
+                  </div>
                 
                  
                   <div class="col-md-2" style="margin-top: 30px;">
@@ -103,6 +110,7 @@
                   <tr>
                     <th>Origen</th>
                     <th>Descripción</th>
+                    <th>Nombre</th>
                     <th>Monto</th>
                     <th>Registrado Por:</th>
                     <th>Fecha</th>
@@ -115,6 +123,7 @@
                   <tr>
                     <td>{{$client->origen}}</td>
                     <td>{{$client->descripcion}}</td>
+                    <td>{{$client->nombre}}</td>
                     <td>{{$client->monto}}</td>
                     <td>{{$client->name}}</td>
                     <td>{{$client->created_at}}</td>

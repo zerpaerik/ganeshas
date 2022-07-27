@@ -8,8 +8,10 @@ use App\Clientes;
 use App\Creditos;
 use App\Debitos;
 use App\Pedidos;
+use App\Pedido;
 use App\Pacientes;
 use App\Solicitudes;
+use App\ProductosAlmacen;
 use App\Analisis;
 use App\User;
 use App\Productos;
@@ -28,22 +30,77 @@ class PedidosController extends Controller
     {
 
 
-        if($request->inicio && !is_null($request->habitacion)){
+        if($request->inicio){
+
+      /*  $pedidos = DB::table('pedidos as a')
+        ->select('a.id','a.monto','a.estatus','a.cantidad','a.total','a.usuario','a.tipopago','a.created_at','a.producto','b.nombre as producto')
+        ->join('productos as b','b.id','a.producto')
+        ->where('a.created_at','=',$request->inicio)
+        ->where('a.estatus','=',1)
+        ->get(); */
+
+        $pedidos = DB::table('pedido as a')
+        ->select('a.*')
+        //->join('productos as b','b.id','a.producto')
+        ->where('a.estatus','=',1)
+        ->where('a.created_at', '=', $request->inicio)
+        ->get(); 
+
+        
+          
+        $soli = Pedido::where('created_at', '=',$f1)
+        ->where('estatus','=',1)
+        ->select(DB::raw('COUNT(*) as cantidad, SUM(total) as monto'))
+        ->first();
+
+        if ($soli->cantidad == 0) {
+        $soli->monto = 0;
+        }
+        $f1 = $request->inicio;
+   
+
+    }else {
+        $pedidos = DB::table('pedido as a')
+        ->select('a.*')
+        //->join('productos as b','b.id','a.producto')
+        ->where('a.estatus','=',1)
+        ->where('a.created_at', '=', date('Y-m-d'))
+        ->get(); 
+
+        $f1 =date('Y-m-d');
+
+          
+        $soli = Pedido::where('created_at', '=',$f1)
+        ->where('estatus','=',1)
+        ->select(DB::raw('COUNT(*) as cantidad, SUM(total) as monto'))
+        ->first();
+
+        if ($soli->cantidad == 0) {
+        $soli->monto = 0;
+        }
+
+    }
+
+        return view('pedidos.index', compact('pedidos','f1','soli'));
+        //
+    }
+
+    public function index1(Request $request)
+    {
 
 
+        if($request->inicio){
 
         $pedidos = DB::table('pedidos as a')
-        ->select('a.id','a.solicitud','a.descripcion','a.tipopago','a.monto','a.created_at','a.estatus','b.huesped','b.habitacion','an.nombre as habita','h.nombre as nompac','h.responsable as apepac')
-        ->join('solicitudes as b','b.id','a.solicitud')
-        ->join('analisis as an','an.id','b.habitacion')
-        ->join('clientes as h','h.id','b.huesped')
+        ->select('a.id','a.monto','a.estatus','a.cantidad','a.total','a.usuario','a.tipopago','a.created_at','a.producto','b.nombre as producto')
+        ->join('productos as b','b.id','a.producto')
         ->where('a.created_at','=',$request->inicio)
-        ->where('a.solicitud','=',$request->habitacion)
+        ->where('a.estatus','=',2)
         ->get(); 
 
         
         $soli = Pedidos::where('created_at', '=',$request->inicio)
-        ->where('solicitud', '=',$request->habitacion)
+        ->where('estatus','=',2)
         ->select(DB::raw('COUNT(*) as cantidad, SUM(monto) as monto'))
         ->first();
 
@@ -51,35 +108,13 @@ class PedidosController extends Controller
         $soli->monto = 0;
         }
         $f1 = $request->inicio;
-    } else if ($request->inicio && is_null($request->habitacion)){
-
-
-
-        
-        $pedidos = DB::table('pedidos as a')
-        ->select('a.id','a.solicitud','a.descripcion','a.tipopago','a.monto','a.created_at','a.estatus','b.huesped','b.habitacion','an.nombre as habita','h.nombre as nompac','h.responsable as apepac')
-        ->join('solicitudes as b','b.id','a.solicitud')
-        ->join('analisis as an','an.id','b.habitacion')
-        ->join('clientes as h','h.id','b.huesped')
-        ->where('a.created_at','=',$request->inicio)
-        ->get(); 
-
-        
-        $soli = Pedidos::where('created_at', '=',$request->inicio)
-        ->select(DB::raw('COUNT(*) as cantidad, SUM(monto) as monto'))
-        ->first();
-
-        if ($soli->cantidad == 0) {
-        $soli->monto = 0;
-        }
-        $f1 = $request->inicio;
+   
 
     }else {
         $pedidos = DB::table('pedidos as a')
-        ->select('a.id','a.solicitud','a.descripcion','a.tipopago','a.created_at','a.monto','a.estatus','b.huesped','b.habitacion','an.nombre as habita','h.nombre as nompac','h.responsable as apepac')
-        ->join('solicitudes as b','b.id','a.solicitud')
-        ->join('analisis as an','an.id','b.habitacion')
-        ->join('clientes as h','h.id','b.huesped')
+        ->select('a.id','a.monto','a.estatus','a.cantidad','a.total','a.usuario','a.tipopago','a.created_at','a.producto','b.nombre as producto')
+        ->join('productos as b','b.id','a.producto')
+        ->where('a.estatus','=',2)
         ->where('a.created_at', '=', date('Y-m-d'))
         ->get(); 
 
@@ -87,6 +122,7 @@ class PedidosController extends Controller
 
           
         $soli = Pedidos::where('created_at', '=',$f1)
+        ->where('estatus','=',2)
         ->select(DB::raw('COUNT(*) as cantidad, SUM(monto) as monto'))
         ->first();
 
@@ -96,18 +132,66 @@ class PedidosController extends Controller
 
     }
 
-    $habs = DB::table('pedidos as a')
-    ->select('a.id','a.solicitud','a.descripcion','a.monto','a.created_at','a.estatus','b.huesped','b.habitacion','an.nombre as habita','h.nombre as nompac','h.responsable as apepac')
-    ->join('solicitudes as b','b.id','a.solicitud')
-    ->join('analisis as an','an.id','b.habitacion')
-    ->join('clientes as h','h.id','b.huesped')
-    ->groupBy('b.id')
-    ->get(); 
-        
-
-        return view('pedidos.index', compact('pedidos','f1','soli','habs'));
+        return view('pedidos.index1', compact('pedidos','f1','soli'));
         //
     }
+
+    public function indexr(Request $request)
+    {
+
+
+        if($request->inicio){
+
+        $pedidos = DB::table('pedidos as a')
+        ->select('a.id','a.monto','a.estatus','a.cantidad','a.cliente','a.total','a.usuario','a.tipopago','a.created_at','a.producto','b.nombre as producto','c.name','c.lastname','p.cantidad as soli')
+        ->join('productos as b','b.id','a.producto')
+        ->join('users as c','c.id','a.cliente')
+        ->join('productos_almacen as p','p.producto','a.producto')
+        ->where('a.created_at','=',$request->inicio)
+        ->where('a.estatus','=',1)
+        ->get(); 
+
+        
+        $soli = Pedidos::where('created_at', '=',$request->inicio)
+        ->where('estatus','=',1)
+        ->select(DB::raw('COUNT(*) as cantidad, SUM(monto) as monto'))
+        ->first();
+
+        if ($soli->cantidad == 0) {
+        $soli->monto = 0;
+        }
+        $f1 = $request->inicio;
+   
+
+    }else {
+        $pedidos = DB::table('pedidos as a')
+        ->select('a.id','a.monto','a.estatus','a.cantidad','a.cliente','a.total','a.usuario','a.tipopago','a.created_at','a.producto','b.nombre as producto','c.name','c.lastname','p.cantidad as soli')
+        ->join('productos as b','b.id','a.producto')
+        ->join('users as c','c.id','a.cliente')
+        ->join('productos_almacen as p','p.producto','a.producto')
+        ->where('a.estatus','=',1)
+        ->where('a.created_at', '=', date('Y-m-d'))
+        ->get(); 
+
+
+        $f1 =date('Y-m-d');
+
+          
+        $soli = Pedidos::where('created_at', '=',$f1)
+        ->where('estatus','=',1)
+        ->select(DB::raw('COUNT(*) as cantidad, SUM(monto) as monto'))
+        ->first();
+
+        if ($soli->cantidad == 0) {
+        $soli->monto = 0;
+        }
+
+    }
+
+        return view('pedidos.indexr', compact('pedidos','f1','soli'));
+        //
+    }
+
 
     
 
@@ -134,6 +218,65 @@ class PedidosController extends Controller
 
     }
 
+    public function procesarmultiple(Request $request)
+    {
+
+
+      if(isset($request->ped)){
+     
+        foreach ($request->ped as $pedido) {
+
+          $ped_det = DB::table('pedidos as a')
+          ->select('a.id','a.monto','a.estatus','a.cantidad','a.cliente','a.producto','a.total','a.usuario','a.tipopago','a.created_at','b.id as producto_id','b.nombre as producto','c.name','c.lastname','p.cantidad as soli')
+          ->join('productos as b','b.id','a.producto')
+          ->join('users as c','c.id','a.cliente')
+          ->join('productos_almacen as p','p.producto','a.producto')
+          ->where('a.id','=',$pedido)
+          ->first(); 
+
+
+          //VERIFICANDO QUE HAYA MAS STOCK QUE LO SOLICITADO PARA RESTAR
+          if($ped_det->soli < $ped_det->cantidad){
+            //ACTUALIZAR ITEM DE ORDEN - CANTIDAD DESPACHADA Y TOTAL DE ITEM - STATUS DE PEDIDO
+            $a = Pedidos::where('id','=',$pedido)->first();
+            $a->cantidad_despachada = $ped_det->soli;
+            $a->total = $ped_det->soli * $ped_det->monto;
+            $a->estatus = 2;
+            $resa = $a->update();
+
+            $pal = ProductosAlmacen::where('producto','=',$ped_det->producto_id)->first();
+            //RESTAR DEL STOCK
+            $pa = ProductosAlmacen::where('producto','=',$ped_det->producto_id)->first();
+            $pa->cantidad =$pal->cantidad -  $ped_det->soli;
+            $res = $pa->update();
+
+
+
+          } else {
+            //ACTUALIZAR STATUS DE PEDIDO
+
+            $a = Pedidos::where('id','=',$pedido)->first();
+            $a->estatus = 2;
+            $a->cantidad_despachada =  $ped_det->cantidad;
+            $resa = $a->update();
+
+            $pal = ProductosAlmacen::where('producto','=',$ped_det->producto_id)->first();
+
+            //RESTAR DEL STOCK
+            $pa = ProductosAlmacen::where('producto','=',$ped_det->producto_id)->first();
+            $pa->cantidad =$pal->cantidad -  $ped_det->cantidad;
+            $res = $pa->update();
+
+          }
+        
+        }
+  
+      } 
+  
+      return back();
+    }
+
+
     public function datapac($id){
 
        
@@ -158,45 +301,60 @@ class PedidosController extends Controller
     public function store(Request $request)
     {
 
+      $pedido = new Pedido();
+      $pedido->save();
 
-        $solicitud =Solicitudes::where('id','=',$request->solicitud)->first();
+      $sum = 0;
 
         if (isset($request->id_servicio)) {
              foreach ($request->id_servicio['servicios'] as $key => $servicio) {
                if (!is_null($servicio['servicio'])) {
 
+                $ped_det = Pedido::where('id','=', $pedido->id)->first();
+
+
                 $productos = Productos::where('id','=',$servicio['servicio'])->first();
                 $pedidos = new Pedidos();
-                $pedidos->solicitud =$request->solicitud;
                 $pedidos->producto =$servicio['servicio'];
-                $pedidos->monto =$request->monto_s['servicios'][$key]['monto'];
-                $pedidos->descripcion =$productos->nombre;
-                $pedidos->usuario =Auth::user()->id;
+                $pedidos->cantidad =$request->monto_ss['servicios'][$key]['montoss'];
+                $pedidos->monto =$request->monto_s['servicios'][$key]['montos'];
+                $pedidos->total =$request->monto_s['servicios'][$key]['montos'] * $request->monto_ss['servicios'][$key]['montoss'];
+                $pedidos->cliente =Auth::user()->id;
+                $pedidos->pedido =$pedido->id;
                 $pedidos->save();
 
-                $productccc = Productos::where('id','=',$servicio['servicio'])->first();
-
-                $productos = Productos::find($servicio['servicio']);
-                $productos->cantidad =$productccc->cantidad - 1;
-                $res = $productos->update();
+                $sum = $sum + $pedidos->total;
        
-               } else {
-       
-               }
+               } 
              }
-           }
+        }
 
-       
-        
 
-        $hab = Analisis::where('id','=',$solicitud->habitacion)->first();
-        $hab->pedido =1;
-        $res = $hab->update();
-
+        if($sum > 150 && $sum <= 350){
+            $pedido_u = Pedido::find($pedido->id);
+            $pedido_u->descuento =  25 ;
+            $pedido_u->subtotal =  $sum ;
+            $pedido_u->total = $sum - ($sum * 25 / 100);
+            $res = $pedido_u->update();
+ 
+        } else if ($sum > 350){
+            $pedido_u = Pedido::find($pedido->id);
+            $pedido_u->subtotal =  $sum ;
+            $pedido_u->descuento =  28 ;
+            $pedido_u->total =  $sum - ($sum * 28 / 100);
+            $res = $pedido_u->update();
+ 
+        } else {
+            $pedido_u = Pedido::find($pedido->id);
+            $pedido_u->subtotal =  $sum ;
+            $pedido_u->descuento =  0 ;
+            $pedido_u->total =  $sum;
+            $res = $pedido_u->update();
+ 
+        }
 
         return redirect()->action('PedidosController@index')
         ->with('success','Registrado Exitosamente!');
-
 
     }
 
@@ -358,39 +516,28 @@ class PedidosController extends Controller
 
     public function ticket($id)
     {
-        $pedido = Equipos::find($id);
 
-        $pedidos = DB::table('pedidos as a')
-        ->select('a.id','a.solicitud','a.descripcion','a.monto','a.created_at','a.estatus','b.huesped','b.habitacion','an.nombre as habita','h.nombre as nompac','h.responsable as apepac')
-        ->join('solicitudes as b','b.id','a.solicitud')
-        ->join('analisis as an','an.id','b.habitacion')
-        ->join('clientes as h','h.id','b.huesped')
-        ->where('a.solicitud','=',$id)
+        $pedido_detalle = DB::table('pedidos as a')
+        ->select('a.id','a.monto','a.pedido','a.estatus','a.cantidad','a.total','a.usuario','a.tipopago','a.created_at','a.producto','b.nombre as producto')
+        ->join('productos as b','b.id','a.producto')
+        ->where('a.pedido','=',$id)
+        ->where('a.estatus','=',1)
         ->get(); 
 
+        $pedido = DB::table('pedido as a')
+        ->select('a.*')
+        //->join('productos as b','b.id','a.producto')
+        ->where('a.estatus','=',1)
+        ->where('a.id', '=', $id)
+        ->first(); 
 
-
-                                    $ped = DB::table('pedidos as a')
-                                    ->select('a.id','a.solicitud','a.descripcion','a.monto','a.created_at','a.estatus','b.huesped','b.habitacion','an.nombre as habita','h.nombre as nompac','h.responsable as apepac')
-                                    ->join('solicitudes as b','b.id','a.solicitud')
-                                    ->join('analisis as an','an.id','b.habitacion')
-                                    ->join('clientes as h','h.id','b.huesped')
-                                    ->where('a.solicitud','=',$id)
-                                    ->first(); 
-
-        $productos = Productos::where('estatus','=',1)->get();
-        $cli = Clientes::where('id','=',$ped->huesped)->first();
-
-
-
-        $view = \View::make('pedidos.ticket', compact('pedidos','ped','cli'));
-        $customPaper = array(0,0,500.00,190.00);
+        $view = \View::make('pedidos.ticket', compact('pedido_detalle','pedido'));
 
         $pdf = \App::make('dompdf.wrapper');
-        $pdf->loadHTML($view)->setPaper($customPaper, 'landscape');
+        $pdf->loadHTML($view);
      
-       
-        return $pdf->stream('ticket-pedido'.'.pdf');    }
+        return $pdf->stream('ticket-pedido'.'.pdf');
+    }
 
     /**
      * Update the specified resource in storage.

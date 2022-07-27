@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>GANESHAS | Admin</title>
+  <title>Ganeshas | Admin</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
@@ -82,7 +82,7 @@
                
                       <form method="get" action="requerimientos1">					
 
-                    <div class="row">
+                      <div class="row">
                   <div class="col-md-3">
                     <label for="exampleInputEmail1">Inicio</label>
                     <input type="date" class="form-control" value="{{$f1}}" name="inicio" placeholder="Buscar por dni">
@@ -94,6 +94,63 @@
                   <div class="col-md-3">
                     <label for="exampleInputEmail1">Almacen</label>
                     <select class="form-control" name="solicita">
+                    @if($alma == 2)
+                    <option value="2" selected>Recepción</option>
+                    <option value="3">Obstetra</option>
+                    <option value="4">Rayos X</option>
+                    <option value="11">Laboratorio</option>
+                    <option value="7">Canto Rey</option>
+                    <option value="8">Vida Feliz</option>
+                    <option value="9">Zarate</option>
+                    @elseif($alma == 3)
+                    <option value="2">Recepción</option>
+                    <option value="3" selected>Obstetra</option>
+                    <option value="4">Rayos X</option>
+                    <option value="11">Laboratorio</option>
+                    <option value="7">Canto Rey</option>
+                    <option value="8">Vida Feliz</option>
+                    <option value="9">Zarate</option>
+                    @elseif($alma == 4)
+                    <option value="2">Recepción</option>
+                    <option value="3">Obstetra</option>
+                    <option value="4" selected>Rayos X</option>
+                    <option value="11">Laboratorio</option>
+                    <option value="7">Canto Rey</option>
+                    <option value="8">Vida Feliz</option>
+                    <option value="9">Zarate</option>
+                    @elseif($alma == 7)
+                    <option value="2">Recepción</option>
+                    <option value="3">Obstetra</option>
+                    <option value="4">Rayos X</option>
+                    <option value="11">Laboratorio</option>
+                    <option value="7" selected>Canto Rey</option>
+                    <option value="8">Vida Feliz</option>
+                    <option value="9">Zarate</option>
+                    @elseif($alma == 8)
+                    <option value="2">Recepción</option>
+                    <option value="3">Obstetra</option>
+                    <option value="4">Rayos X</option>
+                    <option value="11">Laboratorio</option>
+                    <option value="7">Canto Rey</option>
+                    <option value="8" selected>Vida Feliz</option>
+                    <option value="9">Zarate</option>
+                    @elseif($alma == 9)
+                    <option value="2">Recepción</option>
+                    <option value="3">Obstetra</option>
+                    <option value="4">Rayos X</option>
+                    <option value="11">Laboratorio</option>
+                    <option value="7">Canto Rey</option>
+                    <option value="8">Vida Feliz</option>
+                    <option value="9" selected>Zarate</option>
+                    @elseif($alma == 11)
+                    <option value="2">Recepción</option>
+                    <option value="3">Obstetra</option>
+                    <option value="4">Rayos X</option>
+                    <option value="11" selected>Laboratorio</option>
+                    <option value="7">Canto Rey</option>
+                    <option value="8">Vida Feliz</option>
+                    <option value="9">Zarate</option>
+                    @else
                     <option value="2">Recepción</option>
                     <option value="3">Obstetra</option>
                     <option value="4">Rayos X</option>
@@ -101,6 +158,7 @@
                     <option value="7">Canto Rey</option>
                     <option value="8">Vida Feliz</option>
                     <option value="9">Zarate</option>
+                    @endif
                     </select>                  
                     </div>
                   
@@ -108,6 +166,7 @@
                   <button type="submit" class="btn btn-primary">Buscar</button>
 
                   </div>
+
 
                   
                 
@@ -157,7 +216,7 @@
                     <td>{{ Carbon\Carbon::createFromDate($eq->created_at)->format('d-m-Y')  }}</td>
                     <td>{{$eq->user}}</td>
                     <td>
-                    <form method="get" action="requerimientos-edit"><input type="hidden" value="{{$eq->id}}" name="id"><input type="number" name="cantidad" value=""><button style="margin-left: 10px;" type="submit" class="btn btn-xs btn-danger">Procesar</button></form>
+                    <form method="get" action="requerimientos-edit"><input type="hidden" value="{{$eq->id}}" name="id"><input type="number" name="cantidad" value="" required min="0" max="{{$eq->cantidad_solicita}}"><button style="margin-left: 10px;" type="submit" class="btn btn-xs btn-danger">Procesar</button></form>
 
                   </td>
                   </tr>

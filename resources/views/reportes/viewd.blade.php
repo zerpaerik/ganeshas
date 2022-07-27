@@ -48,7 +48,8 @@
 
 <div>
 	<div class="text-center title-header col-12">
-		<center><strong>REPORTE DETALLADO DE {{ $sede }}</strong> </center>
+	<center><strong>HOTEL Ganeshas</strong> </center>
+		<center><strong>REPORTE DETALLADO</strong> </center>
 		<center><strong>DESDE: </strong>- {{ $f1 }} <strong>DESDE: </strong>{{ $f2 }}</center>
 
 	</div>
@@ -65,79 +66,76 @@
 <br>
 
 <div style="font-weight: bold; font-size: 14px">
-		DETALLE
+		INGRESOS
 </div>
 
 <div style="background: #eaeaea;">
 	<table>
 		<tr>
-		   <th style="padding: 0;width: 10%;text-overflow: ellipsis;">FECHA</th>
-			<th style="padding: 0;width: 10%;text-overflow: ellipsis;">VENTA TOTAL</th>
-			<th style="padding: 0;width: 10%;text-overflow: ellipsis;">P.EFE</th>
-			<th style="padding: 0;width: 10%;text-overflow: ellipsis;">P.TARJ</th>
-			<th style="padding: 0;width: 10%;text-overflow: ellipsis;">P.DEPOS</th>
-			<th style="padding: 0;width: 10%;text-overflow: ellipsis;">P.YAPE</th>
-			<th style="padding: 0;width: 10%;text-overflow: ellipsis;">P.PLIN</th>
-			<th style="padding: 0;width: 10%;text-overflow: ellipsis;">EGRESOS</th>
-			<th style="padding: 0;width: 10%;text-overflow: ellipsis;">TOTAL</th>
-
+			<th style="padding: 0;width: 5%;text-overflow: ellipsis;">FECHA</th>
+			<th style="padding: 0;width: 10%;text-overflow: ellipsis;">DESCRIPCIÓN</th>
+			<th style="padding: 0;width: 5%;text-overflow: ellipsis;">MONTO</th>
+			<th style="padding: 0;width: 5%;text-overflow: ellipsis;">TP</th>
+			<th style="padding: 0;width: 10%;text-overflow: ellipsis;">CLIENTE</th>
+			<th style="padding: 0;width: 5%;text-overflow: ellipsis;">REGISTRADO POR</th>
 
 
 
 
 		</tr>
-		@foreach($efectivo as $ingreso)
+		@foreach($ingresos as $ingreso)
 		<tr>
-		    <td style="padding: 0;width: 10%;text-overflow: ellipsis;">{{ $ingreso->fecha }}</td>
+			<td style="padding: 0;width: 5%;text-overflow: ellipsis;">{{ $ingreso->created_at }}</td>
+			<td style="padding: 0;width: 5%;text-overflow: ellipsis;">{{ $ingreso->descripcion }}</td>
 			<td style="padding: 0;width: 5%;text-overflow: ellipsis;">{{ $ingreso->monto }}</td>
-			<td style="padding: 0;width: 5%;text-overflow: ellipsis;">{{ $ingreso->efectivo }}</td>
-			<td style="padding: 0;width: 5%;text-overflow: ellipsis;">{{ $ingreso->tarjeta }}</td>
-			<td style="padding: 0;width: 5%;text-overflow: ellipsis;">{{ $ingreso->deposito }}</td>
-			<td style="padding: 0;width: 5%;text-overflow: ellipsis;">{{ $ingreso->yape }}</td>
-			<td style="padding: 0;width: 5%;text-overflow: ellipsis;">{{ $ingreso->plin }}</td>
-			<td style="padding: 0;width: 5%;text-overflow: ellipsis;">{{ $ingreso->egre }}</td>
-			<td style="padding: 0;width: 5%;text-overflow: ellipsis;">{{ $ingreso->efectivo - $ingreso->egre }}</td>
-
+			<td style="padding: 0;width: 5%;text-overflow: ellipsis;">{{ $ingreso->tipopago }}</td>
+			<td style="padding: 0;width: 5%;text-overflow: ellipsis;">{{ $ingreso->nombre }}</td>
+			<td style="padding: 0;width: 5%;text-overflow: ellipsis;">{{ $ingreso->usuario }}</td>
+			
 		</tr>
 		@endforeach
 	</table>
 
-	<table>
-		<tr>
-		   <th style="padding: 0;width: 10%;text-overflow: ellipsis;">----</th>
-			<th style="padding: 0;width: 10%;text-overflow: ellipsis;">----</th>
-			<th style="padding: 0;width: 10%;text-overflow: ellipsis;">----</th>
-			<th style="padding: 0;width: 10%;text-overflow: ellipsis;">----</th>
-			<th style="padding: 0;width: 10%;text-overflow: ellipsis;">----</th>
-			<th style="padding: 0;width: 10%;text-overflow: ellipsis;">----</th>
-			<th style="padding: 0;width: 10%;text-overflow: ellipsis;">----</th>
-			<th style="padding: 0;width: 10%;text-overflow: ellipsis;">----</th>
-			<th style="padding: 0;width: 10%;text-overflow: ellipsis;">----</th>
-
-
-
-
-
-		</tr>
-		<tr>
-		    <td style="padding: 0;width: 10%;text-overflow: ellipsis;">TOTALES</td>
-			<td style="padding: 0;width: 5%;text-overflow: ellipsis;">{{ $totales->monto }}</td>
-			<td style="padding: 0;width: 5%;text-overflow: ellipsis;">{{ $totales->efectivo }}</td>
-			<td style="padding: 0;width: 5%;text-overflow: ellipsis;">{{ $totales->tarjeta }}</td>
-			<td style="padding: 0;width: 5%;text-overflow: ellipsis;">{{ $totales->deposito }}</td>
-			<td style="padding: 0;width: 5%;text-overflow: ellipsis;">{{ $totales->yape }}</td>
-			<td style="padding: 0;width: 5%;text-overflow: ellipsis;">{{ $totales->plin }}</td>
-			<td style="padding: 0;width: 5%;text-overflow: ellipsis;">{{ $totales->egre }}</td>
-			<td style="padding: 0;width: 5%;text-overflow: ellipsis;">{{ $totales->efectivo - $totales->egre }}</td>
-
-		</tr>
-	</table>
-
+	<strong>TOTAL INGRESOS:</strong>{{ $totalingreso->monto }}<br>
 
 </div>
 <br>
 
+<div style="font-weight: bold; font-size: 14px">
+		EGRESOS
+</div>
 
+<div style="background: #eaeaea;">
+	<table>
+		<tr>
+			<th style="padding: 0;width: 5%;text-overflow: ellipsis;">FECHA</th>
+			<th style="padding: 0;width: 5%;text-overflow: ellipsis;">DESCRIPCIÓN</th>
+			<th style="padding: 0;width: 5%;text-overflow: ellipsis;">MONTO</th>
+			<th style="padding: 0;width: 5%;text-overflow: ellipsis;">TIPO DE PAGO</th>
+			<th style="padding: 0;width: 5%;text-overflow: ellipsis;">REGISTRADO POR</th>
+
+
+
+
+		</tr>
+		@foreach($egresos as $egreso)
+		<tr>
+			<td style="padding: 0;width: 5%;text-overflow: ellipsis;">{{ $egreso->created_at }}</td>
+			<td style="padding: 0;width: 5%;text-overflow: ellipsis;">{{ $egreso->descripcion }}</td>
+			<td style="padding: 0;width: 5%;text-overflow: ellipsis;">{{ $egreso->monto }}</td>
+			<td style="padding: 0;width: 5%;text-overflow: ellipsis;">{{ $egreso->tipopago }}</td>
+			<td style="padding: 0;width: 5%;text-overflow: ellipsis;">{{ $egreso->usuario }}</td>
+			
+		</tr>
+		@endforeach
+	</table>
+
+	<strong>TOTAL EGRESOS:</strong>{{ $totalegreso->monto }}<br>
+
+
+	
+	
+</div>
 
 
 

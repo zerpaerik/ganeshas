@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>GANESHAS | Admin</title>
+  <title>Ganeshas | Admin</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
@@ -64,7 +64,7 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Productos</li>
+              <li class="breadcrumb-item active">Productosss</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -87,16 +87,15 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <table id="example" class="table table-bordered table-striped">
+                <table id="example" class="table table-bordered table-striped" data-page-length='100'>
                   <thead>
                   <tr>
                     <th>Nombre</th>
                     <th>Medida</th>
+                    <th>Foto</th>
                     <th>Categoria</th>
-                    <th>Stock Minimo</th>
-                    <th>Cantidad Actual</th>
                     <th>Precio</th>
-                    <th>Principio Activo</th>
+
                     <th>Acciones</th>
                   </tr>
                   </thead>
@@ -106,17 +105,13 @@
                   <tr>
                     <td>{{$an->nombre}}</td>
                     <td>{{$an->medida}}</td>
+                    <td><img src="fotos/{{$an->foto}}" class="" alt="Foto de Producto" width="250"></td>
                     <td>{{$an->categoria}}</td>
-                    <td>{{$an->minimo}}</td>
-                    <td>{{$an->cantidad}}</td>
                     <td>{{$an->precio}}</td>
-                    <td>{{$an->activo}}</td>
-
 
                     <td>
                     @if(Auth::user()->rol == 1)
 
-                      
                           <a class="btn btn-info btn-sm" href="productos-edit-{{$an->id}}">
                               <i class="fas fa-pencil-alt">
                               </i>
@@ -127,7 +122,6 @@
                               </i>
                               Delete
                           </a>
-
 
                        
                           @endif</td>
@@ -143,11 +137,10 @@
                   <tr>
                   <th>Nombre</th>
                     <th>Medida</th>
+                    <th>Foto</th>
                     <th>Categoria</th>
-                    <th>Stock Minimo</th>
-                    <th>Cantidad Actual</th>
                     <th>Precio</th>
-                    <th>Principio Activo</th>
+
                     <th>Acciones</th>
                   </tr>
                   </tfoot>
@@ -234,6 +227,7 @@
 
 $(document).ready(function() {
     $('#example').DataTable( {
+      
         dom: 'Bfrtip',
         buttons: [
             'excel', 'pdf', 'print'

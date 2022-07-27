@@ -16,7 +16,7 @@ class Pedidos extends Model
     protected $table="pedidos";
 
     protected $fillable = [
-        'solicitud','descripcion','monto','estatus','usuario','tipopago','producto'
+        'solicitud','descripcion','monto','estatus','usuario','tipopago','producto','pedido','cantidad_despachada'
     ];
 
     

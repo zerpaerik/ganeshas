@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>GANESHAS | Admin</title>
+  <title>Ganeshas | Admin</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
@@ -90,17 +90,7 @@
                   {{ csrf_field() }}  					
 
                 
-                  <div class="row">
-                  <div class="col-md-12">
-                    <label for="exampleInputEmail1">Seleccione la Habitación:</label>
-                  <select class="form-control" data-placeholder="Seleccione" style="width: 100%;" name="solicitud">
-                   @foreach($solicitudes as $a)
-                   <option value="{{$a->id}}">{{$a->hab}} Huesped:{{$a->nompac}} {{$a->apepac}}</option>
-                    @endforeach
-                  </select>
-
-                  </div>
-                  </div>
+                 
                   
                   <br>
 
@@ -114,8 +104,8 @@
                 <!-- Form template-->
                 <div id="servicios_template" class="template row">
 
-                    <label for="servicios_#index#_servicio" class="col-sm-3 control-label">Productos</label>
-                    <div class="col-sm-4">
+                    <label for="servicios_#index#_servicio" class="col-sm-2 control-label">Productos</label>
+                    <div class="col-sm-3">
 
                       <select id="servicios_#index#_servicio"  name="id_servicio[servicios][#index#][servicio]" class="selectServ form-control">
                         <option value="1">Productos</option>
@@ -128,12 +118,20 @@
                      
                     </div>
 
-                    <label for="servicios_#index#_monto" class="col-sm-2 control-label">Monto</label>
-                    <div class="col-sm-3">
+                    <label for="servicios_#index#_monto" class="col-sm-1 control-label">Monto</label>
+                    <div class="col-sm-2">
                       <input id="servicios_#index#_montoHidden" name="monto_h[servicios][#index#][montoHidden]" class="number" type="hidden" value="">
 
-                      <input id="servicios_#index#_monto" name="monto_s[servicios][#index#][monto] type="text" class="number form-control monto" placeholder="Monto" data-toggle="tooltip" data-placement="bottom" title="Monto" value="0.00">
+                      <input id="servicios_#index#_monto" name="monto_s[servicios][#index#][montos] type="text" class="number form-control monto" placeholder="Monto" data-toggle="tooltip" data-placement="bottom" title="Monto">
                     </div>
+
+                    <label for="servicios_#index#_monto" class="col-sm-2 control-label">Cantidad</label>
+                    <div class="col-sm-2">
+                      <input id="servicios_#index#_montoHidden" name="monto_hs[servicios][#index#][montoHidden]" class="number" type="hidden" value="">
+
+                      <input id="servicios_#index#_monto" name="monto_ss[servicios][#index#][montoss] type="text" class="number form-control" placeholder="Cantidad" data-toggle="tooltip" data-placement="bottom" title="Monto">
+                    </div>
+
 
                    
 
@@ -278,103 +276,127 @@ function datapac(){
 
 <script>
 
-$(document).ready(function() {
+$(document).on('change','.selectServ',function(){
+      var labId = $(this).attr('id');
+      var labArr = labId.split('_');
+      var id = labArr[1];
 
-$(".monto").keyup(function(event) {
-  var montoId = $(this).attr('id');
-  var montoArr = montoId.split('_');
-  var id = montoArr[1];
-  var montoH = parseFloat($('#servicios_'+id+'_montoHidden').val());
-  var monto = parseFloat($(this).val());
-  $('#servicios_'+id+'_montoHidden').val(monto);
-  calcular();
-  calculo_general();
-});
-
-$(".montol").keyup(function(event) {
-  var montoId = $(this).attr('id');
-  var montoArr = montoId.split('_');
-  var id = montoArr[1];
-  var montoH = parseFloat($('#laboratorios_'+id+'_montoHidden').val());
-  var monto = parseFloat($(this).val());
-  $('#laboratorios_'+id+'_montoHidden').val(monto);
-  calcular();
-  calculo_general();
-});
-
-$(".abonoL, .abonoS").keyup(function(){
-  var total = 0;
-  var selectId = $(this).attr('id');
-  var selectArr = selectId.split('_');
-  
-  if(selectArr[0] == 'servicios'){
-      if(parseFloat($(this).val()) == parseFloat($("#servicios_"+selectArr[1]+"_monto").val())){
-          alert('La cantidad insertada en abono es mayor al monto.');
-          $(this).val('0.00');
-          calculo_general();
-      } else {
-          calculo_general();
-      }
-  } else {
-    if(parseFloat($(this).val()) == 999999){
-          alert('Debe verificar la cantidad.');
-          $(this).val('0.00');
-          calculo_general();
-      } else {
-          calculo_general();
-      }
-  }
-});
+      $.ajax({
+         type: "GET",
+         url:  "productos/getProducto/"+$(this).val(),
+         success: function(a) {
+           
+            $('#servicios_'+id+'_montoHidden').val(a.precio);
+            $('#servicios_'+id+'_monto').val(a.precio);
+          
+         }
+      });
+    })
 
 var botonDisabled = true;
 
-// Main sheepIt form
-var phonesForm = $("#laboratorios").sheepIt({
-    separator: '',
-    allowRemoveCurrent: true,
-    allowAdd: true,
-    allowRemoveAll: true,
-    allowRemoveLast: true,
+    // Main sheepIt form
+    var phonesForm = $("#servicios").sheepIt({
+        separator: '',
+        allowRemoveCurrent: true,
+        allowAdd: true,
+        allowRemoveAll: true,
+        allowRemoveLast: true,
 
-    // Limits
-    maxFormsCount: 10,
-    minFormsCount: 1,
-    iniFormsCount: 0,
+        // Limits
+        maxFormsCount: 10,
+        minFormsCount: 1,
+        iniFormsCount: 0,
 
-    removeAllConfirmationMsg: 'Seguro que quieres eliminar todos?',
-    
-    afterRemoveCurrent: function(source, event){
-      calcular();
-      calculo_general();
-    }
-});
-
-
-$(document).on('change', '.selectLab', function(){
-  var labId = $(this).attr('id');
-  var labArr = labId.split('_');
-  var id = labArr[1];
-
-  $.ajax({
-     type: "GET",
-     url:  "product/getProduct/"+$(this).val(),
-     success: function(a) {
-        $('#laboratorios_'+id+'_montoHidden').val(a.precioventa);
-        $('#laboratorios_'+id+'_monto').val(a.precioventa);
-        var total = parseFloat($('#total').val());
-        $("#total").val(total + parseFloat(a.precioventa));
-        calcular();
-        calculo_general();
-     }
-  });
-})
-});
-
-
+        removeAllConfirmationMsg: 'Seguro que quieres eliminar todos?',
+        afterRemoveCurrent: function(source, event){
+          calcular();
+          calculo_general();
+        }
+    });
 
 </script>
 
+<script>
 
+  $(function () {
+    // Summernote
+    $('.textarea').summernote()
+  })
+</script>
+<script>
+  $(function () {
+    //Initialize Select2 Elements
+    $('.select2').select2()
+
+    //Initialize Select2 Elements
+    $('.select2bs4').select2({
+      theme: 'bootstrap4'
+    })
+
+    //Datemask dd/mm/yyyy
+    $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
+    //Datemask2 mm/dd/yyyy
+    $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
+    //Money Euro
+    $('[data-mask]').inputmask()
+
+    //Date range picker
+    $('#reservationdate').datetimepicker({
+        format: 'L'
+    });
+    //Date range picker
+    $('#reservation').daterangepicker()
+    //Date range picker with time picker
+    $('#reservationtime').daterangepicker({
+      timePicker: true,
+      timePickerIncrement: 30,
+      locale: {
+        format: 'MM/DD/YYYY hh:mm A'
+      }
+    })
+    //Date range as a button
+    $('#daterange-btn').daterangepicker(
+      {
+        ranges   : {
+          'Today'       : [moment(), moment()],
+          'Yesterday'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+          'Last 7 Days' : [moment().subtract(6, 'days'), moment()],
+          'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+          'This Month'  : [moment().startOf('month'), moment().endOf('month')],
+          'Last Month'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        },
+        startDate: moment().subtract(29, 'days'),
+        endDate  : moment()
+      },
+      function (start, end) {
+        $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+      }
+    )
+
+    //Timepicker
+    $('#timepicker').datetimepicker({
+      format: 'LT'
+    })
+    
+    //Bootstrap Duallistbox
+    $('.duallistbox').bootstrapDualListbox()
+
+    //Colorpicker
+    $('.my-colorpicker1').colorpicker()
+    //color picker with addon
+    $('.my-colorpicker2').colorpicker()
+
+    $('.my-colorpicker2').on('colorpickerChange', function(event) {
+      $('.my-colorpicker2 .fa-square').css('color', event.color.toString());
+    });
+
+    $("input[data-bootstrap-switch]").each(function(){
+      $(this).bootstrapSwitch('state', $(this).prop('checked'));
+    });
+
+  })
+</script>
 
 
 </body>

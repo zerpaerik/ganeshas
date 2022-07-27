@@ -6,7 +6,6 @@ use App\Roles;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use DB;
 
 class PersonalController extends Controller
 {
@@ -64,7 +63,6 @@ class PersonalController extends Controller
         $personal->cargo =$request->cargo;
         $personal->tipo_personal =$request->tipo;
         $personal->rol =$request->rol;
-        $personal->sede =$request->sede;
         $personal->password =Hash::make($request['password']);
         $personal->tipo =1;
         $personal->save();
@@ -73,22 +71,17 @@ class PersonalController extends Controller
     }
     }
 
-    public function ver($id)
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Roles  $roles
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Roles $roles)
     {
+        //
+    }
 
-
-      $users = DB::table('users as a')
-      ->select('a.*')
-     // ->join('users as u', 'u.id', 'a.usuario')
-      ->where('a.id', '=', $id)
-      ->first(); 
-	  
-      return view('personal.ver', compact('users'));
-    }	  
-
-
-
-    
     /**
      * Show the form for editing the specified resource.
      *
@@ -121,7 +114,6 @@ class PersonalController extends Controller
       $personal->telefono =$request->telefono;
       $personal->direccion =$request->direccion;
       $personal->cargo =$request->cargo;
-      $personal->sede =$request->sede;
       $personal->tipo_personal =$request->tipo;
       $res = $personal->update();
 

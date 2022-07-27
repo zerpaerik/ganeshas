@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>GANESHAS | Admin</title>
+  <title>Ganeshas | Admin</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
@@ -97,11 +97,15 @@
                             </div>
                             <div class="col-md-2">
                             <label for="exampleInputEmail1">Items</label>
-                            <input type="text" disabled class="form-control" value="{{$soli->item}}" >
+                            <input type="text" disabled class="form-control" value="{{$item}}" >
                             </div>
                             <div class="col-md-2">
                             <label for="exampleInputEmail1">Cantidad</label>
-                            <input type="text" disabled class="form-control" value="{{$soli->cant}}" >
+                            <input type="text" disabled class="form-control" value="{{$desp}}" >
+                            </div>
+                            <div class="col-md-2">
+                              <label for="exampleInputEmail1">Cantidad Total Soles</label>
+                              <input type="text" disabled class="form-control" value="{{number_format((float)$total, 2, '.', '')}}" >
                             </div>
 
 
@@ -114,9 +118,12 @@
                 <table id="example" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                    <th>Producto</th>
+                  <th>Producto</th>
                     <th>Medida</th>
                     <th>Cantidad</th>
+                    <th>Precio</th>
+                    <th>Total Soles</th>
+                    <th>Fecha Descarga</th>
                     <th>Almacen</th>
                     <th>Fecha</th>
                     <th>Registrado Por</th>
@@ -130,6 +137,9 @@
                     <td>{{$an->nompro}}</td>
                     <td>{{$an->medida}}</td>
                     <td>{{$an->cantidad}}</td>
+                    <td>{{number_format((float)$an->precio, 2, '.', '')}}</td>
+                    <td>{{number_format((float)$an->precio * $an->cantidad, 2, '.', '')}}</td>
+                    <td>{{$an->fecha}}</td>
                     @if($an->almacen == 7)
                     <td>Canto Rey</td>
                     @elseif($an->almacen == 8)
@@ -172,6 +182,9 @@
                   <th>Producto</th>
                     <th>Medida</th>
                     <th>Cantidad</th>
+                    <th>Precio</th>
+                    <th>Total Soles</th>
+                    <th>Fecha Descarga</th>
                     <th>Almacen</th>
                     <th>Fecha</th>
                     <th>Registrado Por</th>

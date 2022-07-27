@@ -49,7 +49,7 @@
 <div>
 	<div class="text-center title-header col-12">
     <center><img src="hotel.jpeg" class="img-circle elevation-2" alt="User Image" width="150"></center>
-	<center><strong>HOTEL GANESHAS</strong> </center>
+	<center><strong>HOTEL Ganeshas</strong> </center>
 		<center><strong>LISTADO DE PRODUCTOS</strong> </center>
 
 	</div>

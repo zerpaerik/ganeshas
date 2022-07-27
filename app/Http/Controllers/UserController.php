@@ -93,7 +93,6 @@ class UserController extends Controller
             $user = new User();
             $user->name =$request->name;
             $user->email =$request->email;
-            $user->sede =$request->sede;
             $user->rol =$request->rol;
             $user->password =Hash::make($request['password']);
             $user->save();
@@ -143,7 +142,6 @@ class UserController extends Controller
             $p->name =$request->name;
             $p->email =$request->email;
             $p->rol =$request->rol;
-            $p->sede =$request->sede;
             $p->empresa =$request->empresa;
             $p->password =Hash::make($request['password']);
             $res = $p->update();

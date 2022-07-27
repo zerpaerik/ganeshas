@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>GANESHAS | Admin</title>
+  <title>Ganeshas | Admin</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
@@ -86,17 +86,9 @@
                     <label for="exampleInputEmail1">Fin</label>
                     <input type="date" class="form-control" value="{{$f2}}" name="fin">
                   </div>
-                  <div class="col-md-3">
-                  <label for="exampleInputEmail1">Sede</label>
-                  <select class="form-control" name="sede">
-                    <option value="1">PRINCIPAL</option>
-                  
-                  </select>
-                   
-                  </div>
                  
                   <div class="col-md-2" style="margin-top: 30px;">
-                  <button type="submit" class="btn btn-primary" formtarget="_blank">Generar</button>
+                  <button type="submit" class="btn btn-primary">Generar</button>
 
                   </div>
                   </form>

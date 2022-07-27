@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>GANESHAS | Admin</title>
+  <title>Ganeshas | Admin</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
@@ -88,15 +88,15 @@
                     <div class="row">
                   <div class="col-md-4">
                     <label for="exampleInputEmail1">Nombre</label>
-                    <input type="text" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control" id="nombre" name="nombre" placeholder="Nombre">
+                    <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre">
                   </div>
                   <div class="col-md-4">
                     <label for="exampleInputEmail1">Dirección</label>
-                    <input type="text" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control" id="nombre" name="direccion" placeholder="Dirección">
+                    <input type="text" class="form-control" id="nombre" name="direccion" placeholder="Dirección">
                   </div>
                   <div class="col-md-4">
                     <label for="exampleInputEmail1">Referencia</label>
-                    <input type="text" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control" id="nombre" name="referencia" placeholder="Referencia">
+                    <input type="text" class="form-control" id="nombre" name="referencia" placeholder="Referencia">
                   </div>
                   </div>
               

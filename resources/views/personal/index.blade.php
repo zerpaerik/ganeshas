@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>GANESHAS | Admin</title>
+  <title>Ganeshas | Admin</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
@@ -102,8 +102,8 @@
                     <td>{{$p->email}}</td>
                     <td>{{$p->cargo}}</td>
                     <td>{{$p->telefono}}</td>
-                    <td><a class="btn btn-primary btn-sm" id="{{$p->id}}" onclick="viewh(this)">
-                              <i class="fas fa-eye">
+                    <td><a class="btn btn-primary btn-sm" href="#">
+                              <i class="fas fa-folder">
                               </i>
                               Ver
                           </a>
@@ -151,22 +151,6 @@
     <!-- /.content -->
   </div>
   </div>
-  <div class="modal fade" id="viewTicket">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-            </div>
-           
-          </div>
-          <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-      </div>
   </section>
 
   <!-- /.content-wrapper -->
@@ -224,26 +208,6 @@
 <!-- AdminLTE for demo purposes -->
 <script src="../../dist/js/demo.js"></script>
 <!-- page script -->
-<script type="text/javascript">
-		function viewh(e){
-		    var id = $(e).attr('id');
-		    
-		    $.ajax({
-		        type: "GET",
-		        url: "/personal/ver/"+id,
-		        success: function (data) {
-		            $("#viewTicket .modal-body").html(data);
-		            $('#viewTicket').modal('show');
-		        },
-		        error: function (data) {
-		            console.log('Error:', data);
-		        }
-		    });
-		}
-
-	
-	</script>
-
 <script>
   $(function () {
     $("#example1").DataTable({

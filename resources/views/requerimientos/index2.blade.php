@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>GANESHAS | Admin</title>
+  <title>Ganeshas | Admin</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
@@ -105,6 +105,63 @@
                   <div class="col-md-2">
                     <label for="exampleInputEmail1">Almacen</label>
                     <select class="form-control" name="solicita">
+                    @if($alma == 2)
+                    <option value="2" selected>Recepción</option>
+                    <option value="3">Obstetra</option>
+                    <option value="4">Rayos X</option>
+                    <option value="11">Laboratorio</option>
+                    <option value="7">Canto Rey</option>
+                    <option value="8">Vida Feliz</option>
+                    <option value="9">Zarate</option>
+                    @elseif($alma == 3)
+                    <option value="2">Recepción</option>
+                    <option value="3" selected>Obstetra</option>
+                    <option value="4">Rayos X</option>
+                    <option value="11">Laboratorio</option>
+                    <option value="7">Canto Rey</option>
+                    <option value="8">Vida Feliz</option>
+                    <option value="9">Zarate</option>
+                    @elseif($alma == 4)
+                    <option value="2">Recepción</option>
+                    <option value="3">Obstetra</option>
+                    <option value="4" selected>Rayos X</option>
+                    <option value="11">Laboratorio</option>
+                    <option value="7">Canto Rey</option>
+                    <option value="8">Vida Feliz</option>
+                    <option value="9">Zarate</option>
+                    @elseif($alma == 7)
+                    <option value="2">Recepción</option>
+                    <option value="3">Obstetra</option>
+                    <option value="4">Rayos X</option>
+                    <option value="11">Laboratorio</option>
+                    <option value="7" selected>Canto Rey</option>
+                    <option value="8">Vida Feliz</option>
+                    <option value="9">Zarate</option>
+                    @elseif($alma == 8)
+                    <option value="2">Recepción</option>
+                    <option value="3">Obstetra</option>
+                    <option value="4">Rayos X</option>
+                    <option value="11">Laboratorio</option>
+                    <option value="7">Canto Rey</option>
+                    <option value="8" selected>Vida Feliz</option>
+                    <option value="9">Zarate</option>
+                    @elseif($alma == 9)
+                    <option value="2">Recepción</option>
+                    <option value="3">Obstetra</option>
+                    <option value="4">Rayos X</option>
+                    <option value="11">Laboratorio</option>
+                    <option value="7">Canto Rey</option>
+                    <option value="8">Vida Feliz</option>
+                    <option value="9" selected>Zarate</option>
+                    @elseif($alma == 11)
+                    <option value="2">Recepción</option>
+                    <option value="3">Obstetra</option>
+                    <option value="4">Rayos X</option>
+                    <option value="11" selected>Laboratorio</option>
+                    <option value="7">Canto Rey</option>
+                    <option value="8">Vida Feliz</option>
+                    <option value="9">Zarate</option>
+                    @else
                     <option value="2">Recepción</option>
                     <option value="3">Obstetra</option>
                     <option value="4">Rayos X</option>
@@ -112,6 +169,7 @@
                     <option value="7">Canto Rey</option>
                     <option value="8">Vida Feliz</option>
                     <option value="9">Zarate</option>
+                    @endif
                     </select>                  
                     </div>
                  
@@ -120,27 +178,19 @@
                   <button type="submit" class="btn btn-primary">Buscar</button>
 
                   </div>
-
                   <div class="row">
                   <div class="col-md-2">
                     <label for="exampleInputEmail1">Items</label>
-                    <input type="text" disabled class="form-control" value="{{$soli->item}}" >
+                    <input type="text" disabled class="form-control" value="{{$item}}" >
                   </div>
                   <div class="col-md-2">
                     <label for="exampleInputEmail1">Cantidad</label>
-                    <input type="text" disabled class="form-control" value="{{$soli->cant}}" >
+                    <input type="text" disabled class="form-control" value="{{$desp}}" >
                   </div>
-                  @if($prod != '0')
-
-                  <div class="col-md-3">
-                    <label for="exampleInputEmail1">Monto en Soles</label>
-                    <input type="text" disabled class="form-control" value="{{$prod->precio * $soli->cant}}">
+                  <div class="col-md-2">
+                    <label for="exampleInputEmail1">Total Soles</label>
+                    <input type="text" disabled class="form-control" value="{{number_format((float)$total, 2, '.', '')}}" >
                   </div>
-
-                
-
-                  @endif
-
                   </div>
 
                   
@@ -154,10 +204,12 @@
                   <thead>
                   <tr>
                     <th>Producto</th>
+                    <th>Precio</th>
                     <th>Medida</th>
-                    <th>Solicitante</th>
-                    <th>Cant.Sol</th>
-                    <th>Cant.Ent</th>
+                    <th>Almancen</th>
+                    <th>Solicitado</th>
+                    <th>Entregado</th>
+                    <th>Monto</th>
                     <th>Fecha</th>
                     <th>Acciones</th>
                   </tr>
@@ -168,6 +220,7 @@
                   @foreach($requerimientos as $eq)
                   <tr>
                     <td>{{$eq->nompro}}</td>
+                    <td>{{$eq->precio}}</td>
                     <td>{{$eq->medida}}</td>
                     @if($eq->almacen_solicita == 2)
                     <td>Recepción</td>
@@ -188,10 +241,9 @@
                     @else
                     <td>Zarate</td>
                     @endif
-                    
-                    
                     <td>{{$eq->cantidad_solicita}}</td>
                     <td>{{$eq->cantidad_despachada}}</td>
+                    <td>{{number_format((float)$eq->cantidad_despachada * $eq->precio, 2, '.', '')}}</td>
                     <td>{{ Carbon\Carbon::createFromDate($eq->created_at)->format('d-m-Y')  }}</td>
                     <td>
                     <a class="btn btn-danger btn-sm" href="requerimientos-reversar-{{$eq->id}}" onclick="return confirm('¿Desea Reversar este registro?')">
@@ -217,10 +269,12 @@
                   <tfoot>
                   <tr>
                   <th>Producto</th>
+                    <th>Precio</th>
                     <th>Medida</th>
-                    <th>Solicitante</th>
-                    <th>Cant.Sol</th>
-                    <th>Cant.Ent</th>
+                    <th>Almancen</th>
+                    <th>Solicitado</th>
+                    <th>Entregado</th>
+                    <th>Monto</th>
                     <th>Fecha</th>
                     <th>Acciones</th>
                   </tr>

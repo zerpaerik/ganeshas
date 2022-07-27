@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>GANESHAS | Admin</title>
+  <title>Ganeshas | Admin</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
@@ -93,8 +93,8 @@
                     <input type="text" class="form-control" id="nombre" name="apellidos" value="{{$prof->lastname}}" placeholder="Apellidos">
                   </div>
                   <div class="col-md-4">
-                    <label for="exampleInputEmail1">CMP</label>
-                    <input type="text" class="form-control" id="nombre" name="cmp" value="{{$prof->cmp}}" placeholder="Telefono de contacto">
+                    <label for="exampleInputEmail1">Email</label>
+                    <input type="text" class="form-control" id="nombre" name="email" value="{{$prof->email}}" placeholder="DNI">
                   </div>
                   </div>
                   <br>
@@ -103,6 +103,18 @@
                     <label for="exampleInputEmail1">Teléfono</label>
                     <input type="text" class="form-control" id="nombre" name="telefono" value="{{$prof->telefono}}" placeholder="Dirección de contacto">
                   </div>
+                  <div class="col-md-4">
+                    <label for="exampleInputEmail1">CMP</label>
+                    <input type="text" class="form-control" id="nombre" name="cmp" value="{{$prof->cmp}}" placeholder="Telefono de contacto">
+                  </div>
+                  <div class="col-md-4">
+                    <label for="exampleInputEmail1">Nacimiento</label>
+                    <input type="date" class="form-control" id="nombre" name="nacimiento" value="{{$prof->nacimiento}}" placeholder="Email de contacto">
+                  </div>
+                  
+                  </div>
+                  <br>
+                  <div class="row">
                   <div class="col-md-4">
                     <label for="exampleInputEmail1">Centro</label>
                     <select class="form-control" name="centro"  data-toggle="tooltip" data-placement="bottom">
@@ -135,11 +147,15 @@
                       @endforeach
                     </select>
                   </div>
-                  
+
                 
+
+                  
+                  
                   
                   </div>
-                 
+
+                  <div id="sesion" class="sesion">
 
 
                   <input type="hidden" name="id" value="{{$prof->id}}">

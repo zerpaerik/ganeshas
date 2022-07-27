@@ -5,9 +5,13 @@ namespace App\Http\Controllers;
 use App\Productos;
 use App\ProductMov;
 use App\ProductosAlmacen;
+use App\ProductosUsados;
 use App\UnidadMedida;
 use App\Ingresos;
 use App\User;
+use App\Req;
+use App\Requerimientos;
+use App\MovimientoProductos;
 use App\IngresosDetalle;
 use Illuminate\Http\Request;
 use DB;
@@ -34,7 +38,7 @@ class ProductosController extends Controller
             $f2 = $request->fin;
 
         $ingresos = DB::table('ingresos_detalle as a')
-        ->select('a.id','a.producto','a.ingreso','a.vence','a.precio','a.estatus','a.usuario_elimina','a.cantidad','i.created_at','i.usuario','a.precio','i.factura','i.fecha','i.observacion','u.name as usuario','p.nombre as producto', 'p.medida')
+        ->select('a.id','a.producto','a.ingreso','a.vence','a.estatus','a.usuario_elimina','a.cantidad','i.created_at','i.usuario','a.precio','i.factura','i.fecha','i.observacion','u.name as usuario','p.nombre as producto', 'p.medida')
         ->join('ingresos as i','i.id','a.ingreso')
         ->join('productos as p','p.id','a.producto')
         ->join('users as u','u.id','i.usuario')
@@ -44,7 +48,7 @@ class ProductosController extends Controller
 
     } else {
         $ingresos = DB::table('ingresos_detalle as a')
-        ->select('a.id','a.producto','a.ingreso','a.vence','a.precio','a.estatus','a.usuario_elimina','a.cantidad','i.created_at','i.usuario','a.precio','i.factura','i.fecha','i.observacion','u.name as usuario','p.nombre as producto','p.medida')
+        ->select('a.id','a.producto','a.ingreso','a.vence','a.estatus','a.usuario_elimina','a.cantidad','i.created_at','i.usuario','a.precio','i.factura','i.fecha','i.observacion','u.name as usuario','p.nombre as producto','p.medida')
         ->join('ingresos as i','i.id','a.ingreso')
         ->join('productos as p','p.id','a.producto')
         ->join('users as u','u.id','i.usuario')
@@ -101,8 +105,15 @@ class ProductosController extends Controller
         ->where('a.cantidad','>',0)
         ->get(); 
 
+        $total = DB::table('productos_almacen as a')
+        ->select('a.id','a.producto','a.cantidad','a.precio','a.vence','u.minimol','u.nombre as nompro','u.categoria','u.medida','a.almacen',DB::raw('SUM(a.cantidad*a.precio) as preciototal'))
+        ->join('productos as u','u.id','a.producto')
+        ->where('a.almacen','=',1)
+        ->where('a.cantidad','>',0)
+        ->first(); 
 
-        return view('productos.central',compact('productos'));
+
+        return view('productos.central',compact('productos','total'));
 
         //
     }
@@ -117,14 +128,22 @@ class ProductosController extends Controller
         ->where('a.almacen','=',11)
         ->get(); 
 
+        $total = DB::table('productos_almacen as a')
+        ->select('a.id','a.producto','a.cantidad','a.precio','a.vence','u.minimol','u.nombre as nompro','u.categoria','u.medida','a.almacen',DB::raw('SUM(a.cantidad*a.precio) as preciototal'))
+        ->join('productos as u','u.id','a.producto')
+        ->where('a.almacen','=',11)
+        ->first(); 
 
-        return view('productos.laboratorio',compact('productos'));
+
+        return view('productos.laboratorio',compact('productos','total'));
 
         //
     }
 
     public function recepcion()
     {
+
+        
 
 
         $productos = DB::table('productos_almacen as a')
@@ -133,8 +152,14 @@ class ProductosController extends Controller
         ->where('a.almacen','=',2)
         ->get(); 
 
+        $total = DB::table('productos_almacen as a')
+        ->select('a.id','a.producto','a.cantidad','a.precio','a.vence','u.minimol','u.nombre as nompro','u.categoria','u.medida','a.almacen',DB::raw('SUM(a.cantidad*a.precio) as preciototal'))
+        ->join('productos as u','u.id','a.producto')
+        ->where('a.almacen','=',2)
+        ->first(); 
 
-        return view('productos.recepcion',compact('productos'));
+
+        return view('productos.recepcion',compact('productos','total'));
 
         //
     }
@@ -148,9 +173,14 @@ class ProductosController extends Controller
         ->join('productos as u','u.id','a.producto')
         ->where('a.almacen','=',3)
         ->get(); 
+        $total = DB::table('productos_almacen as a')
+        ->select('a.id','a.producto','a.cantidad','a.precio','a.vence','u.minimol','u.nombre as nompro','u.categoria','u.medida','a.almacen',DB::raw('SUM(a.cantidad*a.precio) as preciototal'))
+        ->join('productos as u','u.id','a.producto')
+        ->where('a.almacen','=',3)
+        ->first(); 
 
 
-        return view('productos.obstetra',compact('productos'));
+        return view('productos.obstetra',compact('productos','total'));
 
         //
     }
@@ -165,8 +195,14 @@ class ProductosController extends Controller
         ->where('a.almacen','=',4)
         ->get(); 
 
+        $total = DB::table('productos_almacen as a')
+        ->select('a.id','a.producto','a.cantidad','a.precio','a.vence','u.minimol','u.nombre as nompro','u.categoria','u.medida','a.almacen',DB::raw('SUM(a.cantidad*a.precio) as preciototal'))
+        ->join('productos as u','u.id','a.producto')
+        ->where('a.almacen','=',4)
+        ->first(); 
 
-        return view('productos.rayos',compact('productos'));
+
+        return view('productos.rayos',compact('productos','total'));
 
         //
     }
@@ -190,8 +226,15 @@ class ProductosController extends Controller
         ->where('a.almacen','=',$almacen)
         ->get(); 
 
+        
+        $total = DB::table('productos_almacen as a')
+        ->select('a.id','a.producto','a.cantidad','a.precio','a.vence','u.minimol','u.nombre as nompro','u.categoria','u.medida','a.almacen',DB::raw('SUM(a.cantidad*a.precio) as preciototal'))
+        ->join('productos as u','u.id','a.producto')
+        ->where('a.almacen','=',$almacen)
+        ->first(); 
 
-        return view('productos.almacen',compact('productos'));
+
+        return view('productos.almacen',compact('productos','total'));
 
         //
     }
@@ -255,8 +298,6 @@ class ProductosController extends Controller
     public function storeing(Request $request)
     {
 
-        dd($request->all());
-
 
                 $ingreso = new Ingresos();
                 $ingreso->factura = $request->factura;
@@ -296,6 +337,14 @@ class ProductosController extends Controller
                 $pa->almacen = 1;
                 $pa->save();
 
+                
+                $mp = new MovimientoProductos();
+                $mp->id_producto_almacen = $pa->id;
+                $mp->cantidad = $request->monto_abol['laboratorios'][$key]['abono'];
+                $mp->usuario = Auth::user()->id;
+                $mp->accion = 'INGRESO A ALMACEN CENTRAL';
+                $mp->save();
+
                 } else {
 
                 $pa = ProductosAlmacen::where('producto','=',$laboratorio['laboratorio'])->where('almacen','=',1)->first();
@@ -303,6 +352,13 @@ class ProductosController extends Controller
                // $pa->precio =  $request->precio_abol['laboratorios'][$key]['precio'] / $request->monto_abol['laboratorios'][$key]['abono'];
                 //$pa->vence =  $request->fecha_vence['laboratorios'][$key]['vence'];
                 $res = $pa->update();
+
+                $mp = new MovimientoProductos();
+                $mp->id_producto_almacen = $pa->id;
+                $mp->cantidad = $request->monto_abol['laboratorios'][$key]['abono'];
+                $mp->usuario = Auth::user()->id;
+                $mp->accion = 'INGRESO A ALMACEN CENTRAL';
+                $mp->save();
                     
                 }
 
@@ -322,6 +378,13 @@ class ProductosController extends Controller
                     $pa->usuario = Auth::user()->id;
                     $pa->almacen = 1;
                     $pa->save();
+
+                    $mp = new MovimientoProductos();
+                    $mp->id_producto_almacen = $pa->id;
+                    $mp->cantidad = $request->monto_abol['laboratorios'][$key]['abono'];
+                    $mp->usuario = Auth::user()->id;
+                    $mp->accion = 'INGRESO A ALMACEN CENTRAL';
+                    $mp->save();
     
                     } else {
     
@@ -330,6 +393,13 @@ class ProductosController extends Controller
                    // $pa->precio =  $request->precio_abol['laboratorios'][$key]['precio'] / $request->monto_abol['laboratorios'][$key]['abono'];
                     //$pa->vence =  $request->fecha_vence['laboratorios'][$key]['vence'];
                     $res = $pa->update();
+
+                    $mp = new MovimientoProductos();
+                    $mp->id_producto_almacen = $pa->id;
+                    $mp->cantidad = $request->monto_abol['laboratorios'][$key]['abono'];
+                    $mp->usuario = Auth::user()->id;
+                    $mp->accion = 'INGRESO A ALMACEN CENTRAL';
+                    $mp->save();
                         
                     }
 
@@ -377,13 +447,17 @@ class ProductosController extends Controller
         $productos->nombre =$request->nombre;
         $productos->medida =$request->medida;
         $productos->minimo =$request->minimo;
-        $productos->minimol =$request->minimol;
-        $productos->categoria =$request->categoria;
-        $productos->activo =$request->activo;
         $productos->precio =$request->precio;
+        $productos->categoria =$request->categoria;
+        $fotoequipo = $request->file('foto');
+        $fotoe = $fotoequipo->getClientOriginalName();
+        $productos->foto =$fotoe;
         $productos->usuario =Auth::user()->id;
+        \Storage::disk('')->put($fotoe,  \File::get($fotoequipo));
         $productos->save();
 
+
+        
    
     
 
@@ -420,7 +494,8 @@ class ProductosController extends Controller
 
     public function updateingreso(Request $request){
 
-        $ingresosd = IngresosDetalle::find($request->id);
+
+        $ingresosd = IngresosDetalle::find($request->ingreso);
         $ingresosd->cantidad =$request->cantidad;
         $ingresosd->precio =$request->precio;
         $ingresosd->vence =$request->vence;
@@ -434,7 +509,7 @@ class ProductosController extends Controller
         $productosalmacen->vence =$request->vence;
         $res = $productosalmacen->update();
 
-        return back();
+        return redirect()->action('ProductosController@ingproductos');
 
         //ProductosAlmacen
 
@@ -456,6 +531,160 @@ class ProductosController extends Controller
         return view('productos.detalle_ingresos', compact('ingreso','detalle'));
     }
 
+    public function descargar($id)
+    {
+
+        
+        $productos = DB::table('productos_almacen as a')
+        ->select('a.id','a.producto','a.cantidad','a.precio','a.vence','u.minimol','u.nombre as nompro','u.categoria','u.medida','a.almacen')
+        ->join('productos as u','u.id','a.producto')
+        ->where('a.id','=',$id)
+        ->first(); 
+
+
+        return view('productos.descargar', compact('productos'));
+    }
+
+    public function editc($id)
+    {
+
+        
+        $productos = DB::table('productos_almacen as a')
+        ->select('a.id','a.producto','a.cantidad','a.precio','a.vence','u.minimol','u.nombre as nompro','u.categoria','u.medida','a.almacen')
+        ->join('productos as u','u.id','a.producto')
+        ->where('a.id','=',$id)
+        ->first(); 
+
+
+
+        return view('productos.editc', compact('productos'));
+    }
+
+    public function requerimiento($id)
+    {
+
+        
+        $productos = DB::table('productos_almacen as a')
+        ->select('a.id','a.producto','a.cantidad','a.precio','a.vence','u.minimol','u.nombre as nompro','u.categoria','u.medida','a.almacen')
+        ->join('productos as u','u.id','a.producto')
+        ->where('a.id','=',$id)
+        ->first(); 
+
+
+        return view('productos.requerimiento', compact('productos'));
+    }
+
+    public function historial($id)
+    {
+
+        
+        $productos = DB::table('productos_almacen as a')
+        ->select('a.id','a.producto','a.cantidad','a.precio','a.vence','u.minimol','u.nombre as nompro','u.categoria','u.medida','a.almacen')
+        ->join('productos as u','u.id','a.producto')
+        ->where('a.id','=',$id)
+        ->first(); 
+
+        $historial = DB::table('movimiento_productos as a')
+        ->select('a.id','a.id_producto_almacen','a.cantidad','a.accion','a.usuario','us.name','a.created_at','u.almacen')
+        ->join('productos_almacen as u','u.id','a.id_producto_almacen')
+        ->join('users as us','us.id','a.usuario')
+        ->where('a.id_producto_almacen','=',$id)
+        ->where('u.almacen','=',$productos->almacen)
+        ->get(); 
+
+
+        return view('productos.movimientos', compact('productos','historial'));
+    }
+
+    public function descargarPost(Request $request)
+    {
+
+
+                $pr = ProductosAlmacen::where('id','=',$request->id)->first();
+
+
+                $ingresosd = ProductosAlmacen::where('id','=',$request->id)->first();
+                $ingresosd->cantidad = $pr->cantidad - $request->cant;
+                $res = $ingresosd->update();
+
+                
+            $mp = new MovimientoProductos();
+            $mp->id_producto_almacen = $ingresosd->id;
+            $mp->cantidad = $request->cant;
+            $mp->usuario = Auth::user()->id;
+            $mp->accion = 'DESCARGA DE ALMACEN';
+            $mp->save();
+
+                
+
+
+                $lab = new ProductosUsados();
+                $lab->producto =  $pr->producto;
+                $lab->cantidad =  $request->cant;
+                $lab->fecha =  $request->fecha;
+                $lab->precio =  $pr->precio;
+                $lab->almacen =  $request->almacen;
+                $lab->usuario =  Auth::user()->id;
+                $lab->save();
+
+
+            
+
+                return back();
+            }
+
+            public function editcP(Request $request)
+    {
+
+
+
+                $ingresosd = ProductosAlmacen::where('id','=',$request->id)->first();
+                $ingresosd->cantidad = $request->cantidad;
+                $ingresosd->precio = $request->precio;
+                $res = $ingresosd->update();
+
+                $mp = new MovimientoProductos();
+                $mp->id_producto_almacen = $ingresosd->id;
+                $mp->cantidad = $request->cantidad;
+                $mp->usuario = Auth::user()->id;
+                $mp->accion = 'EDICIÓN DE CANTIDAD/PRECIO';
+                $mp->save();
+
+
+              
+
+            
+
+                return back();
+            }
+
+            public function reqPost(Request $request)
+            {
+
+                $almacen = ProductosAlmacen::where('id','=',$request->id)->first();
+
+    
+                $req1 = new Req();
+                $req1->save();
+
+                $req = new Requerimientos();
+                $req->producto =  $almacen->producto;
+                $req->cantidad_solicita =  $request->cantidad;
+                $req->almacen_solicita =  $request->almacen;
+                $req->usuario =  Auth::user()->id;
+                $req->req =  $req1->id;
+                $req->sede =  $request->session()->get('sede');
+                $req->save();
+        
+        
+        
+        
+                
+                
+                return back();
+        
+            }
+
     public function reversar($id)
     {
 
@@ -466,7 +695,11 @@ class ProductosController extends Controller
                 $productos = ProductosAlmacen::where('ingreso','=',$id)->first();
 
                 $productosa = ProductosAlmacen::where('ingreso','=',$id)->first();
-                $res = $productosa->delete();
+                if ($productosa != null) {
+                    $productosaa = ProductosAlmacen::where('ingreso', '=', $id)->first();
+                    $productosaa->delete();
+                }
+               
 
                 $ingresosd = IngresosDetalle::where('id','=',$id)->first();
                 $ingresosd->estatus =0;
@@ -509,9 +742,7 @@ class ProductosController extends Controller
         $productos->medida =$request->medida;
         $productos->categoria =$request->categoria;
         $productos->minimo =$request->minimo;
-        $productos->cantidad =$request->cantidad;
-        $productos->activo =$request->activo;
-        $productos->precio =$request->precio;
+        $productos->minimol =$request->minimol;
         $res = $productos->update();
 
     

@@ -5,6 +5,7 @@ use App\Equipos;
 use App\Requerimientos;
 use App\Req;
 use App\ProductosAlmacen;
+use App\MovimientoProductos;
 use App\Clientes;
 use App\Productos;
 use App\User;
@@ -36,6 +37,8 @@ class RequerimientosController extends Controller
         ->whereBetween('a.created_at', [$f1, $f2])
         ->get(); 
 
+        $alma = $request->solicita;
+
     } else {
         $f1 = date('Y-m-d');
         $f2 = date('Y-m-d');
@@ -48,9 +51,12 @@ class RequerimientosController extends Controller
         ->whereBetween('a.created_at', [$f1, $f2])
         ->get(); 
 
+        $alma = 2;
+
+
     }
 
-        return view('requerimientos.index', compact('requerimientos','f1','f2'));
+        return view('requerimientos.index', compact('requerimientos','f1','f2','alma'));
         //
     }
 
@@ -75,6 +81,9 @@ class RequerimientosController extends Controller
         ->where('a.estatus', '=', 1)
         ->get(); 
 
+        $alma = $request->solicita;
+
+
 
     } else {
         $f1 = date('Y-m-d');
@@ -88,10 +97,13 @@ class RequerimientosController extends Controller
         ->whereBetween('a.created_at', [$f1, $f2])
         ->get(); 
 
+        $alma =2;
+
+
       
     }
 
-        return view('requerimientos.index1', compact('requerimientos','f1','f2'));
+        return view('requerimientos.index1', compact('requerimientos','f1','f2','alma'));
         //
     }
 
@@ -107,30 +119,64 @@ class RequerimientosController extends Controller
         ->where('a.almacen','=',1)
         ->get();  
 
-        if($request->inicio && is_null($request->producto)){
+        $item = 0;
+        $desp = 0;
+        $total = 0;
+
+        if ($request->inicio && is_null($request->producto)) {
             $f1 = $request->inicio;
             $f2 = $request->fin;
 
+            $alma = $request->solicita;
 
-        $requerimientos = DB::table('requerimientos as a')
-        ->select('a.id','a.producto','a.req','a.almacen_solicita','a.sede','a.created_at','a.cantidad_despachada','a.cantidad_solicita','a.estatus','b.name as user','p.nombre as nompro','p.medida as medida')
-        ->join('users as b','b.id','a.usuario')
-        ->join('productos as p','p.id','a.producto')
-        ->whereBetween('a.created_at', [$f1, $f2])
-        ->where('a.almacen_solicita', '=', $request->solicita)
-        ->where('a.estatus', '=', 2)
-        ->get(); 
 
-        $soli = Requerimientos::whereBetween('created_at',  [$f1, $f2])
-        ->where('almacen_solicita','=',$request->solicita)
-        ->where('estatus', '=', 2)
-        ->select(DB::raw('COUNT(*) as item, SUM(cantidad_despachada) as cant'))
-        ->first();
+            if ($request->solicita == '99') {
+                $requerimientos = DB::table('requerimientos as a')
+            ->select('a.id', 'a.producto', 'a.req', 'a.almacen_solicita', 'a.sede', 'a.created_at', 'a.cantidad_despachada', 'a.cantidad_solicita', 'a.estatus', 'b.name as user', 'p.nombre as nompro', 'p.medida as medida','pa.precio')
+            ->join('users as b', 'b.id', 'a.usuario')
+            ->join('productos as p', 'p.id', 'a.producto')
+            ->join('productos_almacen as pa', 'pa.producto', 'a.producto')
+            ->whereBetween('a.created_at', [$f1, $f2])
+            ->where('a.estatus', '=', 2)
+            ->groupBy('a.id')
+            ->get();
 
-        if ($soli->item == 0) {
-        $soli->cant = 0;
-        }
+            foreach ($requerimientos as $key => $value) {
+                $item += 1;
+                $desp += $value->cantidad_despachada;
+                $total += $value->cantidad_despachada * $value->precio;
+            }
 
+
+            } else {
+        
+
+
+                $requerimientos = DB::table('requerimientos as a')
+            ->select('a.id', 'a.producto', 'a.req', 'a.almacen_solicita', 'a.sede', 'a.created_at', 'a.cantidad_despachada', 'a.cantidad_solicita', 'a.estatus', 'b.name as user', 'p.nombre as nompro', 'p.medida as medida','pa.precio')
+            ->join('users as b', 'b.id', 'a.usuario')
+            ->join('productos as p', 'p.id', 'a.producto')
+            ->join('productos_almacen as pa', 'pa.producto', 'a.producto')
+            ->whereBetween('a.created_at', [$f1, $f2])
+            ->where('a.almacen_solicita', '=', $request->solicita)
+            ->where('a.estatus', '=', 2)
+            ->groupBy('a.id')
+            ->get();
+
+            foreach ($requerimientos as $key => $value) {
+                $item += 1;
+                $desp += $value->cantidad_despachada;
+                $total += $value->cantidad_despachada * $value->precio;
+            }
+
+
+
+
+            }
+        
+          
+
+       
        
 
 
@@ -144,23 +190,98 @@ class RequerimientosController extends Controller
                 $f1 = $request->inicio;
                 $f2 = $request->fin;
 
+                if ($request->solicita == '99') {
+                    $requerimientos = DB::table('requerimientos as a')
+                    ->select('a.id', 'a.producto', 'a.req', 'a.almacen_solicita', 'a.sede', 'a.created_at', 'a.cantidad_despachada', 'a.cantidad_solicita', 'a.estatus', 'b.name as user', 'p.nombre as nompro', 'p.medida as medida','pa.precio')
+                    ->join('users as b', 'b.id', 'a.usuario')
+                    ->join('productos as p', 'p.id', 'a.producto')
+                    ->join('productos_almacen as pa', 'pa.producto', 'a.producto')
+                    ->whereBetween('a.created_at', [$f1, $f2])
+                    ->where('a.producto', '=', $request->producto)
+                    ->where('a.estatus', '=', 2)
+                    ->groupBy('a.id')
+                    ->get();
 
-        $requerimientos = DB::table('requerimientos as a')
-        ->select('a.id','a.producto','a.req','a.almacen_solicita','a.sede','a.created_at','a.cantidad_despachada','a.cantidad_solicita','a.estatus','b.name as user','p.nombre as nompro','p.medida as medida')
-        ->join('users as b','b.id','a.usuario')
-        ->join('productos as p','p.id','a.producto')
-        ->whereBetween('a.created_at', [$f1, $f2])
-        ->where('a.almacen_solicita', '=', $request->solicita)
-        ->where('a.producto', '=', $request->producto)
-        ->where('a.estatus', '=', 2)
-        ->get(); 
+                    foreach ($requerimientos as $key => $value) {
+                        $item += 1;
+                        $desp += $value->cantidad_despachada;
+                        $total += $value->cantidad_despachada * $value->precio;
+                    }
 
-        $soli = Requerimientos::whereBetween('created_at',  [$f1, $f2])
-        ->where('almacen_solicita','=',$request->solicita)
-        ->where('estatus', '=', 2)
-        ->where('producto', '=', $request->producto)
-        ->select(DB::raw('COUNT(*) as item, SUM(cantidad_despachada) as cant'))
-        ->first();
+
+
+                  /*  $soli = Requerimientos::whereBetween('created_at', [$f1, $f2])
+                ->where('estatus', '=', 2)
+                ->where('producto', '=', $request->producto)
+                ->select(DB::raw('COUNT(*) as item, SUM(cantidad_despachada) as cant'))
+                ->first();*/
+
+
+                $soli = DB::table('requerimientos as a')
+                ->select('a.id', 'a.producto', 'a.req', 'a.almacen_solicita', 'a.sede', 'a.created_at', 'a.cantidad_despachada', 'a.cantidad_solicita', 'a.estatus', 'b.name as user', 'p.nombre as nompro', 'p.medida as medida','pa.precio as precio','pa.id',DB::raw('COUNT(*) as item, SUM(cantidad_despachada) as cant, SUM(a.cantidad_despachada*pa.precio) as preciototal'))
+                ->join('users as b', 'b.id', 'a.usuario')
+                ->join('productos as p', 'p.id', 'a.producto')
+                ->join('productos_almacen as pa', 'pa.producto', 'a.producto')
+                ->where('a.producto', '=', $request->producto)
+                ->whereBetween('a.created_at', [$f1, $f2])
+                ->where('a.estatus', '=', 2)
+                ->groupBy('pa.id')
+                ->first();
+
+                $alma = 2;
+
+    
+
+
+
+
+
+
+                } else {
+                    $requerimientos = DB::table('requerimientos as a')
+                    ->select('a.id', 'a.producto', 'a.req', 'a.almacen_solicita', 'a.sede', 'a.created_at', 'a.cantidad_despachada', 'a.cantidad_solicita', 'a.estatus', 'b.name as user', 'p.nombre as nompro', 'p.medida as medida','pa.precio')
+                    ->join('users as b', 'b.id', 'a.usuario')
+                    ->join('productos as p', 'p.id', 'a.producto')
+                    ->join('productos_almacen as pa', 'pa.producto', 'a.producto')
+                    ->whereBetween('a.created_at', [$f1, $f2])
+                    ->where('a.almacen_solicita', '=', $request->solicita)
+                    ->where('a.producto', '=', $request->producto)
+                    ->where('a.estatus', '=', 2)
+                    ->groupBy('a.id')
+                    ->get();
+
+                    foreach ($requerimientos as $key => $value) {
+                        $item += 1;
+                        $desp += $value->cantidad_despachada;
+                        $total += $value->cantidad_despachada * $value->precio;
+                    }
+
+
+
+                  
+
+                    $alma = $request->solicita;
+
+            
+                            /*    $soli = Requerimientos::whereBetween('created_at', [$f1, $f2])
+                            ->where('almacen_solicita', '=', $request->solicita)
+                            ->where('estatus', '=', 2)
+                            ->where('producto', '=', $request->producto)
+                            ->select(DB::raw('COUNT(*) as item, SUM(cantidad_despachada) as cant'))
+                            ->first();*/
+
+                            $soli = DB::table('requerimientos as a')
+                            ->select('a.id', 'a.producto', 'a.req', 'a.almacen_solicita', 'a.sede', 'a.created_at', 'a.cantidad_despachada', 'a.cantidad_solicita', 'a.estatus', 'b.name as user', 'p.nombre as nompro', 'p.medida as medida','pa.precio as precio','pa.id',DB::raw('COUNT(*) as item, SUM(cantidad_despachada) as cant, SUM(a.cantidad_despachada*pa.precio) as preciototal'))
+                            ->join('users as b', 'b.id', 'a.usuario')
+                            ->join('productos as p', 'p.id', 'a.producto')
+                            ->join('productos_almacen as pa', 'pa.producto', 'a.producto')
+                            ->where('a.almacen_solicita', '=', $request->solicita)
+                            ->where('a.producto', '=', $request->producto)
+                            ->whereBetween('a.created_at', [$f1, $f2])
+                            ->where('a.estatus', '=', 2)
+                            ->first();
+
+                }
 
         $prod = ProductosAlmacen::where('producto','=',$request->producto )
         ->where('almacen','=',$request->solicita)
@@ -170,27 +291,53 @@ class RequerimientosController extends Controller
         ->first();
 
 
-        if ($soli->item == 0) {
-        $soli->cant = 0;
-        }
 
       } else {
         $f1 = date('Y-m-d');
         $f2 = date('Y-m-d');
 
+        $alma = 2;
+
+
+
+        
+
         $requerimientos = DB::table('requerimientos as a')
-        ->select('a.id','a.producto','a.req','a.almacen_solicita','a.sede','a.created_at','a.cantidad_despachada','a.cantidad_solicita','a.estatus','b.name as user','p.nombre as nompro','p.medida as medida')
+        ->select('a.id','a.producto','a.req','a.almacen_solicita','a.sede','a.created_at','a.cantidad_despachada','a.cantidad_solicita','a.estatus','b.name as user','p.nombre as nompro','p.medida as medida','pa.precio')
         ->join('users as b','b.id','a.usuario')
         ->join('productos as p','p.id','a.producto')
+        ->join('productos_almacen as pa', 'pa.producto', 'a.producto')
         ->where('a.estatus', '=', 2)
         ->whereBetween('a.created_at', [$f1, $f2])
+        ->groupBy('a.id')
         ->get(); 
 
+        foreach ($requerimientos as $key => $value) {
+            $item += 1;
+            $desp += $value->cantidad_despachada;
+            $total += $value->cantidad_despachada * $value->precio;
+        }
 
-        $soli = Requerimientos::whereBetween('created_at',  [$f1, $f2])
+
+
+        //dd($requerimientos);
+
+
+      /*  $soli = Requerimientos::whereBetween('created_at',  [$f1, $f2])
         ->where('estatus', '=', 2)
         ->select(DB::raw('COUNT(*) as item, SUM(cantidad_despachada) as cant'))
+        ->first();*/
+
+        $soli = DB::table('requerimientos as a')
+        ->select('a.id', 'a.producto', 'a.req', 'a.almacen_solicita', 'a.sede', 'a.created_at', 'a.cantidad_despachada', 'a.cantidad_solicita', 'a.estatus', 'b.name as user', 'p.nombre as nompro', 'p.medida as medida','pa.precio as precio','pa.id',DB::raw('COUNT(*) as item, SUM(cantidad_despachada) as cant, SUM(a.cantidad_despachada*pa.precio) as preciototal'))
+        ->join('users as b', 'b.id', 'a.usuario')
+        ->join('productos as p', 'p.id', 'a.producto')
+        ->join('productos_almacen as pa', 'pa.producto', 'a.producto')
+        ->whereBetween('a.created_at', [$f1, $f2])
+        ->where('a.estatus', '=', 2)
         ->first();
+
+
 
          $prod = 0;
 
@@ -198,14 +345,17 @@ class RequerimientosController extends Controller
       
 
 
-        if ($soli->item == 0) {
+       /* if ($soli == null) {
         $soli->cant = 0;
-        }
+        $soli->item = 0;
+
+        }*/
+        
 
       
     }
 
-        return view('requerimientos.index2', compact('requerimientos','f1','f2','productos','soli','prod'));
+        return view('requerimientos.index2', compact('requerimientos','f1','f2','productos','soli','prod','alma','item','desp','total'));
         
     }
 
@@ -307,33 +457,39 @@ class RequerimientosController extends Controller
     public function store(Request $request)
     {
 
-        $req1 = new Req();
-        $req1->save();
+
+        if($request->id_laboratorio['laboratorios'][0]['laboratorio'] == null) {
+            $request->session()->flash('error', 'Debe seleccionar al menos un producto para registrar el requerimiento.');
+           // Toastr::error('Error Registrando.', 'Paciente- DNI YA REGISTRADO!', ['progressBar' => true]);
+            return redirect()->action('RequerimientosController@create');
+          } else {
+              $req1 = new Req();
+              $req1->save();
 
 
-        if (isset($request->id_laboratorio)) {
-            foreach ($request->monto_s['laboratorios'] as $key => $laboratorio) {
-              if (!is_null($laboratorio['laboratorio'])) {
+              if (isset($request->id_laboratorio)) {
+                  foreach ($request->id_laboratorio['laboratorios'] as $key => $laboratorio) {
+                      if (!is_null($laboratorio['laboratorio'])) {
+                          $req = new Requerimientos();
+                          $req->producto =  $laboratorio['laboratorio'];
+                          $req->cantidad_solicita =  $request->monto_abol['laboratorios'][$key]['abono'];
+                          $req->almacen_solicita =  $request->solicita;
+                          $req->usuario =  Auth::user()->id;
+                          $req->req =  $req1->id;
+                          $req->sede =  $request->session()->get('sede');
+                          $req->save();
+                      }
+                  }
+              }
 
+              return redirect()->action('RequerimientosController@index', ["created" => true, "req" => Requerimientos::all()]);
 
-                $req = new Requerimientos();
-                $req->producto =  $laboratorio['laboratorio'];
-                $req->cantidad_solicita =  $request->monto_abol['laboratorios'][$key]['abono'];
-                $req->almacen_solicita =  $request->solicita;
-                $req->usuario =  Auth::user()->id;
-                $req->req =  $req1->id;
-                $req->sede =  $request->session()->get('sede');
-                $req->save();
-
-              } 
-            }
           }
 
 
         
         
 
-        return redirect()->action('RequerimientosController@index', ["created" => true, "req" => Requerimientos::all()]);
 
     }
 
@@ -341,7 +497,11 @@ class RequerimientosController extends Controller
     {
 
 
-        
+        if($request->id_laboratorio['laboratorios'][0]['laboratorio'] == null) {
+            $request->session()->flash('error', 'Debe seleccionar al menos un producto para registrar el requerimiento.');
+           // Toastr::error('Error Registrando.', 'Paciente- DNI YA REGISTRADO!', ['progressBar' => true]);
+            return redirect()->action('RequerimientosController@create');
+          } else{
         $req1 = new Req();
         $req1->save();
 
@@ -374,11 +534,15 @@ class RequerimientosController extends Controller
             }
           }
 
+          return redirect()->action('RequerimientosController@enviados', ["created" => true, "req" => Requerimientos::all()]);
+
+
+          }
+
 
         
         
 
-        return redirect()->action('RequerimientosController@enviados', ["created" => true, "req" => Requerimientos::all()]);
 
     }
 
@@ -458,9 +622,33 @@ class RequerimientosController extends Controller
     public function edit(Request $request)
     {
 
+        
 
 
         $req = Requerimientos::where('id','=',$request->id)->first();
+
+        if($req->almacen_solicita == 2){
+            $es_alm= 'RECEPCIÓN';
+
+        } elseif($req->almacen_solicita == 3){
+            $es_alm= 'OBSTETRA';
+
+        } elseif($req->almacen_solicita == 4){
+            $es_alm= 'RAYOSX';
+
+        } elseif($req->almacen_solicita == 7){
+            $es_alm= 'LABORATORIO';
+
+        } elseif($req->almacen_solicita == 8){
+            $es_alm= 'CANTO REY';
+
+        } elseif($req->almacen_solicita == 9){
+            $es_alm= 'VIDA FELIZ';
+        } else {
+            $es_alm= 'ZARATE';
+
+
+        }
 
 
         $producto = ProductosAlmacen::where('producto','=',$req->producto)->where('almacen','=',1)->first();
@@ -482,7 +670,7 @@ class RequerimientosController extends Controller
         return redirect()->action('RequerimientosController@index1')
         ->with('error','La cantidad solicitada excede el stock en almacen, debe hacer la solicitud por una cantidad menor'.' STOCK:'.''.$producto_cantidad->cantidad);
 
-    } else {
+     } else {
 
             if($pal == null){
 
@@ -497,6 +685,23 @@ class RequerimientosController extends Controller
             $pa->almacen = $req->almacen_solicita;
             $pa->save();
 
+            //MOVIMIENTO SALIDA
+            $mp = new MovimientoProductos();
+            $mp->id_producto_almacen = $producto->id;
+            $mp->cantidad = $request->cantidad;
+            $mp->usuario = Auth::user()->id;
+            $mp->accion = 'DESPACHO  DE REQUERIMIENTO A '.'-'.$es_alm;
+            $mp->save();
+
+            //MOVIMIENTO ENTRADA
+
+            $mp = new MovimientoProductos();
+            $mp->id_producto_almacen = $pa->id;
+            $mp->cantidad = $request->cantidad;
+            $mp->usuario = Auth::user()->id;
+            $mp->accion = 'ENTRADA DE PRODUCTO DESDE ALM CENTRAL';
+            $mp->save();
+
             } else {
 
             $pa = ProductosAlmacen::where('producto','=',$req->producto)->where('almacen','=',$req->almacen_solicita)->first();
@@ -504,6 +709,27 @@ class RequerimientosController extends Controller
             $pa->precio =  $producto->precio;
             $pa->vence =  $producto->vence;
             $res = $pa->update();
+
+            //MOVIMIENTO SALIDA
+
+            $mp = new MovimientoProductos();
+            $mp->id_producto_almacen = $producto->id;
+            $mp->cantidad = $request->cantidad;
+            $mp->usuario = Auth::user()->id;
+            $mp->accion = 'DESPACHO DE REQUERIMIENTO A'.'-'.$es_alm;
+            $mp->save();
+
+
+            //MOVIMIENTO ENTRADA
+
+            $mp = new MovimientoProductos();
+            $mp->id_producto_almacen = $pa->id;
+            $mp->cantidad = $request->cantidad;
+            $mp->usuario = Auth::user()->id;
+            $mp->accion = 'ENTRADA DE PRODUCTO DESDE ALM CENTRAL';
+            $mp->save();
+
+
                 
             }
 
@@ -515,6 +741,13 @@ class RequerimientosController extends Controller
                 $pc = ProductosAlmacen::where('producto','=',$pac[0]->producto)->first();
                 $pc->cantidad = $pac[0]->cantidad - $request->cantidad;
                 $res = $pc->update();
+
+              /*  $mp = new MovimientoProductos();
+                $mp->id_producto_almacen = $pc->id;
+                $mp->cantidad = $request->cantidad;
+                $mp->usuario = Auth::user()->id;
+                $mp->accion = 'DESPACHO DE REQUERIMIENTO'.'-'.$es_alm;
+                $mp->save();*/
 
                 $pa = Requerimientos::where('id','=',$request->id)->first();
                 $pa->estatus =  2;
@@ -532,6 +765,13 @@ class RequerimientosController extends Controller
                 $pc->cantidad = 0;
                 $ress = $pc->update();
 
+               /* $mp = new MovimientoProductos();
+                $mp->id_producto_almacen = $pc->id;
+                $mp->cantidad = $request->cantidad;
+                $mp->usuario = Auth::user()->id;
+                $mp->accion = 'DESPACHO DE REQUERIMIENTO'.'-'.$es_alm;
+                $mp->save();*/
+
                 $pa = Requerimientos::where('id','=',$request->id)->first();
                 $pa->estatus =  2;
                 $pa->cantidad_despachada = $request->cantidad;
@@ -546,6 +786,13 @@ class RequerimientosController extends Controller
                     $pca->cantidad = $pac[1]->cantidad - $totalr;
                     $resss = $pca->update();
 
+                 /*   $mp = new MovimientoProductos();
+                    $mp->id_producto_almacen = $pca->id;
+                    $mp->cantidad = $request->cantidad;
+                    $mp->usuario = Auth::user()->id;
+                    $mp->accion = 'DESPACHO DE REQUERIMIENTO'.'-'.$es_alm;
+                    $mp->save();*/
+
 
                 } else {
 
@@ -555,6 +802,14 @@ class RequerimientosController extends Controller
                 $pc3 = ProductosAlmacen::where('id','=',$pac[1]->id)->first();
                 $pc3->cantidad = 0;
                 $res = $pc3->update();
+
+                
+              /*  $mp = new MovimientoProductos();
+                $mp->id_producto_almacen = $pc3->id;
+                $mp->cantidad = $request->cantidad;
+                $mp->usuario = Auth::user()->id;
+                $mp->accion = 'DESPACHO DE REQUERIMIENTO'.'-'.$es_alm;
+                $mp->save();*/
 
                 $pc4 = ProductosAlmacen::where('id','=',$pac[2]->id)->first();
                 $pc4->cantidad = $pac[2]->cantidad - $totalr3;
@@ -622,6 +877,17 @@ class RequerimientosController extends Controller
             $pal = ProductosAlmacen::where('producto','=',$r->producto)->where('almacen','=',$r->almacen_solicita)->first();
             $pal->cantidad = $ps->cantidad - $r->cantidad_despachada;
             $res = $pal->update();
+
+
+            $mp = new MovimientoProductos();
+            $mp->id_producto_almacen = $pal->id;
+            $mp->cantidad = $r->cantidad_despachada;
+            $mp->usuario = Auth::user()->id;
+            $mp->accion = 'REVERSO DE REQUERIMIENTO';
+            $mp->save();
+
+
+            
 
             $req = Requerimientos::where('id','=',$id)->first();
             $req->estatus =  1;

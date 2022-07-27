@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>GANESHAS | Admin</title>
+  <title>Ganeshas | Admin</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
@@ -88,28 +88,37 @@
                     <div class="row">
                   <div class="col-md-4">
                     <label for="exampleInputEmail1">Nombres</label>
-                    <input type="text" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control" id="nombre" name="nombres" placeholder="Nombres">
+                    <input type="text" class="form-control" id="nombre" name="nombres" placeholder="Nombres">
                   </div>
                   <div class="col-md-4">
                     <label for="exampleInputEmail1">Apellidos</label>
-                    <input type="text" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control" id="nombre" name="apellidos" placeholder="Apellidos">
-                  </div>
-                  <div class="col-md-4">
-                    <label for="exampleInputEmail1">CMP</label>
-                    <input type="text" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control" id="nombre" name="cmp" placeholder="CMP">
+                    <input type="text" class="form-control" id="nombre" name="apellidos" placeholder="Apellidos">
                   </div>
 
-                 
+                  <div class="col-md-4">
+                    <label for="exampleInputEmail1">Email</label>
+                    <input type="text" class="form-control" id="nombre" name="email" placeholder="email">
                   </div>
-                  <div class="row">
                  
-                
                   </div>
                   <div class="row">
                   <div class="col-md-4">
                     <label for="exampleInputEmail1">Teléfono</label>
-                    <input type="text" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control" id="nombre" name="telefono" placeholder="Teléfono">
+                    <input type="text" class="form-control" id="telefono" name="telefono" placeholder="Teléfono">
                   </div>
+                  <div class="col-md-4">
+                    <label for="exampleInputEmail1">CMP</label>
+                    <input type="text" class="form-control" id="nombre" name="cmp" placeholder="CMP">
+                  </div>
+                 
+                  <div class="col-md-4">
+                    <label for="exampleInputEmail1">Nacimiento</label>
+                    <input type="date" class="form-control" id="nombre" name="nacimiento" placeholder="Telefono de contacto">
+                  </div>
+                 
+                  
+                  </div>
+                  <div class="row">
                   <div class="col-md-4">
                     <label for="exampleInputEmail1">Especialidad</label>
                     <select class="form-control" name="especialidad">
@@ -131,11 +140,26 @@
                         </select>                    
                         </div>
 
-                      
+                        <div class="col-md-4">
+                    <label for="exampleInputEmail1">N° Cuenta</label>
+                    <input type="text" class="form-control" id="nombre" name="cuenta" placeholder="Cuenta de Banco">
+                  </div>
+                 
                   
                  
                   </div>
+                  <div class="row">
+
+
+                  <div class="col-md-4">
+                    <label for="exampleInputEmail1">Sesión</label>
+                    <select class="form-control" name="ses" id="el2">
+                    <option value="0">NO</option>
+                    <option value="1">SI</option>
                  
+                        </select>
+                  </div>
+                  </div>
 
 
 
