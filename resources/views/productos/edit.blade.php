@@ -91,48 +91,48 @@
                   <div class="col-md-3">
                   <label>Categoria</label>
                         <select class="form-control" name="categoria">
-                      @if($productos->categoria == 'Métodos')
-                    <option value="Métodos" selected>Métodos</option>
-                    <option value="Medicamentos">Medicamentos</option>
-                    <option value="Insumos">Insumos</option>
-                    <option value="Laboratorio">Laboratorio</option>
-                    <option value="RayosX">RayosX</option>
-                    <option value="Escritorio">Escritorio</option>
-                    @elseif($productos->categoria == 'Medicamentos')
-                    <option value="Métodos">Métodos</option>
-                    <option value="Medicamentos" selected>Medicamentos</option>
-                    <option value="Insumos">Insumos</option>
-                    <option value="Laboratorio">Laboratorio</option>
-                    <option value="RayosX">RayosX</option>
-                    <option value="Escritorio">Escritorio</option>
-                    @elseif($productos->categoria == 'Insumos')
-                    <option value="Métodos">Métodos</option>
-                    <option value="Medicamentos">Medicamentos</option>
-                    <option value="Insumos" selected>Insumos</option>
-                    <option value="Laboratorio">Laboratorio</option>
-                    <option value="RayosX">RayosX</option>
-                    <option value="Escritorio">Escritorio</option>
-                    @elseif($productos->categoria == 'Laboratorio')
-                    <option value="Métodos">Métodos</option>
-                    <option value="Medicamentos">Medicamentos</option>
-                    <option value="Insumos">Insumos</option>
-                    <option value="Laboratorio" selected>Laboratorio</option>
-                    <option value="RayosX">RayosX</option>
-                    <option value="Escritorio">Escritorio</option>
-                    @elseif($productos->categoria == 'RayosX')
-                    <option value="Métodos">Métodos</option>
-                    <option value="Medicamentos">Medicamentos</option>
-                    <option value="Insumos">Insumos</option>
-                    <option value="Laboratorio" >Laboratorio</option>
-                    <option value="RayosX" selected>RayosX</option>
-                    <option value="Escritorio">Escritorio</option>
+                      @if($productos->categoria == 'Velas')
+                      <option value="Velas" selected>Velas</option>
+                    <option value="Jabones">Jabones</option>
+                    <option value="Inciencio">Inciencio</option>
+                    <option value="Perfume">Perfume</option>
+                    <option value="Cremas">Cremas</option>
+                    <option value="Otro">Otro</option>
+                    @elseif($productos->categoria == 'Jabones')
+                    <option value="Velas">Velas</option>
+                    <option value="Jabones" selected>Jabones</option>
+                    <option value="Inciencio">Inciencio</option>
+                    <option value="Perfume">Perfume</option>
+                    <option value="Cremas">Cremas</option>
+                    <option value="Otro">Otro</option>
+                    @elseif($productos->categoria == 'Inciencio')
+                    <option value="Velas">Velas</option>
+                    <option value="Jabones">Jabones</option>
+                    <option value="Inciencio" selected>Inciencio</option>
+                    <option value="Perfume">Perfume</option>
+                    <option value="Cremas">Cremas</option>
+                    <option value="Otro">Otro</option>
+                    @elseif($productos->categoria == 'Perfume')
+                    <option value="Velas">Velas</option>
+                    <option value="Jabones">Jabones</option>
+                    <option value="Inciencio" >Inciencio</option>
+                    <option value="Perfume" selected>Perfume</option>
+                    <option value="Cremas">Cremas</option>
+                    <option value="Otro">Otro</option>
+                    @elseif($productos->categoria == 'Cremas')
+                    <option value="Velas">Velas</option>
+                    <option value="Jabones">Jabones</option>
+                    <option value="Inciencio" >Inciencio</option>
+                    <option value="Perfume" >Perfume</option>
+                    <option value="Cremas" selected>Cremas</option>
+                    <option value="Otro">Otro</option>
                     @else
-                    <option value="Métodos">Métodos</option>
-                    <option value="Medicamentos">Medicamentos</option>
-                    <option value="Insumos">Insumos</option>
-                    <option value="Laboratorio" >Laboratorio</option>
-                    <option value="RayosX" >RayosX</option>
-                    <option value="Escritorio" selected>Escritorio</option>
+                    <option value="Velas">Velas</option>
+                    <option value="Jabones">Jabones</option>
+                    <option value="Inciencio" >Inciencio</option>
+                    <option value="Perfume" >Perfume</option>
+                    <option value="Cremas" >Cremas</option>
+                    <option value="Otro" selected>Otro</option>
                     @endif
 
                 

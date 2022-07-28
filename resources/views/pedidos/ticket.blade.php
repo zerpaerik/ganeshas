@@ -43,7 +43,11 @@
 
 
     <div  style="font-size: 15px; text-align: left;margin-bottom:-60px;margin-top: -30px;">
-    <p>FECHA: <strong>{{$pedido->created_at}}</strong>  </p>
+    <p>FECHA: <strong>{{$pedido->created_at}}</strong> </p>
+
+    @if($pedido->estatus == 2)
+    <p>CLIENTE: <strong>{{$pedido_c->apellido}} {{$pedido_c->nombre}}</strong> </p>
+    @endif
 	
 	</div>
   <br><br><br>

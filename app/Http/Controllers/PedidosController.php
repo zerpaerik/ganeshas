@@ -174,6 +174,7 @@ class PedidosController extends Controller
         ->get(); 
 
 
+
         $f1 =date('Y-m-d');
 
           
@@ -189,6 +190,66 @@ class PedidosController extends Controller
     }
 
         return view('pedidos.indexr', compact('pedidos','f1','soli'));
+        //
+    }
+
+
+    public function indexp(Request $request)
+    {
+
+
+        if($request->inicio){
+
+            /*  $pedidos = DB::table('pedidos as a')
+              ->select('a.id','a.monto','a.estatus','a.cantidad','a.total','a.usuario','a.tipopago','a.created_at','a.producto','b.nombre as producto')
+              ->join('productos as b','b.id','a.producto')
+              ->where('a.created_at','=',$request->inicio)
+              ->where('a.estatus','=',1)
+              ->get(); */
+      
+              $pedidos = DB::table('pedido as a')
+              ->select('a.*')
+              //->join('productos as b','b.id','a.producto')
+              ->where('a.estatus','=',2)
+              ->where('a.created_at', '=', $request->inicio)
+              ->get(); 
+      
+              
+                
+              $soli = Pedido::where('created_at', '=',$f1)
+              ->where('estatus','=',2)
+              ->select(DB::raw('COUNT(*) as cantidad, SUM(total) as monto'))
+              ->first();
+      
+              if ($soli->cantidad == 0) {
+              $soli->monto = 0;
+              }
+              $f1 = $request->inicio;
+         
+      
+          }else {
+              $pedidos = DB::table('pedido as a')
+              ->select('a.*')
+              ->where('a.estatus','=',2)
+              ->where('a.created_at', '=', date('Y-m-d'))
+              ->get(); 
+
+      
+              $f1 =date('Y-m-d');
+      
+                
+              $soli = Pedido::where('created_at', '=',$f1)
+              ->where('estatus','=',2)
+              ->select(DB::raw('COUNT(*) as cantidad, SUM(total) as monto'))
+              ->first();
+      
+              if ($soli->cantidad == 0) {
+              $soli->monto = 0;
+              }
+      
+          }
+
+        return view('pedidos.indexp', compact('pedidos','f1','soli'));
         //
     }
 
@@ -227,7 +288,7 @@ class PedidosController extends Controller
         foreach ($request->ped as $pedido) {
 
           $ped_det = DB::table('pedidos as a')
-          ->select('a.id','a.monto','a.estatus','a.cantidad','a.cliente','a.producto','a.total','a.usuario','a.tipopago','a.created_at','b.id as producto_id','b.nombre as producto','c.name','c.lastname','p.cantidad as soli')
+          ->select('a.id','a.monto','a.pedido','a.estatus','a.cantidad','a.cliente','a.producto','a.total','a.usuario','a.tipopago','a.created_at','b.id as producto_id','b.nombre as producto','c.name','c.lastname','p.cantidad as soli')
           ->join('productos as b','b.id','a.producto')
           ->join('users as c','c.id','a.cliente')
           ->join('productos_almacen as p','p.producto','a.producto')
@@ -250,6 +311,9 @@ class PedidosController extends Controller
             $pa->cantidad =$pal->cantidad -  $ped_det->soli;
             $res = $pa->update();
 
+            $p = Pedido::where('id','=',$ped_det->pedido)->first();
+            $p->estatus = 2;
+            $resp = $p->update();
 
 
           } else {
@@ -266,6 +330,10 @@ class PedidosController extends Controller
             $pa = ProductosAlmacen::where('producto','=',$ped_det->producto_id)->first();
             $pa->cantidad =$pal->cantidad -  $ped_det->cantidad;
             $res = $pa->update();
+
+            $p = Pedido::where('id','=',$ped_det->pedido)->first();
+            $p->estatus = 2;
+            $resp = $p->update();
 
           }
         
@@ -319,7 +387,8 @@ class PedidosController extends Controller
                 $pedidos->cantidad =$request->monto_ss['servicios'][$key]['montoss'];
                 $pedidos->monto =$request->monto_s['servicios'][$key]['montos'];
                 $pedidos->total =$request->monto_s['servicios'][$key]['montos'] * $request->monto_ss['servicios'][$key]['montoss'];
-                $pedidos->cliente =Auth::user()->id;
+                $pedidos->cliente = Auth::user()->id;
+                $pedidos->usuario = Auth::user()->id;
                 $pedidos->pedido =$pedido->id;
                 $pedidos->save();
 
@@ -517,12 +586,15 @@ class PedidosController extends Controller
     public function ticket($id)
     {
 
+
         $pedido_detalle = DB::table('pedidos as a')
         ->select('a.id','a.monto','a.pedido','a.estatus','a.cantidad','a.total','a.usuario','a.tipopago','a.created_at','a.producto','b.nombre as producto')
         ->join('productos as b','b.id','a.producto')
         ->where('a.pedido','=',$id)
         ->where('a.estatus','=',1)
         ->get(); 
+
+
 
         $pedido = DB::table('pedido as a')
         ->select('a.*')
@@ -532,6 +604,43 @@ class PedidosController extends Controller
         ->first(); 
 
         $view = \View::make('pedidos.ticket', compact('pedido_detalle','pedido'));
+
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($view);
+     
+        return $pdf->stream('ticket-pedido'.'.pdf');
+    }
+
+    public function ticketp($id)
+    {
+
+
+        $pedido_detalle = DB::table('pedidos as a')
+        ->select('a.id','a.monto','a.pedido','a.estatus','a.cantidad','a.total','a.usuario','a.tipopago','a.created_at','a.producto','b.nombre as producto')
+        ->join('productos as b','b.id','a.producto')
+        ->where('a.pedido','=',$id)
+        ->where('a.estatus','=',2)
+        ->get(); 
+
+        
+        $pedido_c = DB::table('pedidos as a')
+        ->select('a.id','a.cliente','b.name as nombre','b.lastname as apellido')
+        ->join('users as b','b.id','a.cliente')
+        ->where('a.pedido','=',$id)
+        ->first(); 
+
+        
+
+
+
+        $pedido = DB::table('pedido as a')
+        ->select('a.*')
+        //->join('productos as b','b.id','a.producto')
+        ->where('a.estatus','=',2)
+        ->where('a.id', '=', $id)
+        ->first(); 
+
+        $view = \View::make('pedidos.ticket', compact('pedido_detalle','pedido','pedido_c'));
 
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);

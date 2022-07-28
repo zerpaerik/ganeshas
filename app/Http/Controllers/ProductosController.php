@@ -118,94 +118,6 @@ class ProductosController extends Controller
         //
     }
 
-    public function laboratorio()
-    {
-
-
-        $productos = DB::table('productos_almacen as a')
-        ->select('a.id','a.producto','a.cantidad','a.precio','a.vence','u.nombre as nompro','u.categoria','u.minimol','u.medida','a.almacen')
-        ->join('productos as u','u.id','a.producto')
-        ->where('a.almacen','=',11)
-        ->get(); 
-
-        $total = DB::table('productos_almacen as a')
-        ->select('a.id','a.producto','a.cantidad','a.precio','a.vence','u.minimol','u.nombre as nompro','u.categoria','u.medida','a.almacen',DB::raw('SUM(a.cantidad*a.precio) as preciototal'))
-        ->join('productos as u','u.id','a.producto')
-        ->where('a.almacen','=',11)
-        ->first(); 
-
-
-        return view('productos.laboratorio',compact('productos','total'));
-
-        //
-    }
-
-    public function recepcion()
-    {
-
-        
-
-
-        $productos = DB::table('productos_almacen as a')
-        ->select('a.id','a.producto','a.cantidad','a.precio','a.vence','u.minimol','u.nombre as nompro','u.categoria','u.medida','a.almacen')
-        ->join('productos as u','u.id','a.producto')
-        ->where('a.almacen','=',2)
-        ->get(); 
-
-        $total = DB::table('productos_almacen as a')
-        ->select('a.id','a.producto','a.cantidad','a.precio','a.vence','u.minimol','u.nombre as nompro','u.categoria','u.medida','a.almacen',DB::raw('SUM(a.cantidad*a.precio) as preciototal'))
-        ->join('productos as u','u.id','a.producto')
-        ->where('a.almacen','=',2)
-        ->first(); 
-
-
-        return view('productos.recepcion',compact('productos','total'));
-
-        //
-    }
-
-    public function obstetra()
-    {
-
-
-        $productos = DB::table('productos_almacen as a')
-        ->select('a.id','a.producto','a.cantidad','a.precio','a.vence','u.nombre as nompro','u.minimol','u.categoria','u.medida','a.almacen')
-        ->join('productos as u','u.id','a.producto')
-        ->where('a.almacen','=',3)
-        ->get(); 
-        $total = DB::table('productos_almacen as a')
-        ->select('a.id','a.producto','a.cantidad','a.precio','a.vence','u.minimol','u.nombre as nompro','u.categoria','u.medida','a.almacen',DB::raw('SUM(a.cantidad*a.precio) as preciototal'))
-        ->join('productos as u','u.id','a.producto')
-        ->where('a.almacen','=',3)
-        ->first(); 
-
-
-        return view('productos.obstetra',compact('productos','total'));
-
-        //
-    }
-
-    public function rayos()
-    {
-
-
-        $productos = DB::table('productos_almacen as a')
-        ->select('a.id','a.producto','a.cantidad','a.precio','a.vence','u.nombre as nompro','u.minimol','u.categoria','u.medida','a.almacen')
-        ->join('productos as u','u.id','a.producto')
-        ->where('a.almacen','=',4)
-        ->get(); 
-
-        $total = DB::table('productos_almacen as a')
-        ->select('a.id','a.producto','a.cantidad','a.precio','a.vence','u.minimol','u.nombre as nompro','u.categoria','u.medida','a.almacen',DB::raw('SUM(a.cantidad*a.precio) as preciototal'))
-        ->join('productos as u','u.id','a.producto')
-        ->where('a.almacen','=',4)
-        ->first(); 
-
-
-        return view('productos.rayos',compact('productos','total'));
-
-        //
-    }
 
     public function almacen(Request $request)
     {
@@ -443,18 +355,18 @@ class ProductosController extends Controller
               } else {
 
 
-        $productos = new Productos();
-        $productos->nombre =$request->nombre;
-        $productos->medida =$request->medida;
-        $productos->minimo =$request->minimo;
-        $productos->precio =$request->precio;
-        $productos->categoria =$request->categoria;
-        $fotoequipo = $request->file('foto');
-        $fotoe = $fotoequipo->getClientOriginalName();
-        $productos->foto =$fotoe;
-        $productos->usuario =Auth::user()->id;
-        \Storage::disk('')->put($fotoe,  \File::get($fotoequipo));
-        $productos->save();
+                $productos = new Productos();
+                $productos->nombre =$request->nombre;
+                $productos->medida =$request->medida;
+                $productos->minimo =$request->minimo;
+                $productos->precio =$request->precio;
+                $productos->categoria =$request->categoria;
+                $fotoequipo = $request->file('foto');
+                $fotoe = $fotoequipo->getClientOriginalName();
+                $productos->foto =$fotoe;
+                $productos->usuario =Auth::user()->id;
+                \Storage::disk('public')->put($fotoe,  \File::get($fotoequipo));
+                $productos->save();
 
 
         

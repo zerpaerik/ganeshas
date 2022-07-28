@@ -91,12 +91,12 @@
                   <div class="col-md-3">
                     <label for="exampleInputEmail1">Categoria</label>
                     <select class="form-control" name="categoria">
-                    <option value="Métodos">Métodos</option>
-                    <option value="Medicamentos">Medicamentos</option>
-                    <option value="Insumos">Insumos</option>
-                    <option value="Laboratorio">Laboratorio</option>
-                    <option value="RayosX">RayosX</option>
-                    <option value="Escritorio">Escritorio</option>
+                    <option value="Velas">Velas</option>
+                    <option value="Jabones">Jabones</option>
+                    <option value="Inciencio">Inciencio</option>
+                    <option value="Perfume">Perfume</option>
+                    <option value="Cremas">Cremas</option>
+                    <option value="Otro">Otro</option>
 
 
                   
