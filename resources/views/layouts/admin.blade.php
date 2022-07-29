@@ -51,8 +51,8 @@
                                 </li>
                                 <li id="menu-item-228"
                                     class="menu-item menu-item-type-post_type menu-item-object-megamenu menu-item-228 parent parent-megamenu item-megamenu menu-item-has-children">
-                                    <a class="akasha-menu-item-title" title="Shop"
-                                       href="{{route('productos-ganesha.index')}}">Catàlogo</a>
+                                    <a class="akasha-menu-item-title" title="Shop" target="_blank"
+                                       href="Catálogo FINAL comprimido - Ganesha's.pdf">Catàlogo</a>
                                     <span class="toggle-submenu"></span>
         
                                 </li>
