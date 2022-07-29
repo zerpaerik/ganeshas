@@ -223,7 +223,7 @@ class PedidosController extends Controller
 
 
           
-        $soli = Pedidos::where('created_at', '=',$f1)
+        $soli = Pedidos::whereBetween('created_at', [$request->inicio,  $request->fin])
         ->where('estatus','=',1)
         ->select(DB::raw('COUNT(*) as cantidad, SUM(monto) as monto'))
         ->first();
