@@ -43,6 +43,7 @@ class PedidosController extends Controller
         ->select('a.*')
         //->join('productos as b','b.id','a.producto')
         ->where('a.estatus','=',1)
+        ->where('a.cliente','=', Auth::user()->id)
         ->where('a.created_at', '=', $request->inicio)
         ->get(); 
 
@@ -50,6 +51,7 @@ class PedidosController extends Controller
           
         $soli = Pedido::where('created_at', '=',$f1)
         ->where('estatus','=',1)
+        ->where('cliente','=', Auth::user()->id)
         ->select(DB::raw('COUNT(*) as cantidad, SUM(total) as monto'))
         ->first();
 
@@ -64,6 +66,7 @@ class PedidosController extends Controller
         ->select('a.*')
         //->join('productos as b','b.id','a.producto')
         ->where('a.estatus','=',1)
+        ->where('a.cliente','=', Auth::user()->id)
         ->where('a.created_at', '=', date('Y-m-d'))
         ->get(); 
 
@@ -72,6 +75,7 @@ class PedidosController extends Controller
           
         $soli = Pedido::where('created_at', '=',$f1)
         ->where('estatus','=',1)
+        ->where('cliente','=', Auth::user()->id)
         ->select(DB::raw('COUNT(*) as cantidad, SUM(total) as monto'))
         ->first();
 
@@ -92,8 +96,10 @@ class PedidosController extends Controller
         if($request->inicio){
 
         $pedidos = DB::table('pedidos as a')
-        ->select('a.id','a.monto','a.estatus','a.cantidad','a.total','a.usuario','a.tipopago','a.created_at','a.producto','b.nombre as producto')
+        ->select('a.id','a.monto','a.pedido','a.estatus','a.cantidad','a.total','a.usuario','a.tipopago','a.created_at','a.producto','b.nombre as producto','p.cliente')
         ->join('productos as b','b.id','a.producto')
+        ->join('pedido as p','p.id','a.pedido')
+        ->where('p.cliente','=',Auth::user()->id)
         ->where('a.created_at','=',$request->inicio)
         ->where('a.estatus','=',2)
         ->get(); 
@@ -101,8 +107,15 @@ class PedidosController extends Controller
         
         $soli = Pedidos::where('created_at', '=',$request->inicio)
         ->where('estatus','=',2)
+        ->where('cliente','=',Auth::user()->id)
         ->select(DB::raw('COUNT(*) as cantidad, SUM(monto) as monto'))
         ->first();
+
+
+
+
+
+
 
         if ($soli->cantidad == 0) {
         $soli->monto = 0;
@@ -112,8 +125,10 @@ class PedidosController extends Controller
 
     }else {
         $pedidos = DB::table('pedidos as a')
-        ->select('a.id','a.monto','a.estatus','a.cantidad','a.total','a.usuario','a.tipopago','a.created_at','a.producto','b.nombre as producto')
+        ->select('a.id','a.monto','a.pedido','a.estatus','a.cantidad','a.total','a.usuario','a.tipopago','a.created_at','a.producto','b.nombre as producto','p.cliente')
         ->join('productos as b','b.id','a.producto')
+        ->join('pedido as p','p.id','a.pedido')
+        ->where('p.cliente','=',Auth::user()->id)
         ->where('a.estatus','=',2)
         ->where('a.created_at', '=', date('Y-m-d'))
         ->get(); 
@@ -123,6 +138,7 @@ class PedidosController extends Controller
           
         $soli = Pedidos::where('created_at', '=',$f1)
         ->where('estatus','=',2)
+        ->where('cliente','=',Auth::user()->id)
         ->select(DB::raw('COUNT(*) as cantidad, SUM(monto) as monto'))
         ->first();
 
@@ -140,19 +156,19 @@ class PedidosController extends Controller
     {
 
 
-        if($request->inicio){
+    if($request->inicio && is_null($request->cliente)){
 
         $pedidos = DB::table('pedidos as a')
         ->select('a.id','a.monto','a.estatus','a.cantidad','a.cliente','a.total','a.usuario','a.tipopago','a.created_at','a.producto','b.nombre as producto','c.name','c.lastname','p.cantidad as soli')
         ->join('productos as b','b.id','a.producto')
         ->join('users as c','c.id','a.cliente')
         ->join('productos_almacen as p','p.producto','a.producto')
-        ->where('a.created_at','=',$request->inicio)
+        ->whereBetween('a.created_at', [$request->inicio,  $request->fin])
         ->where('a.estatus','=',1)
         ->get(); 
 
         
-        $soli = Pedidos::where('created_at', '=',$request->inicio)
+        $soli = Pedidos::whereBetween('created_at', [$request->inicio,  $request->fin])
         ->where('estatus','=',1)
         ->select(DB::raw('COUNT(*) as cantidad, SUM(monto) as monto'))
         ->first();
@@ -161,7 +177,34 @@ class PedidosController extends Controller
         $soli->monto = 0;
         }
         $f1 = $request->inicio;
+        $f2 = $request->fin;
+
    
+    }else if($request->inicio && !is_null($request->cliente)) {
+
+        $pedidos = DB::table('pedidos as a')
+        ->select('a.id','a.monto','a.estatus','a.cantidad','a.cliente','a.total','a.usuario','a.tipopago','a.created_at','a.producto','b.nombre as producto','c.name','c.lastname','p.cantidad as soli')
+        ->join('productos as b','b.id','a.producto')
+        ->join('users as c','c.id','a.cliente')
+        ->join('productos_almacen as p','p.producto','a.producto')
+        ->whereBetween('a.created_at', [$request->inicio,  $request->fin])
+        ->where('a.cliente', '=',$request->cliente)
+        ->where('a.estatus','=',1)
+        ->get(); 
+
+        
+        $soli = Pedidos::whereBetween('created_at', [$request->inicio,  $request->fin])
+        ->where('cliente', '=', $request->cliente)
+        ->where('estatus','=',1)
+        ->select(DB::raw('COUNT(*) as cantidad, SUM(monto) as monto'))
+        ->first();
+
+        if ($soli->cantidad == 0) {
+        $soli->monto = 0;
+        }
+        $f1 = $request->inicio;
+        $f2 = $request->fin;
+
 
     }else {
         $pedidos = DB::table('pedidos as a')
@@ -176,6 +219,8 @@ class PedidosController extends Controller
 
 
         $f1 =date('Y-m-d');
+        $f2 =date('Y-m-d');
+
 
           
         $soli = Pedidos::where('created_at', '=',$f1)
@@ -189,7 +234,15 @@ class PedidosController extends Controller
 
     }
 
-        return view('pedidos.indexr', compact('pedidos','f1','soli'));
+        $clientes = DB::table('pedido as a')
+        ->select('a.*','b.name','b.lastname','b.id')
+        ->join('users as b','b.id','a.cliente')
+        ->where('a.estatus','=',1)
+        ->get(); 
+
+
+
+        return view('pedidos.indexr', compact('pedidos','f1','f2','soli','clientes'));
         //
     }
 
@@ -198,25 +251,20 @@ class PedidosController extends Controller
     {
 
 
-        if($request->inicio){
+        if($request->inicio && is_null($request->cliente)){
 
-            /*  $pedidos = DB::table('pedidos as a')
-              ->select('a.id','a.monto','a.estatus','a.cantidad','a.total','a.usuario','a.tipopago','a.created_at','a.producto','b.nombre as producto')
-              ->join('productos as b','b.id','a.producto')
-              ->where('a.created_at','=',$request->inicio)
-              ->where('a.estatus','=',1)
-              ->get(); */
+         
       
               $pedidos = DB::table('pedido as a')
               ->select('a.*')
               //->join('productos as b','b.id','a.producto')
               ->where('a.estatus','=',2)
-              ->where('a.created_at', '=', $request->inicio)
+              ->whereBetween('a.created_at', [$request->inicio,  $request->fin])
               ->get(); 
       
               
                 
-              $soli = Pedido::where('created_at', '=',$f1)
+              $soli = Pedido::whereBetween('created_at', [$request->inicio,  $request->fin])
               ->where('estatus','=',2)
               ->select(DB::raw('COUNT(*) as cantidad, SUM(total) as monto'))
               ->first();
@@ -225,6 +273,31 @@ class PedidosController extends Controller
               $soli->monto = 0;
               }
               $f1 = $request->inicio;
+              $f2 = $request->fin;
+            }else if($request->inicio && !is_null($request->cliente)) {
+
+                $pedidos = DB::table('pedido as a')
+                ->select('a.*')
+                //->join('productos as b','b.id','a.producto')
+                ->where('a.estatus','=',2)
+                ->where('a.cliente','=',$request->cliente)
+                ->whereBetween('a.created_at', [$request->inicio,  $request->fin])
+                ->get(); 
+        
+                
+                  
+                $soli = Pedido::whereBetween('created_at', [$request->inicio,  $request->fin])
+                ->where('estatus','=',2)
+                ->where('cliente','=',$request->cliente)
+                ->select(DB::raw('COUNT(*) as cantidad, SUM(total) as monto'))
+                ->first();
+
+                if ($soli->cantidad == 0) {
+                $soli->monto = 0;
+                }
+                $f1 = $request->inicio;
+                $f2 = $request->fin;
+ 
          
       
           }else {
@@ -236,6 +309,8 @@ class PedidosController extends Controller
 
       
               $f1 =date('Y-m-d');
+              $f2 =date('Y-m-d');
+
       
                 
               $soli = Pedido::where('created_at', '=',$f1)
@@ -249,7 +324,14 @@ class PedidosController extends Controller
       
           }
 
-        return view('pedidos.indexp', compact('pedidos','f1','soli'));
+          $clientes = DB::table('pedido as a')
+          ->select('a.*','b.name','b.lastname','b.id')
+          ->join('users as b','b.id','a.cliente')
+          ->where('a.estatus','=',2)
+          ->get(); 
+  
+
+        return view('pedidos.indexp', compact('pedidos','f1','f2','soli','clientes'));
         //
     }
 
@@ -370,6 +452,7 @@ class PedidosController extends Controller
     {
 
       $pedido = new Pedido();
+      $pedido->cliente = Auth::user()->id;
       $pedido->save();
 
       $sum = 0;

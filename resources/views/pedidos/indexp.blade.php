@@ -83,12 +83,26 @@
                   <label for="exampleInputEmail1">Filtros de Busqueda</label>
 
                     <div class="row">
-                  <div class="col-md-3">
-                    <label for="exampleInputEmail1">Fecha</label>
+                    <div class="col-md-2">
+                    <label for="exampleInputEmail1">Inicio</label>
                     <input type="date" class="form-control" value="{{$f1}}" name="inicio" placeholder="Buscar por dni" onsubmit="datapac()">
                   </div>
 
-                  <div class="col-md-2" style="margin-top: 30px;">
+                  <div class="col-md-2">
+                    <label for="exampleInputEmail1">Fin</label>
+                    <input type="date" class="form-control" value="{{$f2}}" name="fin" placeholder="Buscar por dni" onsubmit="datapac()">
+                  </div>
+
+                  <div class="col-md-3">
+                    <label for="exampleInputEmail1">Cliente</label>
+                    <select class="form-control" name="cliente">
+                    @foreach($clientes as $esp)
+                    <option value="{{$esp->id}}">{{$esp->lastname}} {{$esp->name}}</option>
+                    @endforeach
+                    </select>                  
+                  </div>
+
+                  <div class="col-md-1" style="margin-top: 30px;">
                   <button type="submit" class="btn btn-primary">Buscar</button>
 
                   </div>

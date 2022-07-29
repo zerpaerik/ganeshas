@@ -43,7 +43,7 @@
 
 
     <div  style="font-size: 15px; text-align: left;margin-bottom:-60px;margin-top: -30px;">
-    <p>FECHA: <strong>{{$pedido->created_at}}</strong> </p>
+    <p>FECHA: <strong> {{date('d-M-y', strtotime($pedido->created_at))}}</strong> </p>
 
     @if($pedido->estatus == 2)
     <p>CLIENTE: <strong>{{$pedido_c->apellido}} {{$pedido_c->nombre}}</strong> </p>
@@ -52,7 +52,7 @@
 	</div>
   <br><br><br>
 
-    <table width="100%" class="table-main">
+    <table width="90%" class="table-main">
       <thead>
         <tr>
           <th style="font-size: 15px"><center>Producto.<center></th>
@@ -64,10 +64,10 @@
       <tbody>
         @foreach($pedido_detalle as $line)
           <tr>
-            <td style="font-size: 15px; line-height: 30px;" align="center">{{$line->producto}}</td>
-            <td style="font-size: 15px; line-height: 30px;" align="center">{{$line->cantidad}}</td>
-            <td style="font-size: 15px; line-height: 30px;" align="center">{{$line->monto}}</td>
-            <td style="font-size: 15px; line-height: 30px;" align="center">{{$line->total}}</td>
+            <td style="font-size: 15px; line-height: 10px;" align="center">{{$line->producto}}</td>
+            <td style="font-size: 15px; line-height: 10px;" align="center">{{$line->cantidad}}</td>
+            <td style="font-size: 15px; line-height: 10px;" align="center">{{$line->monto}}</td>
+            <td style="font-size: 15px; line-height: 10px;" align="center">{{$line->total}}</td>
           </tr>
         @endforeach
       </tbody>
@@ -83,15 +83,15 @@
               <tbody>
                    
                     <tr>
-                      <td align="left" style="font-size: 15px"><strong>SUBTOTAL</strong></td>
+                      <td align="right" style="font-size: 15px"><strong>SUBTOTAL</strong></td>
                       <td align="right" style="font-size: 15px">{{$pedido->subtotal}}</td>
                     </tr>
                     <tr>
-                      <td align="left" style="font-size: 15px"><strong>DESCUENTO</strong></td>
+                      <td align="right" style="font-size: 15px"><strong>DESCUENTO</strong></td>
                       <td align="right" style="font-size: 15px">{{$pedido->descuento}} %, {{$pedido->subtotal - $pedido->total}} </td>
                     </tr>
                     <tr>
-                      <td align="left" style="font-size: 15px"><strong>VALOR TOTAL</strong></td>
+                      <td align="right" style="font-size: 15px"><strong>VALOR TOTAL</strong></td>
                       <td align="right" style="font-size: 15px">{{$pedido->total}}</td>
                     </tr>
               </tbody>
