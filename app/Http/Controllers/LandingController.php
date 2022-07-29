@@ -24,7 +24,7 @@ class LandingController extends Controller
     public function productos()
     {
 
-        return view('landing.productos');
+        return view('landing.products');
         //
     }
 
