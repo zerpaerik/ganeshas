@@ -39,6 +39,8 @@ class PedidosController extends Controller
         ->where('a.estatus','=',1)
         ->get(); */
 
+        $f1 = $request->inicio;
+
         $pedidos = DB::table('pedido as a')
         ->select('a.*')
         //->join('productos as b','b.id','a.producto')
