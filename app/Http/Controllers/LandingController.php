@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Material;
 use Illuminate\Http\Request;
 use Auth;
+use App\Productos;
 
 
 class LandingController extends Controller
@@ -31,7 +32,8 @@ class LandingController extends Controller
     public function inicio()
     {
 
-        return view('landing.principal');
+        $productos = Productos::where('estatus','=',1)->get();
+        return view('landing.principal', compact('productos'));
         //
     }
 

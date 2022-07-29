@@ -94,60 +94,6 @@
                   </div>
                  
                  
-                  <div class="col-md-2">
-                    <label for="exampleInputEmail1">Almacen</label>
-                    <select class="form-control" name="almacen">
-                    @if($alma == 2)
-                    <option value="2" selected>Recepción</option>
-                    <option value="3">Obstetra</option>
-                    <option value="4">Rayos X</option>
-                    <option value="11">Laboratorio</option>
-                  
-                    @elseif($alma == 3)
-                    <option value="2">Recepción</option>
-                    <option value="3" selected>Obstetra</option>
-                    <option value="4">Rayos X</option>
-                    <option value="11">Laboratorio</option>
-                  
-                    @elseif($alma == 4)
-                    <option value="2">Recepción</option>
-                    <option value="3">Obstetra</option>
-                    <option value="4" selected>Rayos X</option>
-                    <option value="11">Laboratorio</option>
-                 
-                    @elseif($alma == 7)
-                    <option value="2">Recepción</option>
-                    <option value="3">Obstetra</option>
-                    <option value="4">Rayos X</option>
-                    <option value="11">Laboratorio</option>
-              
-                    @elseif($alma == 8)
-                    <option value="2">Recepción</option>
-                    <option value="3">Obstetra</option>
-                    <option value="4">Rayos X</option>
-                    <option value="11">Laboratorio</option>
-                  
-                    @elseif($alma == 9)
-                    <option value="2">Recepción</option>
-                    <option value="3">Obstetra</option>
-                    <option value="4">Rayos X</option>
-                    <option value="11">Laboratorio</option>
-                 
-                    @elseif($alma == 11)
-                    <option value="2">Recepción</option>
-                    <option value="3">Obstetra</option>
-                    <option value="4">Rayos X</option>
-                    <option value="11" selected>Laboratorio</option>
-                  
-                    @else
-                    <option value="2">Recepción</option>
-                    <option value="3">Obstetra</option>
-                    <option value="4">Rayos X</option>
-                    <option value="11">Laboratorio</option>
-     
-                    @endif
-                    </select>                  
-                    </div>
                     <div class="col-md-2">
                     <label for="exampleInputEmail1">Producto</label>
                     <select class="form-control" name="producto">
@@ -206,12 +152,10 @@
                 <table id="example" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                  <th>Producto</th>
+                    <th>Producto</th>
                     <th>Cantidad</th>
                     <th>Precio</th>
                     <th>Total Soles</th>
-                    <th>Fecha Descarga</th>
-                    <th>Almacen</th>
                     <th>Fecha</th>
                     <th>Acciones</th>
                   </tr>
@@ -224,28 +168,13 @@
                     <td>{{$an->cant}}</td>
                     <td>{{number_format((float)$an->precio, 2, '.', '')}}</td>
                     <td>{{number_format((float)$an->precio * $an->cant, 2, '.', '')}}</td>
-                    <td>{{$an->fecha}}</td>
-                    @if($an->almacen == 2)
-                    <td>Recepción</td>
-                    @elseif($an->almacen == 3)
-                    <td>Obstetra</td>
-                    @elseif($an->almacen == 11)
-                    <td>Laboratorio</td>
-                    @else
-                    <td>Rayos X</td>
-                    @endif
                     <td>{{$an->created_at}}</td>
                     <td>
                     @if($an->estatus == 1)
                     @if(Auth::user()->rol == 1)
 
                          
-                          <a class="btn btn-danger btn-sm" href="productos-usados-reversar-{{$an->id}}" onclick="return confirm('¿Desea Reversar este registro?')">
-                              <i class="fas fa-trash">
-                              </i>
-                              Reversar
-                          </a>
-
+                        
                        
                           @endif
                           @else
@@ -255,7 +184,7 @@
 
 
                           @endif
-                          <a class="btn btn-success btn-sm" target="_blank" href="productos_usados_report/{{$an->producto}}/{{$f1}}/{{$f2}}/{{$alma}}">
+                          <a class="btn btn-success btn-sm" target="_blank" href="productos_usados_report/{{$an->producto}}/{{$f1}}/{{$f2}}">
                               <i class="fas fa-print">
                               </i>
                               Recibo
@@ -276,8 +205,6 @@
                     <th>Cantidad</th>
                     <th>Precio</th>
                     <th>Total Soles</th>
-                    <th>Fecha Descarga</th>
-                    <th>Almacen</th>
                     <th>Fecha</th>
                     <th>Acciones</th>
                   </tr>

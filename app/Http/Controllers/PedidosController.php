@@ -15,6 +15,7 @@ use App\ProductosAlmacen;
 use App\Analisis;
 use App\User;
 use App\Productos;
+use App\ProductosUsados;
 use Auth;
 use Illuminate\Http\Request;
 use DB;
@@ -259,8 +260,8 @@ class PedidosController extends Controller
          
       
               $pedidos = DB::table('pedido as a')
-              ->select('a.*')
-              //->join('productos as b','b.id','a.producto')
+              ->select('a.*','b.name','b.lastname')
+              ->join('users as b','b.id','a.cliente')
               ->where('a.estatus','=',2)
               ->whereBetween('a.created_at', [$request->inicio,  $request->fin])
               ->get(); 
@@ -280,8 +281,8 @@ class PedidosController extends Controller
             }else if($request->inicio && !is_null($request->cliente)) {
 
                 $pedidos = DB::table('pedido as a')
-                ->select('a.*')
-                //->join('productos as b','b.id','a.producto')
+                ->select('a.*','b.name','b.lastname')
+                ->join('users as b','b.id','a.cliente')
                 ->where('a.estatus','=',2)
                 ->where('a.cliente','=',$request->cliente)
                 ->whereBetween('a.created_at', [$request->inicio,  $request->fin])
@@ -305,7 +306,8 @@ class PedidosController extends Controller
       
           }else {
               $pedidos = DB::table('pedido as a')
-              ->select('a.*')
+              ->select('a.*','b.name','b.lastname')
+              ->join('users as b','b.id','a.cliente')
               ->where('a.estatus','=',2)
               ->where('a.created_at', '=', date('Y-m-d'))
               ->get(); 
@@ -397,6 +399,14 @@ class PedidosController extends Controller
             $pa->cantidad =$pal->cantidad -  $ped_det->soli;
             $res = $pa->update();
 
+
+            $lab = new ProductosUsados();
+            $lab->producto =  $ped_det->producto_id;
+            $lab->cantidad =  $ped_det->soli;
+            $lab->almacen =  1;
+            $lab->usuario =  Auth::user()->id;
+            $lab->save();
+
             $p = Pedido::where('id','=',$ped_det->pedido)->first();
             $p->estatus = 2;
             $resp = $p->update();
@@ -416,6 +426,14 @@ class PedidosController extends Controller
             $pa = ProductosAlmacen::where('producto','=',$ped_det->producto_id)->first();
             $pa->cantidad =$pal->cantidad -  $ped_det->cantidad;
             $res = $pa->update();
+
+            $lab = new ProductosUsados();
+            $lab->producto =  $ped_det->producto_id;
+            $lab->cantidad =  $ped_det->cantidad;
+            $lab->almacen =  1;
+            $lab->usuario =  Auth::user()->id;
+            $lab->save();
+
 
             $p = Pedido::where('id','=',$ped_det->pedido)->first();
             $p->estatus = 2;

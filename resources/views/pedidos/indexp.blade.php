@@ -79,7 +79,7 @@
                               </i>
                               Agregar
                           </a>
-                          <form method="get" action="pedidos">					
+                          <form method="get" action="pedidosp">					
                   <label for="exampleInputEmail1">Filtros de Busqueda</label>
 
                     <div class="row">
@@ -124,6 +124,7 @@
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
+                    <th>Cliente</th>
                     <th>Fecha Pedido</th>
                     <th>Subtotal</th>
                     <th>% Descuento</th>
@@ -136,6 +137,7 @@
 
                   @foreach($pedidos as $so)
                   <tr>
+                    <td>{{$so->lastname}} {{$so->name}}</td>
                     <td>{{$so->created_at}}</td>
                     <td>{{$so->subtotal}}</td>
                     <td>{{$so->descuento}}</td>
@@ -161,6 +163,7 @@
                   </tbody>
                   <tfoot>
                   <tr>
+                  <th>Cliente</th>
                     <th>Fecha Pedido</th>
                     <th>Subtotal</th>
                     <th>% Descuento</th>
