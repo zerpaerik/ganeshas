@@ -238,6 +238,7 @@ class PedidosController extends Controller
         ->select('a.*','b.name','b.lastname','b.id')
         ->join('users as b','b.id','a.cliente')
         ->where('a.estatus','=',1)
+        ->groupBy('b.id')
         ->get(); 
 
 
@@ -328,6 +329,7 @@ class PedidosController extends Controller
           ->select('a.*','b.name','b.lastname','b.id')
           ->join('users as b','b.id','a.cliente')
           ->where('a.estatus','=',2)
+          ->groupBy('b.id')
           ->get(); 
   
 
