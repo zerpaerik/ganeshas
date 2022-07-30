@@ -108,6 +108,8 @@
                   <button type="submit" class="btn btn-primary">Buscar</button>
 
                   </div>
+                  <div class="row">
+
                   <div class="col-md-2">
                             <label for="exampleInputEmail1">Items</label>
                             <input type="text" disabled class="form-control" value="{{$item}}" >
@@ -117,7 +119,7 @@
                             <input type="text" disabled class="form-control" value="{{$desp}}" >
                             </div>
                             <div class="col-md-2">
-                              <label for="exampleInputEmail1">Cantidad Total Soles</label>
+                              <label for="exampleInputEmail1">Total Soles</label>
                               <input type="text" disabled class="form-control" value="{{number_format((float)$total, 2, '.', '')}}" >
                             </div>
 
@@ -125,6 +127,8 @@
 
                             </form>
                   </div>
+                  </div>
+
                   <!--
                  <div class="row">
 

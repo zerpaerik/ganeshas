@@ -65,7 +65,7 @@
         @foreach($pedido_detalle as $line)
           <tr>
             <td style="font-size: 15px; line-height: 10px;" align="center">{{$line->producto}}</td>
-            <td style="font-size: 15px; line-height: 10px;" align="center">{{$line->cantidad}}</td>
+            <td style="font-size: 15px; line-height: 10px;" align="center">{{$line->cantidad_despachada}}</td>
             <td style="font-size: 15px; line-height: 10px;" align="center">{{$line->monto}}</td>
             <td style="font-size: 15px; line-height: 10px;" align="center">{{$line->total}}</td>
           </tr>

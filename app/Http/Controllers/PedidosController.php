@@ -403,6 +403,7 @@ class PedidosController extends Controller
             $lab = new ProductosUsados();
             $lab->producto =  $ped_det->producto_id;
             $lab->cantidad =  $ped_det->soli;
+            $lab->precio =  $ped_det->monto;
             $lab->almacen =  1;
             $lab->usuario =  Auth::user()->id;
             $lab->save();
@@ -430,10 +431,10 @@ class PedidosController extends Controller
             $lab = new ProductosUsados();
             $lab->producto =  $ped_det->producto_id;
             $lab->cantidad =  $ped_det->cantidad;
+            $lab->precio =  $ped_det->monto;
             $lab->almacen =  1;
             $lab->usuario =  Auth::user()->id;
             $lab->save();
-
 
             $p = Pedido::where('id','=',$ped_det->pedido)->first();
             $p->estatus = 2;
@@ -693,7 +694,7 @@ class PedidosController extends Controller
 
 
         $pedido_detalle = DB::table('pedidos as a')
-        ->select('a.id','a.monto','a.pedido','a.estatus','a.cantidad','a.total','a.usuario','a.tipopago','a.created_at','a.producto','b.nombre as producto')
+        ->select('a.id','a.monto','a.pedido','a.estatus','a.cantidad','a.cantidad_despachada','a.total','a.usuario','a.tipopago','a.created_at','a.producto','b.nombre as producto')
         ->join('productos as b','b.id','a.producto')
         ->where('a.pedido','=',$id)
         ->where('a.estatus','=',1)

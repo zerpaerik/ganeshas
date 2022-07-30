@@ -253,6 +253,19 @@
 <!-- page script -->
 <!-- Summernote -->
 <script src="../../plugins/summernote/summernote-bs4.min.js"></script>
+<script language="javascript">
+
+function disableEnterKey(e) 
+{ 
+  var key; 
+  if(window.event) 
+     key = window.event.keyCode; 
+   else key = e.which; //firefox 
+   return (key != 13); 
+  }
+
+</script>
+
 <script>
 function datapac(){
       
