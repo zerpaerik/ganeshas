@@ -33,34 +33,35 @@
                         </div>
                         <div class="col-md-6">
                             <div role="form" class="wpcf7">
-                                <form class="wpcf7-form">
+                            <form role="form" method="post" action="soliu/create" class="wpcf7-form">
+				        	{{ csrf_field() }}   
                                     <p><label> Nombre Completo *<br>
                                         <span class="wpcf7-form-control-wrap your-name">
-                                            <input name="your-name" value="" size="40"
+                                            <input name="nombre" value="" size="40"
                                                    class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required"
                                                    type="text"></span>
                                     </label></p>
                                     <p><label> DNI / CE *<br>
                                         <span class="wpcf7-form-control-wrap your-email">
-                                            <input name="your-email" value="" size="40"
+                                            <input name="cedula" value="" size="40"
                                                    class="wpcf7-form-control wpcf7-text wpcf7-email wpcf7-validates-as-required wpcf7-validates-as-email"
-                                                   type="email"></span>
+                                                   type="text"></span>
                                     </label></p>
                                     <p><label> Telèfono*<br>
                                         <span class="wpcf7-form-control-wrap your-email">
-                                            <input name="your-email" value="" size="40"
+                                            <input name="telefono" value="" size="40"
                                                    class="wpcf7-form-control wpcf7-text wpcf7-email wpcf7-validates-as-required wpcf7-validates-as-email"
                                                    type="text"></span>
                                     </label></p>
                                     <p><label> Fecha de Nacimiento *<br>
                                         <span class="wpcf7-form-control-wrap your-email">
-                                            <input name="your-email" value="" size="40"
+                                            <input name="fecha" value="" size="40"
                                                    class="wpcf7-form-control wpcf7-text wpcf7-email wpcf7-validates-as-required wpcf7-validates-as-email"
                                                    type="date"></span>
                                     </label></p>
                                     <p><label> Direcciòn *<br>
                                         <span class="wpcf7-form-control-wrap your-message">
-                                            <textarea name="your-message"
+                                            <textarea name="direccion"
                                                       cols="40" rows="10"
                                                       class="wpcf7-form-control wpcf7-textarea"></textarea></span>
                                     </label></p>

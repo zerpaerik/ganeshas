@@ -28,6 +28,9 @@ Route::get('/nosotras', 'LandingController@nosotras')->name('nosotras.index');
 Route::get('/contacto', 'LandingController@contacto')->name('contacto.index');
 Route::get('/mis-productos', 'LandingController@productos')->name('productos-ganesha.index');
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/soliu', 'HomeController@solicitudes')->name('soliu.index');
+Route::post('soliu/create', 'LandingController@solicitudes');
+
 
 
 Route::get('roles', 'RolesController@index')->name('roles.index');

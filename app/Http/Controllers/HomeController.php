@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Creditos;
 use App\Debitos;
 use App\Analisis;
-use App\Atenciones;
+use App\SoliUs;
 use App\Sedes;
 use DB;
 
@@ -33,4 +33,16 @@ class HomeController extends Controller
 
         return view('home',compact('sedes'));
     }
+
+    public function solicitudes(Request $request)
+    {
+
+        $soliu = SoliUs::all();
+        return view('soliu.index', compact('soliu'));
+    
+    }
+
+
+
+
 }

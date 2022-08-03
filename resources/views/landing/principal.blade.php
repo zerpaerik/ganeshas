@@ -14,7 +14,7 @@
                             <h5>Se parte de la primera tribu de mujeres trabajadoras y luchadoras</h5>
                             <h1>Llenas de grandes metas e ilusiones</h1>
                             <h2>Que buscamos cumplir juntas</h2>
-                            <a style="background-color: #ad296d; border-color:#ad296d" href="#">Quiero ser una Ganesha</a>
+                            <a style="background-color: #ad296d; border-color:#ad296d" href="#">Quiero ser una mujer Ganesha's</a>
                         </div>
                     </div>
                 </div>
@@ -24,10 +24,9 @@
                 <div class="slide-info">
                     <div class="container">
                         <div class="slide-inner">
-                            <h5>Conoce nuestra varia linea de productos</h5>
+                            <h5>Conoce nuestra variada linea de productos</h5>
                             <h1><span>Naturales y 100% Artesanales</h1>
-                            <h2>& Cute</h2>
-                            <a style="background-color: #ad296d; border-color:#ad296d" target="_blank" href="Catálogo FINAL comprimido - Ganesha's.pdf">Ver Catalogo</a>
+                            <a style="background-color: #ad296d; border-color:#ad296d" target="_blank" href="https://api.whatsapp.com/send?phone=51934545223&text=Hola, Estoy interesada en comprar!">Quiero Comprar</a>
                         </div>
                     </div>
                 </div>
@@ -67,7 +66,7 @@
                                 <div class="banner-content">
                                     <div class="title-wrap">
                                         <h6 class="title">
-                                            <p style="color: #ad296d">Descubre en nuestro Catálogo los conocimientos de la sabiduría ancestral de los pueblos indígenas a través de nuestros productos creados desde sus secretos místicos, formas de elaboración, fórmulas y la magia curativa de plantas medicinales, cristales, piedras o cuarzos!</p>
+                                            <p style="color: #ad296d">Descubre en nuestro Catálogo los conocimientos de la sabiduría ancestral de los pueblos indígenas a través de nuestros productos creados desde sus secretos místicos!</p>
                                         </h6>
                                     </div>
                                     <div class="button-wrap">
@@ -76,10 +75,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="akasha-banner style-01 left-bottom">
+                    <div class="akasha-banner style-01 left-bottom" style="margin-top:-120px;">
                         <div class="banner-inner">
                             <figure class="banner-thumb">
-                                <img src="segunda.jpg"
+                                <img src="otra.jpg"
                                      class="attachment-full size-full" alt="img"></figure>
                             <div class="banner-info ">
                                 <div class="banner-content">

@@ -6,6 +6,8 @@ use App\Material;
 use Illuminate\Http\Request;
 use Auth;
 use App\Productos;
+use App\SoliUs;
+
 
 
 class LandingController extends Controller
@@ -35,6 +37,21 @@ class LandingController extends Controller
         $productos = Productos::where('estatus','=',1)->get();
         return view('landing.principal', compact('productos'));
         //
+    }
+
+    public function solicitudes(Request $request)
+    {
+
+        $centros = new SoliUs();
+        $centros->nombre =$request->nombre;
+        $centros->cedula =$request->cedula;
+        $centros->telefono =$request->telefono;
+        $centros->direccion =$request->direccion;
+        $centros->fecha =$request->fecha;
+        $centros->save();
+
+        return redirect()->action('LandingController@inicio');
+    
     }
 
     public function contacto()

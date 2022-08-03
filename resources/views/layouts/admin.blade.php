@@ -92,6 +92,19 @@
             </div>
         </div>
     </div>
+    <div class="header-mobile">
+        <div class="header-mobile-left">
+            <div class="block-menu-bar">
+                <a class="menu-bar menu-toggle" href="#">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </a>
+            </div>
+        </div>
+     
+       
+    </div>
    
 </header>
  @yield('content')

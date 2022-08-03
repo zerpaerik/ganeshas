@@ -10,9 +10,6 @@
   <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-
-  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.5/css/buttons.dataTables.min.css">
-
   <!-- Tempusdominus Bbootstrap 4 -->
   <link rel="stylesheet" href="plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
   <!-- iCheck -->
@@ -27,8 +24,6 @@
   <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
   <!-- summernote -->
   <link rel="stylesheet" href="plugins/summernote/summernote-bs4.css">
-
-
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 <!-- DataTables -->
@@ -59,12 +54,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Productos</h1>
+            <h1 class="m-0 text-dark">Solicitudes</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Productosss</li>
+              <li class="breadcrumb-item active">Solicitudes de Usuarios</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -73,78 +68,44 @@
     <!-- /.content-header -->
 
     <!-- Main content -->
-    <section class="content">   
-    @include('flash-message')
-
+    <section class="content">
       <div class="container-fluid">
       <div class="card">
               <div class="card-header">
-              @if(Auth::user()->rol == 1)
-
-                <a class="btn btn-primary btn-sm" href="{{route('productos.create')}}">
-                              <i class="fas fa-folder">
-                              </i>
-                              Agregar
-                          </a>
-                @endif
+              
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <table id="example" class="table table-bordered table-striped" data-page-length='100'>
+                <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
                     <th>Nombre</th>
-                    <th>Medida</th>
-                    <th>Foto</th>
-                    <th>Categoria</th>
-                    <th>Precio</th>
-
-                    <th>Acciones</th>
+                    <th>Cedula</th>
+                    <th>Telefono</th>
+                    <th>Nacimiento</th>
+                    <th>Direcciòn</th>
                   </tr>
                   </thead>
                   <tbody>
 
-                  @foreach($productos as $an)
+                  @foreach($soliu as $p)
                   <tr>
-                    <td>{{$an->nombre}}</td>
-                    <td>{{$an->medida}}</td>
-                    <td><img src="fotos/{{$an->foto}}" class="" alt="Foto de Producto" width="250"></td>
-                    <td>{{$an->categoria}}</td>
-                    <td>{{$an->precio}}</td>
-
-                    <td>
-                    @if(Auth::user()->rol == 1)
-
-                          <a class="btn btn-info btn-sm" href="productos-edit-{{$an->id}}">
-                              <i class="fas fa-pencil-alt">
-                              </i>
-                              Editar
-                          </a>
-                          <a class="btn btn-danger btn-sm" href="productos-delete-{{$an->id}}" onclick="return confirm('¿Desea Eliminar este registro?')">
-                              <i class="fas fa-trash">
-                              </i>
-                              Delete
-                          </a>
-
-                       
-                          @endif</td>
+                    <td>{{$p->nombre}}</td>
+                    <td>{{$p->cedula}}</td>
+                    <td>{{$p->telefono}}</td>
+                    <td>{{$p->fecha}}</td>
+                    <td>{{$p->direccion}}</td>
                   </tr>
                   @endforeach
-                 
-                 
-               
-                 
                  
                   </tbody>
                   <tfoot>
                   <tr>
-                  <th>Nombre</th>
-                    <th>Medida</th>
-                    <th>Foto</th>
-                    <th>Categoria</th>
-                    <th>Precio</th>
-
-                    <th>Acciones</th>
+                    <th>Nombre</th>
+                    <th>Cedula</th>
+                    <th>Telefono</th>
+                    <th>Nacimiento</th>
+                    <th>Direcciòn</th>
                   </tr>
                   </tfoot>
                 </table>
@@ -214,40 +175,16 @@
 <script src="../../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
 <script src="../../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
 <script src="../../plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
-
-<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script> 
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js"></script>
 <!-- AdminLTE App -->
 <script src="../../dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="../../dist/js/demo.js"></script>
 <!-- page script -->
 <script>
-
-$(document).ready(function() {
-    $('#example').DataTable( {
-      
-        dom: 'Bfrtip',
-        buttons: [
-            'excel', 'pdf', 'print'
-        ]
-    } );
-} );
-</script>
-
-<script>
   $(function () {
     $("#example1").DataTable({
       "responsive": true,
       "autoWidth": false,
-      dom: 'Bfrtip',
-      buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
-        ]
     });
     $('#example2').DataTable({
       "paging": true,

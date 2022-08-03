@@ -227,96 +227,10 @@ class ProductosController extends Controller
                 $lab->producto =  $laboratorio['laboratorio'];
                 $lab->cantidad =  $request->monto_abol['laboratorios'][$key]['abono'];
                 $lab->precio =  $request->precio_abol['laboratorios'][$key]['precio'];
-                $lab->vence =  $request->fecha_vence['laboratorios'][$key]['vence'];
                 $lab->ingreso = $ingreso->id;
                 $lab->save();
 
-                if($request->fecha_vence['laboratorios'][$key]['vence'] != null){
-
-                $pal = ProductosAlmacen::where('producto','=',$laboratorio['laboratorio'])->where('vence','=',$request->fecha_vence['laboratorios'][$key]['vence'])->where('almacen','=',1)->first();
-                 
-                //dd($pal);
-                if($pal == null){
-
-
-                $pa = new ProductosAlmacen();
-                $pa->producto =  $laboratorio['laboratorio'];
-                $pa->cantidad =  $request->monto_abol['laboratorios'][$key]['abono'];
-                $pa->precio =  $request->precio_abol['laboratorios'][$key]['precio'] / $request->monto_abol['laboratorios'][$key]['abono'];
-                $pa->vence =  $request->fecha_vence['laboratorios'][$key]['vence'];
-                $pa->ingreso = $lab->id;
-                $pa->usuario = Auth::user()->id;
-                $pa->almacen = 1;
-                $pa->save();
-
-                
-                $mp = new MovimientoProductos();
-                $mp->id_producto_almacen = $pa->id;
-                $mp->cantidad = $request->monto_abol['laboratorios'][$key]['abono'];
-                $mp->usuario = Auth::user()->id;
-                $mp->accion = 'INGRESO A ALMACEN CENTRAL';
-                $mp->save();
-
-                } else {
-
-                $pa = ProductosAlmacen::where('producto','=',$laboratorio['laboratorio'])->where('almacen','=',1)->first();
-                $pa->cantidad =$pal->cantidad + $request->monto_abol['laboratorios'][$key]['abono'];
-               // $pa->precio =  $request->precio_abol['laboratorios'][$key]['precio'] / $request->monto_abol['laboratorios'][$key]['abono'];
-                //$pa->vence =  $request->fecha_vence['laboratorios'][$key]['vence'];
-                $res = $pa->update();
-
-                $mp = new MovimientoProductos();
-                $mp->id_producto_almacen = $pa->id;
-                $mp->cantidad = $request->monto_abol['laboratorios'][$key]['abono'];
-                $mp->usuario = Auth::user()->id;
-                $mp->accion = 'INGRESO A ALMACEN CENTRAL';
-                $mp->save();
-                    
-                }
-
-            } else {
-
-                $pal = ProductosAlmacen::where('producto','=',$laboratorio['laboratorio'])->where('almacen','=',1)->first();
-
-                if($pal == null){
-
-
-                    $pa = new ProductosAlmacen();
-                    $pa->producto =  $laboratorio['laboratorio'];
-                    $pa->cantidad =  $request->monto_abol['laboratorios'][$key]['abono'];
-                    $pa->precio =  $request->precio_abol['laboratorios'][$key]['precio'] / $request->monto_abol['laboratorios'][$key]['abono'];
-                    $pa->vence =  $request->fecha_vence['laboratorios'][$key]['vence'];
-                    $pa->ingreso = $lab->id;
-                    $pa->usuario = Auth::user()->id;
-                    $pa->almacen = 1;
-                    $pa->save();
-
-                    $mp = new MovimientoProductos();
-                    $mp->id_producto_almacen = $pa->id;
-                    $mp->cantidad = $request->monto_abol['laboratorios'][$key]['abono'];
-                    $mp->usuario = Auth::user()->id;
-                    $mp->accion = 'INGRESO A ALMACEN CENTRAL';
-                    $mp->save();
-    
-                    } else {
-    
-                    $pa = ProductosAlmacen::where('producto','=',$laboratorio['laboratorio'])->where('almacen','=',1)->first();
-                    $pa->cantidad =$pal->cantidad + $request->monto_abol['laboratorios'][$key]['abono'];
-                   // $pa->precio =  $request->precio_abol['laboratorios'][$key]['precio'] / $request->monto_abol['laboratorios'][$key]['abono'];
-                    //$pa->vence =  $request->fecha_vence['laboratorios'][$key]['vence'];
-                    $res = $pa->update();
-
-                    $mp = new MovimientoProductos();
-                    $mp->id_producto_almacen = $pa->id;
-                    $mp->cantidad = $request->monto_abol['laboratorios'][$key]['abono'];
-                    $mp->usuario = Auth::user()->id;
-                    $mp->accion = 'INGRESO A ALMACEN CENTRAL';
-                    $mp->save();
-                        
-                    }
-
-
-            }
+           
                /* $product = Productos::where('id','=',$laboratorio['laboratorio'])->first();
                 $productos = Productos::find($laboratorio['laboratorio']);
                 $productos->cantidad =$product->cantidad + $request->monto_abol['laboratorios'][$key]['abono'];

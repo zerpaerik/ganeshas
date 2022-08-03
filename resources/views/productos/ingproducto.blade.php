@@ -122,22 +122,17 @@
                     </div>
 
                     <label for="laboratorios_#index#_abonoL" class="col-sm-1 control-label">Cantidad:</label>
-                    <div class="col-sm-1">
+                    <div class="col-sm-2">
 
                       <input id="laboratorios_#index#_abonoL" name="monto_abol[laboratorios][#index#][abono]" type="number" class="number form-control abonoL" placeholder="Cantidad" data-toggle="tooltip" data-placement="bottom" title="Cantidad">
                     </div>
 
                     <label for="laboratorios_#index#_abonoLP" class="col-sm-1 control-label">Precio:</label>
-                    <div class="col-sm-1">
+                    <div class="col-sm-2">
 
                       <input id="laboratorios_#index#_abonoLP" name="precio_abol[laboratorios][#index#][precio] type="text" class="number form-control abonoL" placeholder="Abono" data-toggle="tooltip" data-placement="bottom" title="Abono" value="0.00">
                     </div>
 
-                    <label for="laboratorios_#index#_abonoDP" class="col-sm-1 control-label">Vence:</label>
-                    <div class="col-sm-2">
-
-                      <input id="laboratorios_#index#_abonoDP" name="fecha_vence[laboratorios][#index#][vence]" type="date" class="form-control abonoL" placeholder="Abono" data-toggle="tooltip" data-placement="bottom">
-                    </div>
 
                     <a id="laboratorios_remove_current" style="cursor: pointer;"><i class="fa fa-times-circle" aria-hidden="true"></i></a>
                 </div>

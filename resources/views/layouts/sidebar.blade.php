@@ -126,6 +126,17 @@
          
             </ul>
           </li>
+
+          <li class="nav-item has-treeview">
+            <a href="{{route('soliu.index')}}" class="nav-link">
+              <i class="nav-icon fas fa-bars"></i>
+              <p>
+                Solicitudes de Usuario
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+          
+          </li>
          
          
 
@@ -302,6 +313,20 @@
          
             </ul>
           </li>
+
+          <li class="nav-item has-treeview">
+            <a href="{{route('soliu.index')}}" class="nav-link">
+              <i class="nav-icon fas fa-bars"></i>
+              <p>
+                Solicitudes de Usuario
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+
+         
+            </ul>
+          </li>
          
          
 
@@ -369,6 +394,20 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
 
+          <li class="nav-item has-treeview">
+            <a href="{{route('productos.index')}}" class="nav-link">
+              <i class="nav-icon fas fa-bars"></i>
+              <p>
+                Productos
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+
+         
+            </ul>
+          </li>
+
 
       
           <li class="nav-item has-treeview">
@@ -400,6 +439,8 @@
          
             </ul>
           </li>
+
+        
 
         
          
