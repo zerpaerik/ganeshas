@@ -80,7 +80,7 @@
                   <thead>
                   <tr>
                     <th>Nombre</th>
-                    <th>Cedula</th>
+                    <th>DNI/CE</th>
                     <th>Telefono</th>
                     <th>Nacimiento</th>
                     <th>Direcciòn</th>
@@ -101,8 +101,8 @@
                   </tbody>
                   <tfoot>
                   <tr>
-                    <th>Nombre</th>
-                    <th>Cedula</th>
+                  <th>Nombre</th>
+                    <th>DNI/CE</th>
                     <th>Telefono</th>
                     <th>Nacimiento</th>
                     <th>Direcciòn</th>

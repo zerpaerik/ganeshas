@@ -7,6 +7,16 @@
       .table-main{
        margin-left:-55px;
        margin-right:-56px;
+       border-collapse: collapse;
+      },
+      th,
+      td {
+          border: 1px solid black;
+      }
+      
+      th,
+      td {
+          padding: 5px;
       }
       .truncate {
         width: 1px;
@@ -52,13 +62,13 @@
 	</div>
   <br><br><br>
 
-    <table width="90%" class="table-main">
+    <table width="100%" class="table-main">
       <thead>
         <tr>
-          <th style="font-size: 15px"><center>Producto.<center></th>
-          <th style="font-size: 15px"><center>Cantidad.<center></th>
-          <th style="font-size: 15px"><center>P.Unit.<center></th>
-          <th style="font-size: 15px"><center>Total<center></th>
+          <th style="font-size: 15px; "><center>Producto.<center></th>
+          <th style="font-size: 15px; "><center>Cantidad.<center></th>
+          <th style="font-size: 15px; "><center>P.Unit.<center></th>
+          <th style="font-size: 15px; "><center>Total<center></th>
         </tr>
       </thead>
       <tbody>

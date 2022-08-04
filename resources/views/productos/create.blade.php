@@ -119,7 +119,7 @@
 
                   <div class="col-md-3">
                     <label for="exampleInputEmail1">Precio</label>
-                    <input type="number" class="form-control" id="nombre" name="precio" placeholder="Precio" required>
+                    <input type="number" class="form-control" id="nombre" name="precio" min="0" max="10" step="0.25" value="0.00" >
                   </div>
 
                   <div class="col-md-3">
@@ -222,6 +222,14 @@
 <!-- AdminLTE for demo purposes -->
 <script src="../../dist/js/demo.js"></script>
 <!-- page script -->
+
+<script>
+  function setTwoNumberDecimal(event) {
+    this.value = parseFloat(this.value).toFixed(2);
+    console.log('aqeeee')
+}
+
+</script>
 
 </body>
 </html>
