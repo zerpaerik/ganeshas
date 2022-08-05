@@ -25,7 +25,7 @@
                     <div class="container">
                         <div class="slide-inner">
                             <h5>Conoce nuestra variada linea de productos</h5>
-                            <h1><span>Naturales y 100% Artesanales</h1>
+                            <h1><span>100% naturales y artesanales</h1>
                             <a style="background-color: #ad296d; border-color:#ad296d" target="_blank" href="https://api.whatsapp.com/send?phone=51934545223&text=Hola, Estoy interesada en comprar!">Quiero Comprar</a>
                         </div>
                     </div>
