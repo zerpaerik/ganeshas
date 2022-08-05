@@ -135,7 +135,7 @@
                                 </h3>
                                 <span class="price"><span class="akasha-Price-amount amount"><span
                                         class="akasha-Price-amount amount"><span
-                                        class="akasha-Price-currencySymbol">Sol.</span>{{$prod->precio}}</span></span>
+                                        class="akasha-Price-currencySymbol">S/.</span>{{$prod->precio}}</span></span>
                             </div>
                             <div class="group-button clearfix">
                                 <div class="yith-wcwl-add-to-wishlist">
