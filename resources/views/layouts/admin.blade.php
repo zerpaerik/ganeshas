@@ -58,7 +58,7 @@
                                 </li>
                                 <li id="menu-item-229"
                                     class="menu-item menu-item-type-post_type menu-item-object-megamenu menu-item-229 parent parent-megamenu item-megamenu menu-item-has-children">
-                                    <a class="akasha-menu-item-title" title="Elements" href="{{route('contacto.index')}}">Ùnete</a>
+                                    <a class="akasha-menu-item-title" title="Elements" href="{{route('contacto.index')}}">Quiero ser consultora</a>
                                     <span class="toggle-submenu"></span>
                                    
                                 </li>
